@@ -113,7 +113,7 @@ namespace Trabajo_Integrador.Dominio
         private double CalcularPuntaje() 
         {
             int cantidadRespuestasCorrectas = CantidadRespuestasCorrectas();
-            return (cantidadRespuestasCorrectas / getPreguntas().Count) * getPreguntas().First().Dificultad.FactorDificultad * FactorTiempo;
+            return ((double)cantidadRespuestasCorrectas / (double)getPreguntas().Count) * (double)getPreguntas().First().Dificultad.FactorDificultad * (double)FactorTiempo;
         }
 
 
