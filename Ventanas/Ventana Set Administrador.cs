@@ -35,7 +35,7 @@ namespace Trabajo_Integrador.Ventanas
         private void setAdmin_Click_1(object sender, EventArgs e)
         {
             nombreUsuario = usuario.Text;
-            if (fachada.UsuarioValido(nombreUsuario))
+            if (fachada.UsuarioExiste(nombreUsuario))
             {
                 fachada.SetAdministrador(nombreUsuario);
                 MessageBox.Show("El usuario "+ nombreUsuario + "fue configurado como administrador con Exito");

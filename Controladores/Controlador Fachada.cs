@@ -185,7 +185,12 @@ namespace Trabajo_Integrador.Controladores
             }
         }
 
-        public Boolean UsuarioValido(string pNombreUsuario)
+        /// <summary>
+        /// Devuleve true si el nombre de usuario ya existe en BD.
+        /// </summary>
+        /// <param name="pNombreUsuario"></param>
+        /// <returns></returns>
+        public Boolean UsuarioExiste(string pNombreUsuario)
         {
             using (var db = new TrabajoDbContext())
             {
