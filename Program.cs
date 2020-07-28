@@ -22,7 +22,7 @@ namespace Trabajo_Integrador
           
 
 
-
+            ///Esto e sun comentario de prueba
             
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
