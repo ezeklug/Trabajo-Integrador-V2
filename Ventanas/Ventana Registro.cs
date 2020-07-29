@@ -34,32 +34,41 @@ namespace Trabajo_Integrador.Ventanas
         {
             if (nuevoUsuario.Text.Trim() == string.Empty)
             {
-                    errorProvider2.SetError(nuevoUsuario, "Debe ingresar un usuario");
-                    nuevoUsuario.Focus();
+                errorProvider2.SetError(nuevoUsuario, "Debe ingresar un usuario");
+                nuevoUsuario.Focus();
             }
 
-                else if(fachada.UsuarioExiste(usuarioNombre))
+            else
+            {
+                if (fachada.UsuarioExiste(usuarioNombre))
                 {
                     errorProvider2.SetError(nuevoUsuario, "Usuario ya existe");
                     nuevoUsuario.Focus();
 
                 }
-                        
-                    else if (nuevaContrasenia != nuevaContrasenia2)
+
+                else
+                {
+                    if ((nuevaContrasenia != null) && (nuevaContrasenia2 != null) && (nuevaContrasenia != nuevaContrasenia2))
                     {
-          
                         errorProvider1.SetError(nuevaContrasenia, "Las contraseñas ingresadas no coinciden");
                         nuevaContrasenia.Focus();
                     }
+                    else
+                    {
+                        fachada.GuardarUsuario(nuevoUsuario.Text.Trim(), nuevaContrasenia.Text.Trim());
+                        MessageBox.Show("Usuaurio registrado correctamente");
+                        this.Hide();
+                        Ventana_Inicio vInicio = new Ventana_Inicio();
+                        vInicio.ShowDialog();
+                        this.Close();
 
 
-            fachada.GuardarUsuario(nuevoUsuario.Text.Trim(), nuevaContrasenia.Text.Trim());
-            MessageBox.Show("Usuaurio registrado correctamente");
-            this.Hide();
-            Ventana_Inicio vInicio = new Ventana_Inicio();
-            vInicio.ShowDialog();
-            this.Close();
+                    }
+                }
+            }
 
+            
 
         }
 

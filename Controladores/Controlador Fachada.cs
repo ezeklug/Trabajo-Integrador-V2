@@ -197,7 +197,8 @@ namespace Trabajo_Integrador.Controladores
                 using (var UoW = new UnitOfWork(db))
                 {
                     Usuario usrDb = UoW.RepositorioUsuarios.Get(pNombreUsuario);
-                    if (usrDb.Id== pNombreUsuario)
+                    Console.Write(usrDb);
+                    if (usrDb.Id == pNombreUsuario)
                     {
                         return true;
                     }
