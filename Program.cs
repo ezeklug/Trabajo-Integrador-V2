@@ -18,17 +18,9 @@ namespace Trabajo_Integrador
         [STAThread]
         static void Main()
         {
-
-          
-
-
-            ///Esto e sun comentario de prueba
-            ///Esto es otra linea de un comentario de prueba 
-            
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Ventana_Inicio());
-            
         }
     }
 }
