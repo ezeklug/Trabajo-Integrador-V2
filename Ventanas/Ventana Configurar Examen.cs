@@ -43,7 +43,8 @@ namespace Trabajo_Integrador.Ventanas
 
         private void cargarCategoria()
         {
-            categorias = fachada.GetCategorias();
+
+            categorias = fachada.GetCategoriaPreguntasConNPreguntas(10);
 
             List<string> listaCategorias = new List<string>(); ;
             foreach (CategoriaPregunta categoria in categorias)
@@ -120,16 +121,47 @@ namespace Trabajo_Integrador.Ventanas
 
             int cantidadSeleccionada = Convert.ToInt32(cantidadPreguntas.Value); //Cantidad de preguntas a responder     
 
-            
 
-            Examen nuevoExamen = fachada.InicializarExamen(cantidadSeleccionada, conjuntoSeleccionado, categoriaSeleccionada, dificultadSeleccionada);
-            fachada.InicarExamen(iNombreUsuario, nuevoExamen);
+            List<String> categorias = new List<string>();
+            foreach (CategoriaPregunta cat in fachada.GetCategoriaPreguntasConNPreguntas(cantidadSeleccionada))
+            {
+                categorias.Add(cat.Id);
+            }
 
-            this.Hide();
 
-            using (Ventana_Preguntas Vpreguntas = new Ventana_Preguntas(nuevoExamen)) 
-                Vpreguntas.ShowDialog();
-            this.Close();
+            if (!(categorias.Contains(categoriaSeleccionada)))
+            {
+                int n = 10; //// Cantidad de preguntas de tal categoria. TODO
+                MessageBoxButtons mensaje = MessageBoxButtons.YesNo;
+                DialogResult result = MessageBox.Show($"Solo hay {n} preguntas de { categoriaSeleccionada}.Quiere hacer el examen aunque no haya la cantidad de preguntas seleccionadas?", "Advertencia", mensaje);
+
+                if (result == DialogResult.Yes)
+                {
+                    Examen nuevoExamen = fachada.InicializarExamen(n, conjuntoSeleccionado, categoriaSeleccionada, dificultadSeleccionada);
+                    fachada.InicarExamen(iNombreUsuario, nuevoExamen);
+
+                    this.Hide();
+
+                    using (Ventana_Preguntas Vpreguntas = new Ventana_Preguntas(nuevoExamen))
+                        Vpreguntas.ShowDialog();
+                    this.Close();
+
+                }
+            }
+            else {
+                Examen nuevoExamen = fachada.InicializarExamen(cantidadSeleccionada, conjuntoSeleccionado, categoriaSeleccionada, dificultadSeleccionada);
+                fachada.InicarExamen(iNombreUsuario, nuevoExamen);
+
+                this.Hide();
+
+                using (Ventana_Preguntas Vpreguntas = new Ventana_Preguntas(nuevoExamen))
+                    Vpreguntas.ShowDialog();
+                this.Close();
+
+            }
+
+
+
 
         }
 

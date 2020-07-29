@@ -129,10 +129,27 @@ namespace Trabajo_Integrador.Controladores
         {
             return controladorAdministrativo.GetCategorias();
         }
+        
+
+
+        /// <summary>
+        /// Devuelve todas las categorias que tengan mas o igual a N preguntas
+        /// </summary>
+        /// <param name="n">Cantida de preguntas</param>
+        /// <returns>Lista de Categorias</returns>
+        public List<CategoriaPregunta> GetCategoriaPreguntasConNPreguntas(int n)
+        {
+            return controladorPreguntas.GetCategoriasConMasDeNPreguntas(n);
+        }
+
+
+
         /// <summary>
         /// Metodo que devuelve todas los conjuntos de preguntas cargados en base de datos
         /// </summary>
         /// <returns></returns>
+        /// 
+
         public List<ConjuntoPreguntas> GetConjuntoPreguntas()
         {
             return controladorAdministrativo.GetConjuntoPreguntas();
