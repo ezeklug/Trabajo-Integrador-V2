@@ -20,7 +20,7 @@ namespace Trabajo_Integrador.Controladores
 
 
         public ControladorFachada()
-        { 
+        {
             controladorAdministrativo = new ControladorAdministrativo();
             controladorExamen = new ControladorExamen();
             controladorPreguntas = new ControladorPreguntas();
@@ -51,7 +51,9 @@ namespace Trabajo_Integrador.Controladores
             return controladorExamen.GetTiempoLimite(unExamen);
         }
 
-   
+
+
+
         /// <summary>
         /// Da comienzo a un examen. Asocia el examen a un usuario
         /// </summary>
@@ -73,6 +75,15 @@ namespace Trabajo_Integrador.Controladores
         }
 
 
+        /// <summary>
+        /// Devuelve la cantidad de preguntas que pertecenientes a una categoria
+        /// </summary>
+        /// <param name="pIdCategoria">Id de la categoria</param>
+        /// <returns>Cantidad</returns>
+        public int CantidadDePreguntasParaCategoria(String pIdCategoria)
+        {
+            return controladorPreguntas.CantidadDePreguntasParaCategoria(pIdCategoria);
+        }
 
         /// <summary>
         /// Metodo que crea un examen sin asociarlo a un usuario
@@ -85,6 +96,7 @@ namespace Trabajo_Integrador.Controladores
         /// 
         public Examen InicializarExamen(int pCantidad, String pConjunto, string pCategoria, string pDificultad)
         {
+            /*
             ConjuntoPreguntas conjunto;
             CategoriaPregunta categoria;
             Dificultad dificultad;
@@ -98,8 +110,8 @@ namespace Trabajo_Integrador.Controladores
                     dificultad = UoW.RepositorioDificultades.Get(pDificultad);
                 }
             }
-
-             return controladorExamen.InicializarExamen(pCantidad.ToString(), conjunto.Id, categoria.Id, dificultad.Id);
+            */
+            return controladorExamen.InicializarExamen(pCantidad.ToString(), pConjunto, pCategoria, pDificultad);
         }
 
 
@@ -129,7 +141,7 @@ namespace Trabajo_Integrador.Controladores
         {
             return controladorAdministrativo.GetCategorias();
         }
-        
+
 
 
         /// <summary>
@@ -197,7 +209,7 @@ namespace Trabajo_Integrador.Controladores
                         else return false;
                     }
                     else return false;
-                   
+
 
                 }
             }
@@ -215,7 +227,7 @@ namespace Trabajo_Integrador.Controladores
                 using (var UoW = new UnitOfWork(db))
                 {
                     Usuario usrDb = UoW.RepositorioUsuarios.Get(pNombreUsuario);
-                   
+
                     if (usrDb != null)
                     {
                         if (usrDb.Id == pNombreUsuario)
@@ -266,30 +278,56 @@ namespace Trabajo_Integrador.Controladores
         /// <param name="pConjunto"></param>
         /// <param name="pCategoria"></param>
         /// <param name="pDificultad"></param>
-        public void CargarPreguntas(string pCantidad,string pConjunto,string pCategoria,string pDificultad)
+        public void CargarPreguntas(string pCantidad, string pConjunto, string pCategoria, string pDificultad)
         {
             controladorAdministrativo.CargarPreguntas(pCantidad, pConjunto, pCategoria, pDificultad);
         }
 
 
 
+
+        /// <summary>
+        /// Devuelve todos los examenes
+        /// </summary>
+        /// <returns></returns>
         public List<Examen> GetExamenes()
         {
             return controladorAdministrativo.GetExamenes();
         }
 
+
+        /// <summary>
+        /// Modifica el tiempo de un conjunto de preguntas
+        /// </summary>
+        /// <param name="pConjuntoPreguntas">Conjunto a modificar</param>
+        /// <param name="pTiempo">Tiempo por pregunta</param>
         public void ModificarTiempo(string pConjuntoPreguntas, float pTiempo)
         {
             controladorAdministrativo.ModificarTiempo(pConjuntoPreguntas, pTiempo);
 
         }
 
+
+
+        /// <summary>
+        /// Setea un usuario como  admin
+        /// </summary>
+        /// <param name="pUsuario">Id del usuario</param>
         public void SetAdministrador(string pUsuario)
         {
             controladorAdministrativo.SetAdministrador(pUsuario);
         }
 
-        
+
+        /// <summary>
+        /// Setea un usuario como no admin
+        /// </summary>
+        /// <param name="pUsuario">Id del usuario</param>
+        public void SetNoAdministrador(string pUsuario)
+        {
+            controladorAdministrativo.SetNoAdministrador(pUsuario);
+        }
+
         /// <summary>
         /// Obtiene todas las preguntas de la base de datos
         /// </summary>

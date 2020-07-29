@@ -70,8 +70,7 @@ namespace Trabajo_Integrador.Ventanas
 
             string conjuntoSeleccionado = ListaConjuntos.SelectedItem.ToString();
             string i =tiempo.SelectedText.ToString();
-            float tiempoIngresado = Convert.ToInt32(tiempo.Text);
-                //float.Parse(i, System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
+            float tiempoIngresado = float.Parse(tiempo.Text);
             fachada.ModificarTiempo(conjuntoSeleccionado, tiempoIngresado);
             MessageBox.Show("Tiempo modificado con Exito");
         }

@@ -55,7 +55,7 @@ namespace Trabajo_Integrador.EntityFramework
             }
             else
             {
-                return preguntas.OrderBy(x => Guid.NewGuid()).Take(cantidad).ToList<Pregunta>();
+                return preguntas.OrderBy(x => Guid.NewGuid()).Take(cantidad+1).ToList<Pregunta>();
             }
 
 

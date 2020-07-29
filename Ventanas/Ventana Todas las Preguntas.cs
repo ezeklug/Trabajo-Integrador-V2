@@ -26,16 +26,20 @@ namespace Trabajo_Integrador.Ventanas
         {
             List<Pregunta> listaPreguntas = fachada.GetPreguntas();
             DataTable dt = new DataTable();
+            int cont = 0;
             //dt.Columns.Add("Usuario", typeof(string));
+            dt.Columns.Add("Nº", typeof(int));
             dt.Columns.Add("Pregunta", typeof(string));
             dt.Columns.Add("Respuesta Correcta", typeof(string));
             dt.Columns.Add("Respuesta Incorrecta 1", typeof(string));
             dt.Columns.Add("Respuesta Incorrecta 2", typeof(string));
             dt.Columns.Add("Respuesta Incorrecta 3", typeof(string));
+            dt.Columns.Add("Categoria", typeof(string));
 
             foreach (Pregunta pregunta in listaPreguntas)
             {
-                dt.Rows.Add(new object[] { pregunta.Id, pregunta.RespuestaCorrecta, pregunta.RespuestaIncorrecta1, pregunta.RespuestaIncorrecta2, pregunta.RespuestaIncorrecta3 });
+                cont++;
+                dt.Rows.Add(new object[] { cont,pregunta.Id, pregunta.RespuestaCorrecta, pregunta.RespuestaIncorrecta1, pregunta.RespuestaIncorrecta2, pregunta.RespuestaIncorrecta3, pregunta.Categoria.Id});
             }
 
             dataGridView1.DataSource = dt;

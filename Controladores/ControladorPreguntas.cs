@@ -106,7 +106,7 @@ namespace Trabajo_Integrador.Controladores
                 Bitacora.GuardarLog(ex.Message.ToString());
             }
         }
-     
+
 
 
         /// <summary>
@@ -117,7 +117,7 @@ namespace Trabajo_Integrador.Controladores
         /// <param name="pCategoria"></param>
         /// <param name="pDificultad"></param>
         /// <returns></returns>
-        public void GetPreguntasOnline(string pCantidad,string pConjunto, string pCategoria, string pDificultad)
+        public void GetPreguntasOnline(string pCantidad, string pConjunto, string pCategoria, string pDificultad)
         {
             try
             {
@@ -135,7 +135,7 @@ namespace Trabajo_Integrador.Controladores
             }
             catch (NotImplementedException ex)
             {
-                Bitacora.GuardarLog("ControladorPreguntas.GetPreguntasOnline: "+ex.Message);
+                Bitacora.GuardarLog("ControladorPreguntas.GetPreguntasOnline: " + ex.Message);
             }
 
         }
@@ -149,13 +149,13 @@ namespace Trabajo_Integrador.Controladores
 
 
 
-       
 
 
 
-        
 
-        
+
+
+
 
 
 
@@ -167,21 +167,21 @@ namespace Trabajo_Integrador.Controladores
         /// <param name="pCategoria"></param>
         /// <param name="pDificultad"></param>
         /// <returns></returns>
-        public List<Pregunta> GetPreguntasRandom(string pCantidad,string pConjunto, string pCategoria, string pDificultad)
+        public List<Pregunta> GetPreguntasRandom(string pCantidad, string pConjunto, string pCategoria, string pDificultad)
         {
             List<Pregunta> preguntas = new List<Pregunta>();
-           
-                using (var db = new TrabajoDbContext())
+
+            using (var db = new TrabajoDbContext())
+            {
+                using (var UoW = new UnitOfWork(db))
                 {
-                    using (var UoW = new UnitOfWork(db))
-                    {
-                        preguntas = (List<Pregunta>)UoW.RepositorioPreguntas.GetRandom(pCantidad, pConjunto, pCategoria, pDificultad);
-                    }
+                    preguntas = (List<Pregunta>)UoW.RepositorioPreguntas.GetRandom(pCantidad, pConjunto, pCategoria, pDificultad);
                 }
-            
-            
-               
-            
+            }
+
+
+
+
             return preguntas;
         }
 
@@ -241,6 +241,36 @@ namespace Trabajo_Integrador.Controladores
             }
             return ADevolver;
         }
+    
+
+
+        /// <summary>
+        /// Devuelve la cantidad de preguntas que tiene una categoria
+        /// </summary>
+        /// <param name="pIdCateoria">El id de la categoria</param>
+        /// <returns></returns>
+        public int CantidadDePreguntasParaCategoria(String pIdCateoria)
+        {
+            int aRetornar = 0;
+            try
+            {
+                using (var db = new TrabajoDbContext())
+                {
+                    using (var UoW = new UnitOfWork(db))
+                    {
+                       aRetornar = db.Preguntas.Where(pre => (pre.Categoria.Id == pIdCateoria)).Count();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Bitacora.GuardarLog("ControladorPreguntas.CantidadDePreguntasParaCategoria" + ex.ToString());
+            }
+            return aRetornar;
+
+        }
+    
+
 
 
         /// <summary>
