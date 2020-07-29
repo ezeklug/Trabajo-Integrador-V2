@@ -133,6 +133,29 @@ namespace Trabajo_Integrador.Controladores
 
 
         /// <summary>
+        /// Devuelve todos los logs
+        /// </summary>
+        /// <returns></returns>
+        public List<Log> getLogs()
+        {
+            List<Log> logs = null;
+            try
+            {
+                using (var db = new TrabajoDbContext())
+                {
+                    using (var UoW = new UnitOfWork(db))
+                    {
+                        logs = db.Logs.ToList();
+                    }
+                }
+            }
+            catch (Exception ex) {
+                Bitacora.GuardarLog("ControladorAdministrativo.getLogs "+ex.Message.ToString());
+            }
+            return logs;
+        }
+
+        /// <summary>
         /// Setea un usuario como no administrador
         /// </summary>
         /// <param name="pUsuario">Id del usuario</param>
