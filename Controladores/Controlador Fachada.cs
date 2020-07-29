@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using Trabajo_Integrador.Dominio;
@@ -197,10 +198,13 @@ namespace Trabajo_Integrador.Controladores
                 using (var UoW = new UnitOfWork(db))
                 {
                     Usuario usrDb = UoW.RepositorioUsuarios.Get(pNombreUsuario);
-                    Console.Write(usrDb);
-                    if (usrDb.Id == pNombreUsuario)
+                    if (usrDb != null)
                     {
-                        return true;
+                        if (usrDb.Id == pNombreUsuario)
+                        {
+                            return true;
+                        }
+                        else return false;
                     }
                     else return false;
                 }
