@@ -208,6 +208,43 @@ namespace Trabajo_Integrador.Controladores
             }
             return listaCategoria;
         }
+
+        /// <summary>
+        /// Devuelve todas las categorias que tengan mas (o igual) de N preguntas
+        /// </summary>
+        /// <returns>Lista de categorias</returns>
+        public List<CategoriaPregunta> GetCategoriasConMasDeNPreguntas(int n)
+        {
+            List<CategoriaPregunta> listaCategoria = new List<CategoriaPregunta>();
+            List<CategoriaPregunta> ADevolver = new List<CategoriaPregunta>();
+            try
+            {
+                using (var db = new TrabajoDbContext())
+                {
+                    using (var UoW = new UnitOfWork(db))
+                    {
+                        Console.WriteLine("ENtro en el try");
+                        listaCategoria = (List<CategoriaPregunta>)UoW.RepositorioCategorias.GetAll();
+                        foreach (CategoriaPregunta cat in listaCategoria)
+                        {
+                            List<Pregunta> preguntas = db.Preguntas.Where(pre => (pre.Categoria.Id == cat.Id)).ToList();
+                            if (preguntas.Count >= n)
+                            {
+                                ADevolver.Add(cat);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.Write("Entro en el catch: "+ex.ToString());
+                Bitacora.GuardarLog("ControladorPreguntas.GetCategoriasConMasDeNPreguntas" + ex.ToString());
+            }
+            return ADevolver;
+        }
+
+
         /// <summary>
         /// Metodo que devuelve todas los conjuntos de preguntas cargados en base de datos
         /// </summary>
