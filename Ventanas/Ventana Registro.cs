@@ -13,8 +13,7 @@ namespace Trabajo_Integrador.Ventanas
 {
     public partial class Ventana_Registro : Form
     {
-        string usuarioNombre;
-        string contrasenia;
+     
         ControladorFachada fachada = new ControladorFachada();
 
         public Ventana_Registro()
@@ -32,7 +31,8 @@ namespace Trabajo_Integrador.Ventanas
 
         private void Registrar_Click(object sender, EventArgs e)
         {
-            if (nuevoUsuario.Text.Trim() == string.Empty)
+            string usuarioNombre = nuevoUsuario.Text.Trim();
+            if (usuarioNombre == string.Empty)
             {
                 errorProvider2.SetError(nuevoUsuario, "Debe ingresar un usuario");
                 nuevoUsuario.Focus();
@@ -49,15 +49,15 @@ namespace Trabajo_Integrador.Ventanas
 
                 else
                 {
-                    if ((nuevaContrasenia != null) && (nuevaContrasenia2 != null) && (nuevaContrasenia != nuevaContrasenia2))
+                    if ((nuevaContrasenia.Text.Trim() != null) && (nuevaContrasenia2.Text.Trim() != null) && (nuevaContrasenia.Text.Trim() != nuevaContrasenia2.Text.Trim()))
                     {
                         errorProvider1.SetError(nuevaContrasenia, "Las contraseñas ingresadas no coinciden");
                         nuevaContrasenia.Focus();
                     }
                     else
                     {
-                        fachada.GuardarUsuario(nuevoUsuario.Text.Trim(), nuevaContrasenia.Text.Trim());
-                        MessageBox.Show("Usuaurio registrado correctamente");
+                        fachada.GuardarUsuario(usuarioNombre, nuevaContrasenia.Text.Trim());
+                        MessageBox.Show("Usuario registrado correctamente");
                         this.Hide();
                         Ventana_Inicio vInicio = new Ventana_Inicio();
                         vInicio.ShowDialog();
@@ -72,5 +72,9 @@ namespace Trabajo_Integrador.Ventanas
 
         }
 
+        private void Ventana_Registro_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

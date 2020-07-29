@@ -170,6 +170,7 @@
             this.Controls.Add(this.label1);
             this.Name = "Ventana_Registro";
             this.Text = "Examen Virtual";
+            this.Load += new System.EventHandler(this.Ventana_Registro_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider2)).EndInit();
