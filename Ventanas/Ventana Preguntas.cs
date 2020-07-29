@@ -84,7 +84,7 @@ namespace Trabajo_Integrador.Ventanas
             List<Pregunta> listaPreguntas = iExamen.getPreguntas();
             mostrarPregunta(listaPreguntas[numeroPregunta]);
 
-            this.CantidadPreguntas.Text ="Pregunta: " + numeroPregunta.ToString() + "/" + iExamen.CantidadPreguntas.ToString();
+            this.CantidadPreguntas.Text ="Pregunta: " + numeroPregunta.ToString() + "/" + (iExamen.CantidadPreguntas-1).ToString();
 
             return listaPreguntas[numeroPregunta];
 
