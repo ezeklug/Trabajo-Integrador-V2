@@ -85,6 +85,7 @@ namespace Trabajo_Integrador.Controladores
         /// 
         public Examen InicializarExamen(int pCantidad, String pConjunto, string pCategoria, string pDificultad)
         {
+            /*
             ConjuntoPreguntas conjunto;
             CategoriaPregunta categoria;
             Dificultad dificultad;
@@ -98,8 +99,8 @@ namespace Trabajo_Integrador.Controladores
                     dificultad = UoW.RepositorioDificultades.Get(pDificultad);
                 }
             }
-
-             return controladorExamen.InicializarExamen(pCantidad.ToString(), conjunto.Id, categoria.Id, dificultad.Id);
+            */
+             return controladorExamen.InicializarExamen(pCantidad.ToString(), pConjunto, pCategoria, pDificultad);
         }
 
 

@@ -52,6 +52,7 @@ namespace Trabajo_Integrador.Ventanas
                 listaCategorias.Add(categoria.Id);
             }
 
+            categoria.Items.Add("Random");
             for (int i = 0; i < listaCategorias.Count; i++)
             {
                 categoria.Items.Add(listaCategorias[i]);
@@ -69,7 +70,7 @@ namespace Trabajo_Integrador.Ventanas
             {
                 listaDificultades.Add(dificultad.Id);
             }
-
+            dificultad.Items.Add("Random");
             for (int i = 0; i < listaDificultades.Count; i++)
             {
                 dificultad.Items.Add(listaDificultades[i]);
@@ -114,8 +115,10 @@ namespace Trabajo_Integrador.Ventanas
 
 
             string categoriaSeleccionada = categoria.SelectedItem.ToString(); //Asigno el valor ingresado a clase Categoria
+            if (categoriaSeleccionada == "Random") categoriaSeleccionada = "0";
 
             string dificultadSeleccionada = dificultad.SelectedItem.ToString(); //Asigno el valor ingresado a clase Dificultad
+            if (dificultadSeleccionada == "Random") dificultadSeleccionada = "0";
 
             string conjuntoSeleccionado = conjunto.SelectedItem.ToString(); //Asigno el valor ingresado a clase Dificultad
 
@@ -127,13 +130,12 @@ namespace Trabajo_Integrador.Ventanas
             {
                 categorias.Add(cat.Id);
             }
-
-
+            
             if (!(categorias.Contains(categoriaSeleccionada)))
             {
                 int n = 10; //// Cantidad de preguntas de tal categoria. TODO
                 MessageBoxButtons mensaje = MessageBoxButtons.YesNo;
-                DialogResult result = MessageBox.Show($"Solo hay {n} preguntas de { categoriaSeleccionada}.Quiere hacer el examen aunque no haya la cantidad de preguntas seleccionadas?", "Advertencia", mensaje);
+                DialogResult result = MessageBox.Show($"Solo hay {n} preguntas de { categoriaSeleccionada}. Quiere hacer el examen aunque no haya la cantidad de preguntas seleccionadas?", "Advertencia", mensaje);
 
                 if (result == DialogResult.Yes)
                 {
