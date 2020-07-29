@@ -131,9 +131,9 @@ namespace Trabajo_Integrador.Ventanas
                 categorias.Add(cat.Id);
             }
             
-            if (!(categorias.Contains(categoriaSeleccionada)))
+            if (!(categorias.Contains(categoriaSeleccionada)) && (categoriaSeleccionada != "0"))
             {
-                int n = 10; //// Cantidad de preguntas de tal categoria. TODO
+                int n = fachada.CantidadDePreguntasParaCategoria(categoriaSeleccionada);
                 MessageBoxButtons mensaje = MessageBoxButtons.YesNo;
                 DialogResult result = MessageBox.Show($"Solo hay {n} preguntas de { categoriaSeleccionada}. Quiere hacer el examen aunque no haya la cantidad de preguntas seleccionadas?", "Advertencia", mensaje);
 

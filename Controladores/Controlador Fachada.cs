@@ -73,6 +73,15 @@ namespace Trabajo_Integrador.Controladores
         }
 
 
+        /// <summary>
+        /// Devuelve la cantidad de preguntas que pertecenientes a una categoria
+        /// </summary>
+        /// <param name="pIdCategoria">Id de la categoria</param>
+        /// <returns>Cantidad</returns>
+        public int CantidadDePreguntasParaCategoria(String pIdCategoria)
+        {
+            return controladorPreguntas.CantidadDePreguntasParaCategoria(pIdCategoria);
+        }
 
         /// <summary>
         /// Metodo que crea un examen sin asociarlo a un usuario
