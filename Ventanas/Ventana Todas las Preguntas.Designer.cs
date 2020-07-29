@@ -39,7 +39,7 @@
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Location = new System.Drawing.Point(48, 58);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(662, 353);
+            this.dataGridView1.Size = new System.Drawing.Size(752, 357);
             this.dataGridView1.TabIndex = 0;
             // 
             // label1
@@ -57,7 +57,7 @@
             this.volver.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
             this.volver.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.volver.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.volver.Location = new System.Drawing.Point(713, 404);
+            this.volver.Location = new System.Drawing.Point(806, 410);
             this.volver.Name = "volver";
             this.volver.Size = new System.Drawing.Size(75, 34);
             this.volver.TabIndex = 2;
@@ -65,16 +65,16 @@
             this.volver.UseVisualStyleBackColor = false;
             this.volver.Click += new System.EventHandler(this.button1_Click);
             // 
-            // Todas_las_Preguntas
+            // Ventana_Todas_las_Preguntas
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(917, 456);
             this.Controls.Add(this.volver);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.dataGridView1);
-            this.Name = "Todas_las_Preguntas";
+            this.Name = "Ventana_Todas_las_Preguntas";
             this.Text = "Preguntas";
             this.Load += new System.EventHandler(this.Todas_las_Preguntas_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();

@@ -44,7 +44,7 @@ namespace Trabajo_Integrador.Controladores
             {
                 using (var UoW = new UnitOfWork(db))
                 {
-                    listaPreguntas = (List<Pregunta>)UoW.RepositorioPreguntas.GetAll();
+                    listaPreguntas = db.Preguntas.Include("Categoria").ToList();
                 }
             }
 
