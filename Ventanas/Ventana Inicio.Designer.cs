@@ -62,7 +62,7 @@
             this.label2.Location = new System.Drawing.Point(198, 202);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(100, 25);
-            this.label2.TabIndex = 2;
+            this.label2.TabIndex = 1;
             this.label2.Text = "Usuario:";
             // 
             // usuario
@@ -70,7 +70,7 @@
             this.usuario.Location = new System.Drawing.Point(304, 207);
             this.usuario.Name = "usuario";
             this.usuario.Size = new System.Drawing.Size(190, 20);
-            this.usuario.TabIndex = 3;
+            this.usuario.TabIndex = 2;
             // 
             // btnIngresar
             // 
@@ -113,7 +113,7 @@
             this.contrasenia.Location = new System.Drawing.Point(304, 249);
             this.contrasenia.Name = "contrasenia";
             this.contrasenia.Size = new System.Drawing.Size(190, 20);
-            this.contrasenia.TabIndex = 7;
+            this.contrasenia.TabIndex = 3;
             this.contrasenia.UseSystemPasswordChar = true;
             // 
             // errorProvider1
@@ -123,7 +123,7 @@
             // pictureBox1
             // 
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(34, 0);
+            this.pictureBox1.Location = new System.Drawing.Point(21, 12);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(121, 126);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -141,10 +141,11 @@
             this.crearUsuario.Text = "Registrarme";
             this.crearUsuario.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.crearUsuario_LinkClicked);
             // 
-            // Inicio
+            // Ventana_Inicio
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoSize = true;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
             this.ClientSize = new System.Drawing.Size(683, 450);
             this.Controls.Add(this.crearUsuario);
@@ -156,7 +157,7 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.label1);
-            this.Name = "Inicio";
+            this.Name = "Ventana_Inicio";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Examen Virtual";
             this.Load += new System.EventHandler(this.Inicio_Load);
