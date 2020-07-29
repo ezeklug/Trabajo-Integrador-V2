@@ -90,6 +90,8 @@ namespace Trabajo_Integrador.Controladores
         {
             return iControladorPreguntas.GetDificultades();
         }
+       
+        
         /// <summary>
         /// Metodo que modifica el tiempo esperado por respuesta de un conjunto pasado como parametro.
         /// </summary>
@@ -102,7 +104,7 @@ namespace Trabajo_Integrador.Controladores
                 using (var UoW = new UnitOfWork(db))
                 {
                     ConjuntoPreguntas conjunto = UoW.RepositorioConjuntoPregunta.Get(pConjuntoPreguntas);
-                    conjunto.Id = pConjuntoPreguntas;
+                    conjunto.TiempoEsperadoRespuesta = pTiempo;
                     UoW.Complete();
                 }
             }
