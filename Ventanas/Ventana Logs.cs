@@ -35,6 +35,7 @@ namespace Trabajo_Integrador.Ventanas
             {
               dt.Rows.Add(new object[] { log.Id, log.Fecha, log.Descripcion});
             }
+            dataGridView1.DataSource = dt;
         }
 
         private void volver_Click(object sender, EventArgs e)
