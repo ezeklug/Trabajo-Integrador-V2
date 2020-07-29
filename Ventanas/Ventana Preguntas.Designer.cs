@@ -38,6 +38,7 @@
             this.siguiente = new System.Windows.Forms.Button();
             this.time = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.CantidadPreguntas = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -119,9 +120,8 @@
             this.time.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.time.Location = new System.Drawing.Point(535, 20);
             this.time.Name = "time";
-            this.time.Size = new System.Drawing.Size(69, 16);
+            this.time.Size = new System.Drawing.Size(0, 16);
             this.time.TabIndex = 6;
-            this.time.Text = "Tiempo: ";
             // 
             // groupBox1
             // 
@@ -136,16 +136,26 @@
             this.groupBox1.TabIndex = 7;
             this.groupBox1.TabStop = false;
             // 
-            // VPreguntas
+            // CantidadPreguntas
+            // 
+            this.CantidadPreguntas.AutoSize = true;
+            this.CantidadPreguntas.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.CantidadPreguntas.Location = new System.Drawing.Point(9, 9);
+            this.CantidadPreguntas.Name = "CantidadPreguntas";
+            this.CantidadPreguntas.Size = new System.Drawing.Size(0, 16);
+            this.CantidadPreguntas.TabIndex = 8;
+            // 
+            // Ventana_Preguntas
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.CantidadPreguntas);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.time);
             this.Controls.Add(this.preg);
-            this.Name = "VPreguntas";
+            this.Name = "Ventana_Preguntas";
             this.Text = "Pregunta";
             this.Load += new System.EventHandler(this.VPreguntas_Load);
             this.groupBox1.ResumeLayout(false);
@@ -166,5 +176,6 @@
         private System.Windows.Forms.Button siguiente;
         private System.Windows.Forms.Label time;
         private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Label CantidadPreguntas;
     }
 }
