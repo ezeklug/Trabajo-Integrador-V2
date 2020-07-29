@@ -223,7 +223,6 @@ namespace Trabajo_Integrador.Controladores
                 {
                     using (var UoW = new UnitOfWork(db))
                     {
-                        Console.WriteLine("ENtro en el try");
                         listaCategoria = (List<CategoriaPregunta>)UoW.RepositorioCategorias.GetAll();
                         foreach (CategoriaPregunta cat in listaCategoria)
                         {
@@ -238,7 +237,6 @@ namespace Trabajo_Integrador.Controladores
             }
             catch (Exception ex)
             {
-                Console.Write("Entro en el catch: "+ex.ToString());
                 Bitacora.GuardarLog("ControladorPreguntas.GetCategoriasConMasDeNPreguntas" + ex.ToString());
             }
             return ADevolver;
