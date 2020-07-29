@@ -55,9 +55,7 @@ namespace Trabajo_Integrador.Ventanas
             opcionB.Text += listaDesordenada[1]; //Muestro la opcion B
             opcionC.Text += listaDesordenada[2]; //Muestro la opcion C
             opcionD.Text += listaDesordenada[3]; //Muestro la opcion D
-
-            
-
+              
         }
 
         public string RecogerOpcion() //Devuelve cual fue la opcion Seleccionada
@@ -86,6 +84,7 @@ namespace Trabajo_Integrador.Ventanas
             List<Pregunta> listaPreguntas = iExamen.getPreguntas();
             mostrarPregunta(listaPreguntas[numeroPregunta]);
 
+            this.CantidadPreguntas.Text ="Pregunta" + numeroPregunta.ToString() + "/" + iExamen.CantidadPreguntas.ToString();
 
             return listaPreguntas[numeroPregunta];
 
@@ -190,7 +189,6 @@ namespace Trabajo_Integrador.Ventanas
             
         }
 
-      
     }
 
 
