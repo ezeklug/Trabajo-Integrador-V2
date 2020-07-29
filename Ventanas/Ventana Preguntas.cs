@@ -74,10 +74,7 @@ namespace Trabajo_Integrador.Ventanas
                 if (opcionD.Checked == true) { respuesta= opcionD.Text;
                 opcionD.Checked = false;  }
             Console.WriteLine(respuesta);
-
-           // siguiente.Enabled = ObtenerEstadoBotonSiguiente();
-
-          
+                                 
 
             return respuesta;
             
@@ -111,9 +108,7 @@ namespace Trabajo_Integrador.Ventanas
         }
         
         private void timer_Tick(object sender, EventArgs e) //Tiempo agotado
-        {
-           
-            
+        {        
             if (tiempo>0)
             {
                 tiempo--;
@@ -128,9 +123,7 @@ namespace Trabajo_Integrador.Ventanas
                     finalizado.ShowDialog();
                 this.Close();
             }
-            
-            
-            
+                     
         }
 
         private Boolean ObtenerEstadoBotonSiguiente()
@@ -147,39 +140,44 @@ namespace Trabajo_Integrador.Ventanas
 
         private void siguiente_Click(object sender, EventArgs e)
         {
-            string opcion = RecogerOpcion();
-            LimpiaControles();
-            fachada.RespuestaCorrecta(iExamen, obtienePregunta(iNumeroPregunta), opcion);
-            Console.WriteLine(obtienePregunta(iNumeroPregunta).Id);
-            Console.WriteLine(opcion);
-            Console.WriteLine(obtienePregunta(iNumeroPregunta).RespuestaCorrecta);
-
-            // Limpia todos los controles
-
-            //siguiente.Enabled = ObtenerEstadoBotonSiguiente();
-
-            // Cambia el estado del boton siguiente
-            
-            LimpiaControles();
-
-            // incrementa contador numero pregunta
-
-            iNumeroPregunta++;
-
-            if (iNumeroPregunta >= iExamen.CantidadPreguntas) 
+            if (ObtenerEstadoBotonSiguiente())
             {
-                this.Hide();
-                fachada.FinalizarExamen(iExamen);
-                Ventana_Examen_Terminado finalizado = new Ventana_Examen_Terminado(iExamen);
-                finalizado.ShowDialog();
-                this.Close();
-                
+                string opcion = RecogerOpcion();
+                LimpiaControles();
+                fachada.RespuestaCorrecta(iExamen, obtienePregunta(iNumeroPregunta), opcion);
+                Console.WriteLine(obtienePregunta(iNumeroPregunta).Id);
+                Console.WriteLine(opcion);
+                Console.WriteLine(obtienePregunta(iNumeroPregunta).RespuestaCorrecta);
+
+
+
+                LimpiaControles(); // Limpia todos los controles
+
+                iNumeroPregunta++;
+
+                if (iNumeroPregunta >= iExamen.CantidadPreguntas)
+                {
+                    this.Hide();
+                    fachada.FinalizarExamen(iExamen);
+                    Ventana_Examen_Terminado finalizado = new Ventana_Examen_Terminado(iExamen);
+                    finalizado.ShowDialog();
+                    this.Close();
+
+                }
+                else
+                {
+                    obtienePregunta(iNumeroPregunta);
+                }
+
             }
             else
             {
-                obtienePregunta(iNumeroPregunta);
+                MessageBox.Show("Debe seleccionar una resupuesta");
             }
-            
+
+           
+
+           
            
         }
               
