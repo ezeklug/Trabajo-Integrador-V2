@@ -30,29 +30,36 @@ namespace Trabajo_Integrador.Ventanas
 
         private void btnIngresar_Click(object sender, EventArgs e)
         {
-            Boolean esAcepatado = controlBoton();
-            if (esAcepatado == true) 
+            try
             {
-                if (esAdministrador(usuario.Text) == true)
+                Boolean esAcepatado = controlBoton();
+                if (esAcepatado == true)
                 {
-                    this.Hide();
+                    if (esAdministrador(usuario.Text) == true)
+                    {
+                        this.Hide();
 
-                    Ventana_Principal_Admi ppal_admin = new Ventana_Principal_Admi(usuario.Text);
-                    ppal_admin.ShowDialog();
-                    this.Close();
+                        Ventana_Principal_Admi ppal_admin = new Ventana_Principal_Admi(usuario.Text);
+                        ppal_admin.ShowDialog();
+                        this.Close();
+                    }
+                    else
+                    {
+                        this.Hide();
+                        Ventana_Principal ppal = new Ventana_Principal(usuario.Text); //Le paso el usuario para que aparezca en la proxima ventana
+
+                        ppal.ShowDialog();
+                        this.Close();
+                    }
                 }
                 else
                 {
-                    this.Hide();
-                    Ventana_Principal ppal = new Ventana_Principal(usuario.Text); //Le paso el usuario para que aparezca en la proxima ventana
-                    
-                    ppal.ShowDialog();
-                    this.Close();
+                    errorProvider1.SetError(usuario, "El usuario y/o contraseña son incorrectos"); //Cartel de Error }
                 }
             }
-            else
+            catch (Exception ex)
             {
-                errorProvider1.SetError(usuario, "El usuario y/o contraseña son incorrectos"); //Cartel de Error }
+                MessageBox.Show("No hay conexión");
             }
         }
 
