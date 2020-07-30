@@ -175,6 +175,12 @@
     <Compile Include="Ventanas\Ventana Inicio.Designer.cs">
       <DependentUpon>Ventana Inicio.cs</DependentUpon>
     </Compile>
+    <Compile Include="Ventanas\Ventana Logs.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Ventanas\Ventana Logs.Designer.cs">
+      <DependentUpon>Ventana Logs.cs</DependentUpon>
+    </Compile>
     <Compile Include="Ventanas\Ventana Set Administrador.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -291,6 +297,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Ventanas\Ventana Inicio.resx">
       <DependentUpon>Ventana Inicio.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Ventanas\Ventana Logs.resx">
+      <DependentUpon>Ventana Logs.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Ventanas\Ventana Registro.resx">
       <DependentUpon>Ventana Registro.cs</DependentUpon>

@@ -35,6 +35,7 @@
             this.setAdministrador = new System.Windows.Forms.Button();
             this.verPreguntas = new System.Windows.Forms.Button();
             this.volver = new System.Windows.Forms.Button();
+            this.monitoreoBitacora = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // listaUsuarios
@@ -121,12 +122,25 @@
             this.volver.UseVisualStyleBackColor = false;
             this.volver.Click += new System.EventHandler(this.volver_Click_1);
             // 
+            // monitoreoBitacora
+            // 
+            this.monitoreoBitacora.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+            this.monitoreoBitacora.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.monitoreoBitacora.Location = new System.Drawing.Point(343, 382);
+            this.monitoreoBitacora.Name = "monitoreoBitacora";
+            this.monitoreoBitacora.Size = new System.Drawing.Size(106, 50);
+            this.monitoreoBitacora.TabIndex = 10;
+            this.monitoreoBitacora.Text = "Bitacora Monitoreo";
+            this.monitoreoBitacora.UseVisualStyleBackColor = false;
+            this.monitoreoBitacora.Click += new System.EventHandler(this.monitoreoBitacora_Click);
+            // 
             // Ventana_Opciones
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
             this.ClientSize = new System.Drawing.Size(800, 474);
+            this.Controls.Add(this.monitoreoBitacora);
             this.Controls.Add(this.volver);
             this.Controls.Add(this.verPreguntas);
             this.Controls.Add(this.setAdministrador);
@@ -149,5 +163,6 @@
         private System.Windows.Forms.Button setAdministrador;
         private System.Windows.Forms.Button verPreguntas;
         private System.Windows.Forms.Button volver;
+        private System.Windows.Forms.Button monitoreoBitacora;
     }
 }

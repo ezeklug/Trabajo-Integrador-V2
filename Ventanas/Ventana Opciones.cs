@@ -84,5 +84,13 @@ namespace Trabajo_Integrador.Ventanas
             this.Close();
 
         }
+
+        private void monitoreoBitacora_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            Ventana_Logs vLogs = new Ventana_Logs(iNombreUsuario);
+            vLogs.ShowDialog();
+            this.Close();
+        }
     }
 }

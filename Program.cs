@@ -6,33 +6,21 @@ using System.Windows.Forms;
 using Trabajo_Integrador.Controladores;
 using Trabajo_Integrador.Dominio;
 using Trabajo_Integrador.Ventanas;
-using System.Runtime.InteropServices;
 
 
 namespace Trabajo_Integrador
 {
     static class Program
     {
-
-
-
-
         /// <summary>
         /// Ponto de entrada principal para o aplicativo.
         /// </summary>
         [STAThread]
         static void Main()
         {
-
-
-
-            ///Esto e sun comentario de prueba
-            ///Esto es otra linea de un comentario de prueba 
-
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Ventana_Inicio());
-            
         }
     }
 }
