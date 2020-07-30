@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Security.Cryptography;
+using Trabajo_Integrador.Utils;
+
 namespace Trabajo_Integrador.Dominio
 {
     /// <summary>
