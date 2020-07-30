@@ -90,8 +90,8 @@ namespace Trabajo_Integrador.Controladores
         {
             return iControladorPreguntas.GetDificultades();
         }
-       
-        
+
+
         /// <summary>
         /// Metodo que modifica el tiempo esperado por respuesta de un conjunto pasado como parametro.
         /// </summary>
@@ -129,6 +129,27 @@ namespace Trabajo_Integrador.Controladores
             }
 
         }
+
+
+
+        /// <summary>
+        /// Setea un usuario como no administrador
+        /// </summary>
+        /// <param name="pUsuario">Id del usuario</param>
+        public void SetNoAdministrador(string pUsuario)
+        {
+            using (var db = new TrabajoDbContext())
+            {
+                using (var UoW = new UnitOfWork(db))
+                {
+                    Usuario dBUsuario = UoW.RepositorioUsuarios.Get(pUsuario);
+                    dBUsuario.Administrador = false;
+                    UoW.Complete();
+                }
+            }
+        }
+
+
 
         /// <summary>
         /// Metodo que Agrega un usuario en la BD si este no existe.
