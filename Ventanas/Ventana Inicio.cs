@@ -57,7 +57,7 @@ namespace Trabajo_Integrador.Ventanas
                     errorProvider1.SetError(usuario, "El usuario y/o contraseña son incorrectos"); //Cartel de Error }
                 }
             }
-            catch (Exception ex)
+            catch (System.Data.Entity.Core.ProviderIncompatibleException ex)
             {
                 MessageBox.Show("No hay conexión");
             }
