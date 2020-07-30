@@ -67,12 +67,27 @@ namespace Trabajo_Integrador.Ventanas
 
         private void modificar_Click_1(object sender, EventArgs e)
         {
-
-            string conjuntoSeleccionado = ListaConjuntos.SelectedItem.ToString();
-            string i =tiempo.SelectedText.ToString();
-            float tiempoIngresado = float.Parse(tiempo.Text);
-            fachada.ModificarTiempo(conjuntoSeleccionado, tiempoIngresado);
-            MessageBox.Show("Tiempo modificado con Exito");
+            if (ListaConjuntos.SelectedItem == null)
+            {
+                MessageBox.Show("Debe seleccionar un conjunto");
+            }
+            else
+            {
+                int control = 0;
+                string conjuntoSeleccionado = ListaConjuntos.SelectedItem.ToString();
+                if ((int.TryParse(tiempo.SelectedText, out control)) || (tiempo.SelectedText==null))
+                {
+                    string i = tiempo.SelectedText.ToString();
+                    float tiempoIngresado = float.Parse(tiempo.Text);
+                    fachada.ModificarTiempo(conjuntoSeleccionado, tiempoIngresado);
+                    MessageBox.Show("Tiempo modificado con Exito");
+                }
+                else
+                {
+                    MessageBox.Show("Debe ingresar números");
+                }
+            }
+            
         }
 
        
