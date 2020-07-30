@@ -124,11 +124,11 @@
     <Compile Include="Dominio\Examen.cs" />
     <Compile Include="Dominio\Dificultad.cs" />
     <Compile Include="EntityFramework\UnitOfWork.cs" />
-    <Compile Include="EstrategiaNula.cs" />
-    <Compile Include="EstrategiaObtenerPreguntas.cs" />
-    <Compile Include="IEstrategiaObtenerPreguntas.cs" />
-    <Compile Include="Bitacora.cs" />
-    <Compile Include="Log.cs" />
+    <Compile Include="Controladores\EstrategiaNula.cs" />
+    <Compile Include="Controladores\EstrategiaObtenerPreguntas.cs" />
+    <Compile Include="Controladores\IEstrategiaObtenerPreguntas.cs" />
+    <Compile Include="Controladores\Bitacora.cs" />
+    <Compile Include="Controladores\Log.cs" />
     <Compile Include="Migrations\202002092213292_Inital.cs" />
     <Compile Include="Migrations\202002092213292_Inital.designer.cs">
       <DependentUpon>202002092213292_Inital.cs</DependentUpon>
@@ -146,9 +146,9 @@
       <DependentUpon>202002171343047_NuevaLogica3.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="OpentDB.cs" />
+    <Compile Include="Controladores\OpentDB.cs" />
     <Compile Include="Dominio\Pregunta.cs" />
-    <Compile Include="PasswordHasher.cs" />
+    <Compile Include="Utils\PasswordHasher.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Controladores\ControladorPreguntas.cs" />

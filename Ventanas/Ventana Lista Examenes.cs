@@ -40,7 +40,7 @@ namespace Trabajo_Integrador.Ventanas
             DataTable dt = new DataTable();
             dt.Columns.Add("Usuario", typeof(string));
             dt.Columns.Add("Fecha", typeof(DateTime));
-            dt.Columns.Add("Puntaje", typeof(int));
+            dt.Columns.Add("Puntaje", typeof(float));
             dt.Columns.Add("Tiempo", typeof(float));
 
             foreach (Examen examen in listaExamenes)
@@ -49,6 +49,11 @@ namespace Trabajo_Integrador.Ventanas
             }
 
             dataGridView1.DataSource = dt;
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 }
