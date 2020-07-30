@@ -12,9 +12,9 @@ Proyecto realizado para la cátedra Taller de Programación de Ingeniería en Si
   
 
 # Un poco de info
-- El proyecto fue realizado en C# utilizando Entity Framework(v 6.4.0) con NPSQL(v 6.4.1) para acceder a la base de datos. 
+- El proyecto fue realizado en C# utilizando Entity Framework(v 6.4.0) con NPGSQL(v 6.4.1) para acceder a la base de datos. 
 - Para estar sincronizados, uno de nosotros tiene una computadora en su casa con una base de datos PostgreSQL a la cual accede el programa.
-- La arquitectura que usamos fue MVC; una capa para el accedo a los datos, otra capa de controladores y otra capa para interfaz con el usuario.
+- La arquitectura que usamos fue MVC; una capa para el acceso a los datos, otra capa de controladores y otra capa para interfaz con el usuario.
 
 # Para probar el programa
 - Compilacion / Ejecución
