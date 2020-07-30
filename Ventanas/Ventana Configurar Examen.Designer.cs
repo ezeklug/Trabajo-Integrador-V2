@@ -143,7 +143,7 @@
             0,
             0,
             0});
-            this.cantidadPreguntas.ValueChanged += new System.EventHandler(this.cantidadPreguntas_ValueChanged);
+            
             // 
             // label4
             // 

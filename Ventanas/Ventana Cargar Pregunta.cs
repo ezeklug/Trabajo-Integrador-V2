@@ -100,19 +100,26 @@ namespace Trabajo_Integrador.Ventanas
 
         private void cargarPreguntas_Click(object sender, EventArgs e)
         {
-            string categoriaSeleccionada = categoria.SelectedItem.ToString(); //Asigno el valor ingresado a clase Categoria
+           
 
-               string dificultadSeleccionada = dificultad.SelectedItem.ToString(); //Asigno el valor ingresado a clase Dificultad
+            if ((categoria.SelectedItem == null) || (dificultad.SelectedItem == null) || (conjunto.SelectedItem == null) || (cantidad.Value == null))
+            {
+                MessageBox.Show("Debe completar todos los campos para iniciar el examen");
+            }
+            else
+            {
+                string categoriaSeleccionada = categoria.SelectedItem.ToString(); //Asigno el valor ingresado a clase Categoria
+
+                string dificultadSeleccionada = dificultad.SelectedItem.ToString(); //Asigno el valor ingresado a clase Dificultad
 
                 string conjuntoSeleccionado = conjunto.SelectedItem.ToString(); //Asigno el valor ingresado a clase Dificultad
 
                 string cantidadSeleccionada = cantidad.Value.ToString();
 
-
-
-               int cargadas =  fachada.GetPreguntasOnline(cantidadSeleccionada, conjuntoSeleccionado, categoriaSeleccionada, dificultadSeleccionada);
+                int cargadas = fachada.GetPreguntasOnline(cantidadSeleccionada, conjuntoSeleccionado, categoriaSeleccionada, dificultadSeleccionada);
 
                 MessageBox.Show($"Se cargaron exitosamente {cargadas} preguntas");
+            }
         }
     }
 }

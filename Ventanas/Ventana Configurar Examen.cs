@@ -113,33 +113,52 @@ namespace Trabajo_Integrador.Ventanas
         private void btnComenzarExamen_Click(object sender, EventArgs e)
         {
 
-
-            string categoriaSeleccionada = categoria.SelectedItem.ToString(); //Asigno el valor ingresado a clase Categoria
-            if (categoriaSeleccionada == "Random") categoriaSeleccionada = "0";
-
-            string dificultadSeleccionada = dificultad.SelectedItem.ToString(); //Asigno el valor ingresado a clase Dificultad
-            if (dificultadSeleccionada == "Random") dificultadSeleccionada = "0";
-
-            string conjuntoSeleccionado = conjunto.SelectedItem.ToString(); //Asigno el valor ingresado a clase Dificultad
-
-            int cantidadSeleccionada = Convert.ToInt32(cantidadPreguntas.Value); //Cantidad de preguntas a responder     
-
-
-            List<String> categorias = new List<string>();
-            foreach (CategoriaPregunta cat in fachada.GetCategoriaPreguntasConNPreguntas(cantidadSeleccionada))
+            if ((categoria.SelectedItem == null) || (dificultad.SelectedItem == null) || (conjunto.SelectedItem == null) || (cantidadPreguntas.Value == null))
             {
-                categorias.Add(cat.Id);
+                MessageBox.Show("Debe completar todos los campos para iniciar el examen");
             }
-            
-            if (!(categorias.Contains(categoriaSeleccionada)) && (categoriaSeleccionada != "0"))
+            else
             {
-                int n = fachada.CantidadDePreguntasParaCategoria(categoriaSeleccionada);
-                MessageBoxButtons mensaje = MessageBoxButtons.YesNo;
-                DialogResult result = MessageBox.Show($"Solo hay {n} preguntas de { categoriaSeleccionada}. Quiere hacer el examen aunque no haya la cantidad de preguntas seleccionadas?", "Advertencia", mensaje);
 
-                if (result == DialogResult.Yes)
+                string categoriaSeleccionada = categoria.SelectedItem.ToString(); //Asigno el valor ingresado a clase Categoria
+                if (categoriaSeleccionada == "Random") categoriaSeleccionada = "0";
+
+                string dificultadSeleccionada = dificultad.SelectedItem.ToString(); //Asigno el valor ingresado a clase Dificultad
+                if (dificultadSeleccionada == "Random") dificultadSeleccionada = "0";
+
+                string conjuntoSeleccionado = conjunto.SelectedItem.ToString(); //Asigno el valor ingresado a clase Dificultad
+
+                int cantidadSeleccionada = Convert.ToInt32(cantidadPreguntas.Value); //Cantidad de preguntas a responder  
+
+                List<String> categorias = new List<string>();
+
+                foreach (CategoriaPregunta cat in fachada.GetCategoriaPreguntasConNPreguntas(cantidadSeleccionada))
                 {
-                    Examen nuevoExamen = fachada.InicializarExamen(n, conjuntoSeleccionado, categoriaSeleccionada, dificultadSeleccionada);
+                    categorias.Add(cat.Id);
+                }
+
+                if (!(categorias.Contains(categoriaSeleccionada)) && (categoriaSeleccionada != "0"))
+                {
+                    int n = fachada.CantidadDePreguntasParaCategoria(categoriaSeleccionada);
+                    MessageBoxButtons mensaje = MessageBoxButtons.YesNo;
+                    DialogResult result = MessageBox.Show($"Solo hay {n} preguntas de { categoriaSeleccionada}. Quiere hacer el examen aunque no haya la cantidad de preguntas seleccionadas?", "Advertencia", mensaje);
+
+                    if (result == DialogResult.Yes)
+                    {
+                        Examen nuevoExamen = fachada.InicializarExamen(n, conjuntoSeleccionado, categoriaSeleccionada, dificultadSeleccionada);
+                        fachada.InicarExamen(iNombreUsuario, nuevoExamen);
+
+                        this.Hide();
+
+                        using (Ventana_Preguntas Vpreguntas = new Ventana_Preguntas(nuevoExamen))
+                            Vpreguntas.ShowDialog();
+                        this.Close();
+
+                    }
+                }
+                else
+                {
+                    Examen nuevoExamen = fachada.InicializarExamen(cantidadSeleccionada, conjuntoSeleccionado, categoriaSeleccionada, dificultadSeleccionada);
                     fachada.InicarExamen(iNombreUsuario, nuevoExamen);
 
                     this.Hide();
@@ -149,28 +168,12 @@ namespace Trabajo_Integrador.Ventanas
                     this.Close();
 
                 }
-            }
-            else {
-                Examen nuevoExamen = fachada.InicializarExamen(cantidadSeleccionada, conjuntoSeleccionado, categoriaSeleccionada, dificultadSeleccionada);
-                fachada.InicarExamen(iNombreUsuario, nuevoExamen);
-
-                this.Hide();
-
-                using (Ventana_Preguntas Vpreguntas = new Ventana_Preguntas(nuevoExamen))
-                    Vpreguntas.ShowDialog();
-                this.Close();
 
             }
 
 
-
-
         }
 
-        private void cantidadPreguntas_ValueChanged(object sender, EventArgs e)
-        {
-
-        }
     }
 
 
