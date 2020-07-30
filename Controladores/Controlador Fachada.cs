@@ -76,6 +76,17 @@ namespace Trabajo_Integrador.Controladores
 
 
         /// <summary>
+        /// Devuelve una lista con todos los logs
+        /// </summary>
+        /// <returns></returns>
+        public List<Log> getLogs()
+        {
+            return controladorAdministrativo.getLogs();
+        }
+
+
+
+        /// <summary>
         /// Devuelve la cantidad de preguntas que pertecenientes a una categoria
         /// </summary>
         /// <param name="pIdCategoria">Id de la categoria</param>
