@@ -6,8 +6,13 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Trabajo_Integrador
+namespace Trabajo_Integrador.Utils
 {
+
+    /// <summary>
+    /// Clase usada para hashear los password con MD5 y guardarlos en la base de datos
+    /// Esta clase no debe ser usada en una aplicacion real en produccion, es solo una prueba de concepto
+    /// </summary>
     public sealed class PasswordHasher
     {
         public static string CreateMD5(string input)
