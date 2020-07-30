@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
@@ -32,7 +33,8 @@ namespace Trabajo_Integrador.Ventanas
             this.Close();
         }
 
-        
+      
+
         private void SetAdministrador_Load(object sender, EventArgs e)
         {
             List<Usuario> listaUsuarios = fachada.GetUsuarios();
@@ -55,9 +57,20 @@ namespace Trabajo_Integrador.Ventanas
 
         private void setAdmin_Click(object sender, EventArgs e)
         {
-            foreach (String nombreUsuario in listaCheckedBox.CheckedItems)
+            List<Usuario> listaUsuarios = fachada.GetUsuarios();
+           // Collection usuariosChecked = listaCheckedBox.CheckedItems;
+
+            foreach (Usuario user in listaUsuarios)
             {
-                fachada.SetAdministrador(nombreUsuario);
+                if(listaCheckedBox.CheckedItems.Contains(user.Id))
+                {
+                    fachada.SetAdministrador(user.Id);
+                   
+                }
+                else
+                {
+                    fachada.SetNoAdministrador(user.Id);
+                }
             }
             MessageBox.Show("El/los usuario/s fueron configurados como administrador con Exito");
         }
