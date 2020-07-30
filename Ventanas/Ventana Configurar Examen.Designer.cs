@@ -143,6 +143,7 @@
             0,
             0,
             0});
+            this.cantidadPreguntas.ValueChanged += new System.EventHandler(this.cantidadPreguntas_ValueChanged);
             // 
             // label4
             // 
@@ -164,7 +165,7 @@
             this.conjunto.Size = new System.Drawing.Size(192, 21);
             this.conjunto.TabIndex = 12;
             // 
-            // configurarExamen
+            // Ventana_Configurar_Examen
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -181,7 +182,7 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Name = "configurarExamen";
+            this.Name = "Ventana_Configurar_Examen";
             this.Text = "Examen Virtual";
             this.Load += new System.EventHandler(this.setExamen_Load);
             ((System.ComponentModel.ISupportInitialize)(this.cantidadPreguntas)).EndInit();

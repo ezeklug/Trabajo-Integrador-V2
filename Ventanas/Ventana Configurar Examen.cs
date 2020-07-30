@@ -167,7 +167,10 @@ namespace Trabajo_Integrador.Ventanas
 
         }
 
-        
+        private void cantidadPreguntas_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 
 

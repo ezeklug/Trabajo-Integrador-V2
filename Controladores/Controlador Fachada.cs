@@ -353,9 +353,18 @@ namespace Trabajo_Integrador.Controladores
             return controladorPreguntas.GetPreguntasRandom(pCantidad, pConjunto, pCategoria, pDificultad);
         }
 
-        public void GetPreguntasOnline(string pCantidad, string pConjunto, string pCategoria, string pDificultad)
+
+        /// <summary>
+        /// Carga preguntas desde un servicio  online a la base de datos
+        /// Devuelve el numero de preguntas cargadas con exito
+        /// </summary>
+        /// <param name="pCantidad"></param>
+        /// <param name="pConjunto"></param>
+        /// <param name="pCategoria"></param>
+        /// <param name="pDificultad"></param>
+        public int GetPreguntasOnline(string pCantidad, string pConjunto, string pCategoria, string pDificultad)
         {
-             controladorPreguntas.GetPreguntasOnline(pCantidad, pConjunto, pCategoria, pDificultad);
+             return controladorPreguntas.GetPreguntasOnline(pCantidad, pConjunto, pCategoria, pDificultad);
         }
 
     }

@@ -41,9 +41,11 @@ namespace Trabajo_Integrador.Controladores
 
         /// <summary>
         /// Dada una lista de preguntas, las inserta en la base de datos
+        /// Devuelve la cantidad de preguntas insertada con exito
         /// </summary>
-        public void CargarPreguntas(List<Pregunta> pPreguntas)
+        public int CargarPreguntas(List<Pregunta> pPreguntas)
         {
+            int cantidad = 0;
             try
             {
                 using (var db = new TrabajoDbContext())
@@ -55,6 +57,7 @@ namespace Trabajo_Integrador.Controladores
                         {
                             if (db.Preguntas.Find(pre.Id) == null)
                             {
+                                cantidad++;
                                 CategoriaPregunta categoria = db.Categorias.Find(pre.Categoria.Id);
                                 Dificultad dificultad = db.Dificultades.Find(pre.Dificultad.Id);
                                 ConjuntoPreguntas conjunto = db.ConjuntoPreguntas.Find(pre.Conjunto.Id);
@@ -105,20 +108,23 @@ namespace Trabajo_Integrador.Controladores
             {
                 Bitacora.GuardarLog(ex.Message.ToString());
             }
+            return cantidad;
         }
 
 
 
         /// <summary>
         /// Obtiene las preguntas de internet y se cargan en la base de datos.
+        /// Devuelve el numero de preguntas que se cargaron exitosamente
         /// </summary>
         /// <param name="pCantidad"></param>
         /// <param name="pConjunto"></param>
         /// <param name="pCategoria"></param>
         /// <param name="pDificultad"></param>
         /// <returns></returns>
-        public void GetPreguntasOnline(string pCantidad, string pConjunto, string pCategoria, string pDificultad)
+        public int GetPreguntasOnline(string pCantidad, string pConjunto, string pCategoria, string pDificultad)
         {
+            int cargadas = 0;
             try
             {
                 CategoriaPregunta categoria;
@@ -131,12 +137,14 @@ namespace Trabajo_Integrador.Controladores
                 }
                 IEstrategiaObtenerPreguntas estrategia = this.GetEstrategia(pConjunto);
                 List<Pregunta> preguntas = estrategia.getPreguntas(pCantidad, pConjunto, pDificultad, categoria);
-                CargarPreguntas(preguntas);
+                cargadas = CargarPreguntas(preguntas);
+               
             }
             catch (NotImplementedException ex)
             {
                 Bitacora.GuardarLog("ControladorPreguntas.GetPreguntasOnline: " + ex.Message);
             }
+            return cargadas;
 
         }
 

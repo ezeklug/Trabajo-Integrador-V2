@@ -110,9 +110,9 @@ namespace Trabajo_Integrador.Ventanas
 
 
 
-                fachada.GetPreguntasOnline(cantidadSeleccionada, conjuntoSeleccionado, categoriaSeleccionada, dificultadSeleccionada);
+               int cargadas =  fachada.GetPreguntasOnline(cantidadSeleccionada, conjuntoSeleccionado, categoriaSeleccionada, dificultadSeleccionada);
 
-                MessageBox.Show("Las preguntas se cargaron correctamente");
+                MessageBox.Show($"Se cargaron exitosamente {cargadas} preguntas");
         }
     }
 }
