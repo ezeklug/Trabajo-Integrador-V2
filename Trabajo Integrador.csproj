@@ -111,7 +111,7 @@
     <Compile Include="Controladores\ControladorExamen.cs" />
     <Compile Include="Dominio\ExamenPregunta.cs" />
     <Compile Include="Dominio\Usuario.cs" />
-    <Compile Include="EntityFramework\ExamenRepository.cs" />
+    <Compile Include="EntityFramework\RepositorioExamen.cs" />
     <Compile Include="EntityFramework\RepositorioCategorias.cs" />
     <Compile Include="EntityFramework\RepositorioConjuntoPregunta.cs" />
     <Compile Include="EntityFramework\RepositorioDificultades.cs" />

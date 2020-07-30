@@ -149,24 +149,6 @@ namespace Trabajo_Integrador.Controladores
         }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         /// <summary>
         /// Obtiene preguntas random de la base de datos
         /// </summary>

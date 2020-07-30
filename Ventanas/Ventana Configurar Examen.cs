@@ -70,7 +70,7 @@ namespace Trabajo_Integrador.Ventanas
             {
                 listaDificultades.Add(dificultad.Id);
             }
-            dificultad.Items.Add("Random");
+           
             for (int i = 0; i < listaDificultades.Count; i++)
             {
                 dificultad.Items.Add(listaDificultades[i]);
