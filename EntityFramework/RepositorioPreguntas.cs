@@ -54,7 +54,7 @@ namespace Trabajo_Integrador.EntityFramework
                 List<Pregunta> preguntas2 =iDBSet.Include("Conjunto").Include("Dificultad").Where(p => ((p.Categoria.Id == pCategoria) && (p.Conjunto.Id == pConjunto))).ToList<Pregunta>();
                 foreach(Pregunta preg in preguntas2)
                 {
-                    if (!preguntas.Contains(preg) && preguntas.Count<=cantidad)
+                    if (!preguntas.Contains(preg) && preguntas.Count<cantidad)
                     {
                         preguntas.Add(preg);
                     }

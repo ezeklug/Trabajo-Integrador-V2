@@ -17,7 +17,7 @@ namespace Trabajo_Integrador.Ventanas
     {
         Examen iExamen;
         ControladorFachada fachada = new ControladorFachada();
-        private int iNumeroPregunta = 1;
+        private int iNumeroPregunta = 0;
 
         public Ventana_Preguntas(Examen unExamen)
         {
@@ -84,7 +84,7 @@ namespace Trabajo_Integrador.Ventanas
             List<Pregunta> listaPreguntas = iExamen.getPreguntas();
             mostrarPregunta(listaPreguntas[numeroPregunta]);
 
-            this.CantidadPreguntas.Text ="Pregunta: " + numeroPregunta.ToString() + "/" + iExamen.CantidadPreguntas.ToString();
+            this.CantidadPreguntas.Text ="Pregunta: " + (numeroPregunta+1).ToString() + "/" + iExamen.CantidadPreguntas.ToString();
 
             return listaPreguntas[numeroPregunta];
 
