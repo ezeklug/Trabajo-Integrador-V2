@@ -144,6 +144,7 @@
     <Compile Include="EntityFramework\RepositorioCategorias.cs" />
     <Compile Include="EntityFramework\RepositorioConjuntoPregunta.cs" />
     <Compile Include="EntityFramework\RepositorioDificultades.cs" />
+    <Compile Include="EntityFramework\RepositorioRespuesta.cs" />
     <Compile Include="EntityFramework\RepositorioPreguntaExamen.cs" />
     <Compile Include="EntityFramework\RepositorioLogs.cs" />
     <Compile Include="EntityFramework\RepositorioPreguntas.cs" />
