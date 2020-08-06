@@ -35,6 +35,7 @@
             this.time = new System.Windows.Forms.Label();
             this.CantidadPreguntas = new System.Windows.Forms.Label();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.npgsqlCommand1 = new Npgsql.NpgsqlCommand();
             this.SuspendLayout();
             // 
             // preg
@@ -85,10 +86,16 @@
             // 
             // flowLayoutPanel1
             // 
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(12, 88);
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(12, 170);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(762, 303);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(762, 221);
             this.flowLayoutPanel1.TabIndex = 9;
+            // 
+            // npgsqlCommand1
+            // 
+            this.npgsqlCommand1.AllResultTypesAreUnknown = false;
+            this.npgsqlCommand1.Transaction = null;
+            this.npgsqlCommand1.UnknownResultTypeList = null;
             // 
             // Ventana_Preguntas
             // 
@@ -117,5 +124,6 @@
         private System.Windows.Forms.Label time;
         private System.Windows.Forms.Label CantidadPreguntas;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
+        private Npgsql.NpgsqlCommand npgsqlCommand1;
     }
 }

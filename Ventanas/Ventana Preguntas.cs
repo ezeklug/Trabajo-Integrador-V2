@@ -33,15 +33,16 @@ namespace Trabajo_Integrador.Ventanas
         {
             preg.Text += unaPregunta.Id; //Muestro la Pregunta en el Label
 
-            List<string> opciones = new List<string>(); //Almacena las 4 opciones de respuestas
+            List<Respuesta> opciones = new List<Respuesta>(); //Almacena las 4 opciones de respuestas
 
-            List<Respuesta> respuestas= fachada.RespuestasDePregunta(unaPregunta);
+            List<Respuesta> respuestas = fachada.RespuestasDePregunta(unaPregunta);
+          
             foreach (Respuesta respuesta in respuestas)
             {
-                opciones.Add(respuesta.Texto);
+                opciones.Add(respuesta);
             }
 
-            List<string> listaDesordenada = new List<string>();
+            List<Respuesta> listaDesordenada = new List<Respuesta>();
             Random rnd = new Random();
 
             while (opciones.Count > 0) //Desordena la Lista 
@@ -52,20 +53,25 @@ namespace Trabajo_Integrador.Ventanas
             }
 
             int cont = 1;
-            foreach (String opcion in listaDesordenada)
+            
+            foreach (Respuesta opcion in listaDesordenada)
             {
-                RadioButton rb = new RadioButton();
-                rb.Text += opcion;
-                rb.Name = cont.ToString();
+                //flowLayoutPanel1.Controls.Add(new RadioButton() { Text = unaPregunta.Id });
+               RadioButton rb = new RadioButton();
+                rb.Text += opcion.Texto;
+                rb.Name = opcion.Id.ToString();
                 cont++;
+                flowLayoutPanel1.Controls.Add(rb);
             }
+           
             
               
         }
 
-        /*public string RecogerOpcion() //Devuelve cual fue la opcion Seleccionada
+        public string RecogerOpcion() //Devuelve cual fue la opcion Seleccionada
         {
-            string respuesta = string.Empty;
+            RadioButton rbSelected = flowLayoutPanel1.Controls.OfType<RadioButton>().FirstOrDefault(r => r.Checked);
+           /* string respuesta = string.Empty;
 
                 if (opcionA.Checked == true) { respuesta = opcionA.Text;
                 opcionA.Checked = false;  }
@@ -75,13 +81,13 @@ namespace Trabajo_Integrador.Ventanas
                 opcionC.Checked = false;  }
                 if (opcionD.Checked == true) { respuesta= opcionD.Text;
                 opcionD.Checked = false;  }
-            Console.WriteLine(respuesta);
+            Console.WriteLine(respuesta);*/
                                  
 
-            return respuesta;
+            return rbSelected.Text;
             
         }
-        */
+        
          
         public Pregunta obtienePregunta(int numeroPregunta) //Muestra la pregunta iNumeroPregunta en la lista de preguntas del examen 
         {
@@ -93,6 +99,7 @@ namespace Trabajo_Integrador.Ventanas
             return listaPreguntas[numeroPregunta];
 
         }
+
        /* public void LimpiaControles() //Limpia todos los campos (textBox y checkBox)
         {
             
@@ -130,30 +137,20 @@ namespace Trabajo_Integrador.Ventanas
         }
 
         private Boolean ObtenerEstadoBotonSiguiente()
-        {
-            // default  false
-            Boolean resultado = false;
-
+        {            
             // Chquea que alguno de los radio buttons este seleccionado, si se cumple, true
-           
-            //resultado = ((opcionA.Checked == true) || (opcionB.Checked == true) || (opcionC.Checked == true) || (opcionD.Checked == true));
-
-            return resultado;
-        }
+             return (RecogerOpcion()!=null);
+         }
 
         private void siguiente_Click(object sender, EventArgs e)
         {
             if (ObtenerEstadoBotonSiguiente())
             {
-               // string opcion = RecogerOpcion();
+                string opcion = RecogerOpcion();
                // LimpiaControles();
-               // fachada.RespuestaCorrecta(iExamen, obtienePregunta(iNumeroPregunta), opcion);
+                fachada.RespuestaCorrecta(iExamen, obtienePregunta(iNumeroPregunta), Int32.Parse(opcion));
                 Console.WriteLine(obtienePregunta(iNumeroPregunta).Id);
-               // Console.WriteLine(opcion);
-                //Console.WriteLine(obtienePregunta(iNumeroPregunta).RespuestaCorrecta);
-
-
-
+               
                // LimpiaControles(); // Limpia todos los controles
 
                 iNumeroPregunta++;
