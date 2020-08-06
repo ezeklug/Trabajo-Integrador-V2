@@ -28,18 +28,18 @@ namespace Trabajo_Integrador.Ventanas
         }
 
         int tiempo;
-          
+         
         public void mostrarPregunta(Pregunta unaPregunta) //Muestra una pregunta con sus opciones
         {
             preg.Text += unaPregunta.Id; //Muestro la Pregunta en el Label
 
             List<string> opciones = new List<string>(); //Almacena las 4 opciones de respuestas
 
-            opciones.Add(unaPregunta.RespuestaCorrecta);
-            opciones.Add(unaPregunta.RespuestaIncorrecta1);
-            opciones.Add(unaPregunta.RespuestaIncorrecta2);
-            opciones.Add(unaPregunta.RespuestaIncorrecta3);
-
+            List<Respuesta> respuestas= fachada.RespuestasDePregunta(unaPregunta);
+            foreach (Respuesta respuesta in respuestas)
+            {
+                opciones.Add(respuesta.Texto);
+            }
 
             List<string> listaDesordenada = new List<string>();
             Random rnd = new Random();
@@ -51,17 +51,21 @@ namespace Trabajo_Integrador.Ventanas
                 opciones.RemoveAt(i);
             }
 
-            opcionA.Text += listaDesordenada[0]; //Muestro la opcion A
-            opcionB.Text += listaDesordenada[1]; //Muestro la opcion B
-            opcionC.Text += listaDesordenada[2]; //Muestro la opcion C
-            opcionD.Text += listaDesordenada[3]; //Muestro la opcion D
+            int cont = 1;
+            foreach (String opcion in listaDesordenada)
+            {
+                RadioButton rb = new RadioButton();
+                rb.Text += opcion;
+                rb.Name = cont.ToString();
+                cont++;
+            }
+            
               
         }
 
-        public string RecogerOpcion() //Devuelve cual fue la opcion Seleccionada
+        /*public string RecogerOpcion() //Devuelve cual fue la opcion Seleccionada
         {
-            Console.WriteLine("Entre a recoger la opcion");
-                string respuesta = string.Empty;
+            string respuesta = string.Empty;
 
                 if (opcionA.Checked == true) { respuesta = opcionA.Text;
                 opcionA.Checked = false;  }
@@ -77,7 +81,7 @@ namespace Trabajo_Integrador.Ventanas
             return respuesta;
             
         }
-
+        */
          
         public Pregunta obtienePregunta(int numeroPregunta) //Muestra la pregunta iNumeroPregunta en la lista de preguntas del examen 
         {
@@ -89,7 +93,7 @@ namespace Trabajo_Integrador.Ventanas
             return listaPreguntas[numeroPregunta];
 
         }
-        public void LimpiaControles() //Limpia todos los campos (textBox y checkBox)
+       /* public void LimpiaControles() //Limpia todos los campos (textBox y checkBox)
         {
             
             preg.Text = "*";
@@ -105,7 +109,7 @@ namespace Trabajo_Integrador.Ventanas
             opcionD.Checked = false;
 
         }
-        
+        */
         private void timer_Tick(object sender, EventArgs e) //Tiempo agotado
         {        
             if (tiempo>0)
@@ -132,7 +136,7 @@ namespace Trabajo_Integrador.Ventanas
 
             // Chquea que alguno de los radio buttons este seleccionado, si se cumple, true
            
-            resultado = ((opcionA.Checked == true) || (opcionB.Checked == true) || (opcionC.Checked == true) || (opcionD.Checked == true));
+            //resultado = ((opcionA.Checked == true) || (opcionB.Checked == true) || (opcionC.Checked == true) || (opcionD.Checked == true));
 
             return resultado;
         }
@@ -141,16 +145,16 @@ namespace Trabajo_Integrador.Ventanas
         {
             if (ObtenerEstadoBotonSiguiente())
             {
-                string opcion = RecogerOpcion();
-                LimpiaControles();
-                fachada.RespuestaCorrecta(iExamen, obtienePregunta(iNumeroPregunta), opcion);
+               // string opcion = RecogerOpcion();
+               // LimpiaControles();
+               // fachada.RespuestaCorrecta(iExamen, obtienePregunta(iNumeroPregunta), opcion);
                 Console.WriteLine(obtienePregunta(iNumeroPregunta).Id);
-                Console.WriteLine(opcion);
-                Console.WriteLine(obtienePregunta(iNumeroPregunta).RespuestaCorrecta);
+               // Console.WriteLine(opcion);
+                //Console.WriteLine(obtienePregunta(iNumeroPregunta).RespuestaCorrecta);
 
 
 
-                LimpiaControles(); // Limpia todos los controles
+               // LimpiaControles(); // Limpia todos los controles
 
                 iNumeroPregunta++;
 

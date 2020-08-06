@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Trabajo_Integrador.Controladores;
+using Trabajo_Integrador.Dominio;
 
 namespace Trabajo_Integrador.Ventanas
 {
@@ -36,10 +37,29 @@ namespace Trabajo_Integrador.Ventanas
             dt.Columns.Add("Respuesta Incorrecta 3", typeof(string));
             dt.Columns.Add("Categoria", typeof(string));
 
+            
             foreach (Pregunta pregunta in listaPreguntas)
             {
+                List<Respuesta> listaRespuestas = fachada.RespuestasDePregunta(pregunta);
+                Respuesta respuestaCorrecta=null;
+                List<Respuesta> respuestasIncorrectas=new List<Respuesta>();
+               
+                foreach (Respuesta respuesta in listaRespuestas)
+                {
+                    if (respuesta.EsCorrecta)
+                    {
+                        respuestaCorrecta = respuesta;
+                    }
+                    else {
+                             respuestasIncorrectas.Add(respuesta);    
+                    }
+                 }
+
                 cont++;
-                dt.Rows.Add(new object[] { cont,pregunta.Id, pregunta.RespuestaCorrecta, pregunta.RespuestaIncorrecta1, pregunta.RespuestaIncorrecta2, pregunta.RespuestaIncorrecta3, pregunta.Categoria.Id});
+                
+                    dt.Rows.Add(new object[] { cont, pregunta.Id, respuestaCorrecta, respuestasIncorrectas[0], respuestasIncorrectas[3], pregunta.Categoria.Id });
+                
+                
             }
 
             dataGridView1.DataSource = dt;
