@@ -28,7 +28,7 @@ namespace Trabajo_Integrador.Ventanas
             List<Pregunta> listaPreguntas = fachada.GetPreguntas();
             DataTable dt = new DataTable();
             int cont = 0;
-            //dt.Columns.Add("Usuario", typeof(string));
+            
             dt.Columns.Add("Nº", typeof(int));
             dt.Columns.Add("Pregunta", typeof(string));
             dt.Columns.Add("Respuesta Correcta", typeof(string));
@@ -57,7 +57,7 @@ namespace Trabajo_Integrador.Ventanas
 
                 cont++;
                 
-                    dt.Rows.Add(new object[] { cont, pregunta.Id, respuestaCorrecta, respuestasIncorrectas[0], respuestasIncorrectas[3], pregunta.Categoria.Id });
+                    dt.Rows.Add(new object[] { cont, pregunta.Id, respuestaCorrecta, respuestasIncorrectas[0], respuestasIncorrectas[1], respuestasIncorrectas[2], pregunta.Categoria.Id });
                 
                 
             }
