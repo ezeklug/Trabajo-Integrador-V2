@@ -158,7 +158,12 @@ namespace Trabajo_Integrador.Controladores
                     {
                         foreach (Respuesta res in pRespuestas)
                         {
-                            UoW.RepositorioRespuesta.Add(res);
+                            List<Respuesta> respuestas = (List<Respuesta>) UoW.RepositorioRespuesta.GetAll();
+                            Respuesta rs =  respuestas.Find(r => (r.Texto == res.Texto) && (r.Pregunta.Id == res.Pregunta.Id));
+                            if (rs == null)
+                            {
+                                UoW.RepositorioRespuesta.Add(res);
+                            }
                         }
                         UoW.Complete();
                     }
