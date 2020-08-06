@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Globalization;
+using Trabajo_Integrador.Dominio;
 
 namespace Trabajo_Integrador
 {
@@ -16,7 +17,7 @@ namespace Trabajo_Integrador
     /// </summary>
     public class OpentDB : EstrategiaObtenerPreguntas
     {
-        List<Pregunta> listaPreguntas = new List<Pregunta>();
+
 
         public OpentDB():base ("OpentDB") {}
 
@@ -28,9 +29,18 @@ namespace Trabajo_Integrador
         /// <param name="pDificultad"></param>
         /// <param name="pCategoria"></param>
         /// <returns></returns>
-        public override List<Pregunta> getPreguntas(string pCantidad, string pConjunto,string pDificultad, CategoriaPregunta pCategoria)
+        public override List<Object> getPreguntas(string pCantidad, string pConjunto,string pDificultad, CategoriaPregunta pCategoria)
         {
             {
+                //Lista usada para devolver
+                //Primer elemento es una lista de preguntas
+                //Segundo elemento es una lista de respuestas
+                List<Object> aDevolver = new List<Object>();
+                List<Pregunta> listaPreguntas = new List<Pregunta>();
+                List<Respuesta> Respuestas = new List<Respuesta>();
+                aDevolver[0] = listaPreguntas;
+                aDevolver[1] = Respuestas;
+
                 // Establecimiento del protocolo ssl de transporte
                 System.Net.ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
 
@@ -60,19 +70,33 @@ namespace Trabajo_Integrador
                         {
                             // De esta manera se accede a los componentes de cada item
                             string pregunta = HttpUtility.HtmlDecode(bResponseItem.question.ToString());
-                            string respuestaCorrecta = HttpUtility.HtmlDecode(bResponseItem.correct_answer.ToString());
                             CategoriaPregunta categoria = new CategoriaPregunta(bResponseItem.category.ToString());
                             Dificultad dificultad = new Dificultad(HttpUtility.HtmlDecode(bResponseItem.difficulty.ToString()));
-                            List<string> incorrectas = bResponseItem.incorrect_answers.ToObject<List<string>>();
-                            List<string> respIncorrectas = new List<string>();
-                            foreach (string respInc in incorrectas)
+                            
+                            //Obtiene el texto de la respuesta correcta
+                            string textorespuestaCorrecta = HttpUtility.HtmlDecode(bResponseItem.correct_answer.ToString());
+                            //Obtiene el texto de las respuestas incorrectas
+                            List<string> textoincorrectas = bResponseItem.incorrect_answers.ToObject<List<string>>();
+                            
+                            //Crea la pregunta
+                            Pregunta preg = new Pregunta(pregunta, dificultad, categoria, new ConjuntoPreguntas(pConjunto));
+
+                            //Crea la respuesta correcta
+                            Respuesta respuestaCorrecta = new Respuesta(textorespuestaCorrecta, preg, true);
+                            
+                           //Añade respuesta correcta a la lista
+                            Respuestas.Add(respuestaCorrecta);
+
+
+                            //Por cada respuesta incorrecta, crea una respuesta y la añade a la lista
+                            foreach (string tri in textoincorrectas)
                             {
-                                string respuestaIncorrecta = HttpUtility.HtmlDecode(respInc);
-                                respIncorrectas.Add(respuestaIncorrecta);
+                                Respuesta res = new Respuesta(HttpUtility.HtmlDecode(tri), preg, false);
+                                Respuestas.Add(res);
                             }
 
-                            Pregunta preg = new Pregunta(pregunta, respuestaCorrecta, respIncorrectas, dificultad, categoria, new ConjuntoPreguntas(pConjunto));
 
+                            
                             //se agrega cada una de las preguntas a la lista
                             listaPreguntas.Add(preg);
                         }           
@@ -93,7 +117,7 @@ namespace Trabajo_Integrador
                 {
 
                 }
-                return listaPreguntas;
+                return aDevolver;
             }
         }
         /// <summary>

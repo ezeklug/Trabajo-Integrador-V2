@@ -138,6 +138,7 @@
     <Compile Include="Dominio\ConjuntoPreguntas.cs" />
     <Compile Include="Controladores\ControladorExamen.cs" />
     <Compile Include="Dominio\ExamenPregunta.cs" />
+    <Compile Include="Dominio\Respuesta.cs" />
     <Compile Include="Dominio\Usuario.cs" />
     <Compile Include="EntityFramework\RepositorioExamen.cs" />
     <Compile Include="EntityFramework\RepositorioCategorias.cs" />
