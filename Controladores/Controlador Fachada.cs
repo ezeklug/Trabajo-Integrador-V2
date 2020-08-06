@@ -366,6 +366,15 @@ namespace Trabajo_Integrador.Controladores
         {
              return controladorPreguntas.GetPreguntasOnline(pCantidad, pConjunto, pCategoria, pDificultad);
         }
+        /// <summary>
+        /// Metodo que sirve para obtener todas las respuestas asociadas a una preguna
+        /// </summary>
+        /// <param name="pPregunta"></param>
+        /// <returns>Una lista de respuestas</returns>
+        public List<Respuesta> RespuestasDePregunta(Pregunta pPregunta)
+        {
+            return controladorPreguntas.RespuestasDePregunta(pPregunta);
+        }
 
     }
 }
