@@ -95,7 +95,7 @@ namespace Trabajo_Integrador.Dominio
 
             foreach (var ep in ExamenPreguntas)
             {
-                if (ep.Pregunta.RespuestaEsCorrecta(ep.OpcionElegida))
+                if (ep.RespuestaElegida.EsCorrecta)
                 {
                     cont++;
                 }

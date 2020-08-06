@@ -350,7 +350,26 @@ namespace Trabajo_Integrador.Controladores
         }
 
 
-
+        public List<Respuesta> RespuestasDePregunta(Pregunta pPregunta)
+        {
+            List<Respuesta> listaRespuesta = new List<Respuesta>();
+            try
+            {
+                using (var db = new TrabajoDbContext())
+                {
+                    using (var UoW = new UnitOfWork(db))
+                    {
+                        listaRespuesta = (List<Respuesta>)UoW.RepositorioRespuesta.GetAll();
+                        listaRespuesta = listaRespuesta.FindAll(r => r.Pregunta.Id == pPregunta.Id);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Bitacora.GuardarLog("ControladorPreguntas.RespuestasDePregunta" + ex.ToString());
+            }
+            return listaRespuesta;
+        }
 
         /// <summary>
         /// Constructor
