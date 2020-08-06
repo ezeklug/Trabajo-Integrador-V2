@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.UI.WebControls.WebParts;
 using Trabajo_Integrador.Dominio;
 using Trabajo_Integrador.EntityFramework;
 
@@ -34,10 +35,24 @@ namespace Trabajo_Integrador.Controladores
         /// <returns></returns>
         public List<Examen> GetRanking(String pUsuario)
         {
-            using (var db = new TrabajoDbContext())
+            List<Examen> listaExamenes = new List<Examen>();
+           try
             {
-                return db.Examenes.Where(e => e.Usuario.Id == pUsuario).OrderBy(ex => ex.Puntaje).ToList<Examen>();
+                using (var db = new TrabajoDbContext())
+                {
+                    using (var UoW = new UnitOfWork(db))
+                    {
+                        listaExamenes = (List<Examen>)UoW.ExamenRepository.GetAll();
+                        listaExamenes = listaExamenes.FindAll(ex => ex.Usuario.Id == pUsuario).OrderBy(ex => ex.Puntaje).ToList<Examen>();
+                    }
+                }
             }
+            catch(Exception ex)
+            {
+                Bitacora.GuardarLog("ControladorFachada.GetRanking"+ ex.Message);
+            }
+            
+            return listaExamenes;
         }
 
 

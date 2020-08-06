@@ -14,6 +14,8 @@ namespace Trabajo_Integrador
     /// </summary>
     public class Bitacora
     {
+
+        
         /// <summary>
         /// Obtiene un log de la base de datos
         /// </summary>
@@ -29,7 +31,7 @@ namespace Trabajo_Integrador
                     return UoW.RepositorioLogs.Get(pId);
                 }
             }
-
+            
         }
 
 
@@ -39,18 +41,9 @@ namespace Trabajo_Integrador
         /// <param name="pDescripcion"></param>
         public static void GuardarLog(String pDescripcion)
         {
-
-            using (var db = new TrabajoDbContext())
-            {
-                using (var UoW = new UnitOfWork(db))
-                {
-                    Log log = new Log();
-                    log.Descripcion = pDescripcion;
-                    log.Fecha = DateTime.Now;
-                    UoW.RepositorioLogs.Add(log);
-                }
-            }
-
+            string nombreDefault = "examenvirtual.log";
+            var File = new System.IO.StreamWriter(nombreDefault);
+            File.WriteLine(pDescripcion);
         }
             
 
