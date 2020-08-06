@@ -20,7 +20,7 @@ namespace Trabajo_Integrador.Dominio
         
         public Pregunta Pregunta  { get; set; }
         
-        public virtual String OpcionElegida { get; set; }
+        public Respuesta RespuestaElegida { get; set; }
 
 
     }

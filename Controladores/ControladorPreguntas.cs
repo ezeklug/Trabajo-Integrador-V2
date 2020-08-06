@@ -136,9 +136,9 @@ namespace Trabajo_Integrador.Controladores
                     }
                 }
                 IEstrategiaObtenerPreguntas estrategia = this.GetEstrategia(pConjunto);
-                List<Pregunta> preguntas = estrategia.getPreguntas(pCantidad, pConjunto, pDificultad, categoria);
-                cargadas = CargarPreguntas(preguntas);
-               
+                (List<Pregunta>, List<Respuesta>) preguntas = estrategia.getPreguntas(pCantidad, pConjunto, pDificultad, categoria);
+                cargadas = CargarPreguntas(preguntas.Item1);
+                CargarRespuestas(preguntas.Item2);
             }
             catch (NotImplementedException ex)
             {
@@ -148,7 +148,27 @@ namespace Trabajo_Integrador.Controladores
 
         }
 
-
+        public void CargarRespuestas(List<Respuesta> pRespuestas)
+        {
+            try
+            {
+                using (var db = new TrabajoDbContext())
+                {
+                    using (var UoW = new UnitOfWork(db))
+                    {
+                        foreach (Respuesta res in pRespuestas)
+                        {
+                            UoW.RepositorioRespuesta.Add(res);
+                        }
+                        UoW.Complete();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Bitacora.GuardarLog(ex.Message.ToString());
+            }
+        }
         /// <summary>
         /// Obtiene preguntas random de la base de datos
         /// </summary>

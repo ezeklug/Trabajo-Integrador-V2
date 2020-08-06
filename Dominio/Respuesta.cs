@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Trabajo_Integrador.Dominio
 {
-    class Respuesta
+    public class Respuesta
     {
 
         public int Id { get; set; }

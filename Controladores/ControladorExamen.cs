@@ -59,7 +59,7 @@ namespace Trabajo_Integrador.Controladores
             return examen;
         }
 
-                              
+
         /// <summary>
         /// Dado un examen, una pregunta y una respuesta, devuelve verdadero si la respuesta es correcta.
         /// Almacena el resultado de la respuesta
@@ -68,9 +68,18 @@ namespace Trabajo_Integrador.Controladores
         /// <param name="pPregunta"></param>
         /// <param name="pRespuesta"></param>
         /// <returns></returns>
-        public Boolean RespuestaCorrecta(Examen pExamen, Pregunta pPregunta, String pRespuesta)
+        public Boolean RespuestaCorrecta(Examen pExamen, Pregunta pPregunta, int idRespuesta)
         {
-            return pExamen.RespuestaCorrecta(pPregunta, pRespuesta);
+            using (var db = new TrabajoDbContext())
+            {
+                using (var UoW = new UnitOfWork(db))
+                {
+                    Respuesta respuesta = UoW.RepositorioRespuesta.Get(idRespuesta);
+                    ExamenPregunta examenPregunta= pExamen.ExamenPreguntas.Find(e => e.Pregunta == pPregunta);
+                    examenPregunta.RespuestaElegida = respuesta;
+                    return respuesta.EsCorrecta;
+                }
+            }
         }
         
         /// <summary>

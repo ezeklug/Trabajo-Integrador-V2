@@ -29,17 +29,11 @@ namespace Trabajo_Integrador
         /// <param name="pDificultad"></param>
         /// <param name="pCategoria"></param>
         /// <returns></returns>
-        public override List<Object> getPreguntas(string pCantidad, string pConjunto,string pDificultad, CategoriaPregunta pCategoria)
+        public override (List<Pregunta>, List<Respuesta>) getPreguntas(string pCantidad, string pConjunto,string pDificultad, CategoriaPregunta pCategoria)
         {
             {
-                //Lista usada para devolver
-                //Primer elemento es una lista de preguntas
-                //Segundo elemento es una lista de respuestas
-                List<Object> aDevolver = new List<Object>();
                 List<Pregunta> listaPreguntas = new List<Pregunta>();
                 List<Respuesta> Respuestas = new List<Respuesta>();
-                aDevolver[0] = listaPreguntas;
-                aDevolver[1] = Respuestas;
 
                 // Establecimiento del protocolo ssl de transporte
                 System.Net.ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
@@ -105,19 +99,8 @@ namespace Trabajo_Integrador
                 catch (WebException ex)
                 {
                     Bitacora.GuardarLog(ex.Message);
-
-             /*       WebResponse mErrorResponse = ex.Response;
-                    using (Stream mResponseStream = mErrorResponse.GetResponseStream())
-                    {
-                        StreamReader mReader = new StreamReader(mResponseStream, Encoding.GetEncoding("utf-8"));
-                        String mErrorText = mReader.ReadToEnd();
-                    }*/
                 }
-                catch (Exception ex)
-                {
-
-                }
-                return aDevolver;
+                return (listaPreguntas,Respuestas);
             }
         }
         /// <summary>

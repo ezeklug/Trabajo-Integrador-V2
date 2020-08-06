@@ -277,9 +277,9 @@ namespace Trabajo_Integrador.Controladores
         /// <param name="pPregunta"></param>
         /// <param name="pRespuesta"></param>
         /// <returns></returns>
-        public Boolean RespuestaCorrecta(Examen pExamen, Pregunta pPregunta, String pRespuesta)
+        public Boolean RespuestaCorrecta(Examen pExamen, Pregunta pPregunta, int idRespuesta)
         {
-            return controladorExamen.RespuestaCorrecta(pExamen, pPregunta, pRespuesta);
+            return controladorExamen.RespuestaCorrecta(pExamen, pPregunta, idRespuesta);
         }
 
         /// <summary>
