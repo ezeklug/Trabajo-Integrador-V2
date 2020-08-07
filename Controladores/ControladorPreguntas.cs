@@ -268,7 +268,7 @@ namespace Trabajo_Integrador.Controladores
         /// </summary>
         /// <param name="pIdCateoria">El id de la categoria</param>
         /// <returns></returns>
-        public int CantidadDePreguntasParaCategoria(String pIdCateoria)
+        public int CantidadDePreguntasParaCategoria(String pIdCategoria)
         {
             int aRetornar = 0;
             try
@@ -277,7 +277,7 @@ namespace Trabajo_Integrador.Controladores
                 {
                     using (var UoW = new UnitOfWork(db))
                     {
-                       aRetornar = UoW.RepositorioPreguntas.GetAll().Where(pre => (pre.Categoria.Id == pIdCateoria)).Count(); ;
+                       aRetornar = UoW.RepositorioPreguntas.GetAll().Where(pre => (pre.Categoria.Id == pIdCategoria)).Count(); ;
                     }
                 }
             }
