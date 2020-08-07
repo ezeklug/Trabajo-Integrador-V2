@@ -187,6 +187,68 @@ namespace Trabajo_Integrador.Controladores
                 }
             }
         }
+
+
+        /// <summary>
+        /// Chequea que el usuario y contrasenia de un usuario existan
+        /// </summary>
+        /// <param name="pUsuarioId"></param>
+        /// <param name="pContrasenia"></param>
+        /// <returns></returns>
+        public Boolean UsuarioValido(string pUsuarioId, string pContrasenia)
+        {
+            using (var db = new TrabajoDbContext())
+            {
+                using (var UoW = new UnitOfWork(db))
+                {
+                    Usuario usr = new Usuario(pUsuarioId, pContrasenia);    //Necesario por el hash de contrasenia
+                    Usuario usrDb = UoW.RepositorioUsuarios.Get(pUsuarioId);
+                    if (usrDb != null)
+                    {
+                        if (usrDb.Contrasenia == usr.Contrasenia)
+                        {
+                            return true;
+                        }
+                        else return false;
+                    }
+                    else return false;
+
+
+                }
+            }
+        }
+
+
+
+        /// <summary>
+        /// Chequea si un usuario existe en la base de datos
+        /// </summary>
+        /// <param name="pUsuarioId"></param>
+        /// <returns></returns>
+        public Boolean UsuarioExiste(string pNombreUsuario)
+        {
+            using (var db = new TrabajoDbContext())
+            {
+                using (var UoW = new UnitOfWork(db))
+                {
+                    Usuario usrDb = UoW.RepositorioUsuarios.Get(pNombreUsuario);
+
+                    if (usrDb != null)
+                    {
+                        if (usrDb.Id == pNombreUsuario)
+                        {
+                            return true;
+                        }
+                        else return false;
+                    }
+                    else return false;
+                }
+            }
+        }
+
+
+
+
         /// <summary>
         /// Metodo que devuelve los examenes correspondientes a un usuario, ordenados por puntaje descendentemente
         /// </summary>

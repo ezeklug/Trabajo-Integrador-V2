@@ -205,25 +205,7 @@ namespace Trabajo_Integrador.Controladores
         /// <returns>Verdadero si usuario y contraseña existen </returns>
         public Boolean UsuarioValido(string pUsuarioId, string pContrasenia)
         {
-            using (var db = new TrabajoDbContext())
-            {
-                using (var UoW = new UnitOfWork(db))
-                {
-                    Usuario usr = new Usuario(pUsuarioId, pContrasenia);
-                    Usuario usrDb = UoW.RepositorioUsuarios.Get(pUsuarioId);
-                    if (usrDb != null)
-                    {
-                        if (usrDb.Contrasenia == usr.Contrasenia)
-                        {
-                            return true;
-                        }
-                        else return false;
-                    }
-                    else return false;
-
-
-                }
-            }
+            return controladorAdministrativo.UsuarioValido(pUsuarioId, pContrasenia);
         }
 
         /// <summary>
@@ -233,23 +215,7 @@ namespace Trabajo_Integrador.Controladores
         /// <returns></returns>
         public Boolean UsuarioExiste(string pNombreUsuario)
         {
-            using (var db = new TrabajoDbContext())
-            {
-                using (var UoW = new UnitOfWork(db))
-                {
-                    Usuario usrDb = UoW.RepositorioUsuarios.Get(pNombreUsuario);
-
-                    if (usrDb != null)
-                    {
-                        if (usrDb.Id == pNombreUsuario)
-                        {
-                            return true;
-                        }
-                        else return false;
-                    }
-                    else return false;
-                }
-            }
+            return controladorAdministrativo.UsuarioExiste(pNombreUsuario);
 
         }
 
