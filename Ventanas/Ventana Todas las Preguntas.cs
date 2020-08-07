@@ -31,37 +31,42 @@ namespace Trabajo_Integrador.Ventanas
             
             dt.Columns.Add("Nº", typeof(int));
             dt.Columns.Add("Pregunta", typeof(string));
-            dt.Columns.Add("Respuesta Correcta", typeof(string));
-            dt.Columns.Add("Respuesta Incorrecta 1", typeof(string));
-            dt.Columns.Add("Respuesta Incorrecta 2", typeof(string));
-            dt.Columns.Add("Respuesta Incorrecta 3", typeof(string));
             dt.Columns.Add("Categoria", typeof(string));
+            // dt.Columns.Add("Respuesta Correcta", typeof(string));
+            // dt.Columns.Add("Respuesta Incorrecta 1", typeof(string));
+            // dt.Columns.Add("Respuesta Incorrecta 2", typeof(string));
+            // dt.Columns.Add("Respuesta Incorrecta 3", typeof(string));
 
-            
+
+
             foreach (Pregunta pregunta in listaPreguntas)
             {
                 List<Respuesta> listaRespuestas = fachada.RespuestasDePregunta(pregunta);
-                Respuesta respuestaCorrecta=null;
-                List<Respuesta> respuestasIncorrectas=new List<Respuesta>();
-               
+                IEnumerable<object> row = new object[]{ cont, pregunta.Id, pregunta.Categoria.Id };
+                int i = 1;
                 foreach (Respuesta respuesta in listaRespuestas)
                 {
-                    if (respuesta.EsCorrecta)
+                    if (!dt.Columns.Contains($"Respuesta {i}"))
                     {
-                        respuestaCorrecta = respuesta;
-                    }
-                    else {
-                             respuestasIncorrectas.Add(respuesta);    
-                    }
-                 }
+                        dt.Columns.Add($"Respuesta {i}", typeof(string));
 
+                    }
+                    row = row.Append(respuesta.Texto);
+                    i++;
+                    // if (respuesta.EsCorrecta)
+                    //{
+                    //   respuestaCorrecta = respuesta;
+                    //}
+                    //else {
+                    //        respuestasIncorrectas.Add(respuesta);    
+                    //}
+
+                   
+                   
+                }
                 cont++;
-                
-                    dt.Rows.Add(new object[] { cont, pregunta.Id, respuestaCorrecta, respuestasIncorrectas[0], respuestasIncorrectas[1], respuestasIncorrectas[2], pregunta.Categoria.Id });
-                
-                
+                dt.Rows.Add(row.ToArray<object>());
             }
-
             dataGridView1.DataSource = dt;
         }
 
