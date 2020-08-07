@@ -36,24 +36,7 @@ namespace Trabajo_Integrador.Controladores
         /// <returns></returns>
         public List<Examen> GetRanking(String pUsuario)
         {
-            List<Examen> listaExamenes = new List<Examen>();
-           try
-            {
-                using (var db = new TrabajoDbContext())
-                {
-                    using (var UoW = new UnitOfWork(db))
-                    {
-                        listaExamenes = (List<Examen>)UoW.ExamenRepository.GetAll();
-                        listaExamenes = listaExamenes.FindAll(ex => ex.Usuario.Id == pUsuario).OrderBy(ex => ex.Puntaje).ToList<Examen>();
-                    }
-                }
-            }
-            catch(Exception ex)
-            {
-                Bitacora.GuardarLog("ControladorFachada.GetRanking"+ ex.Message);
-            }
-            
-            return listaExamenes;
+            return controladorAdministrativo.GetRanking(pUsuario);
         }
 
 

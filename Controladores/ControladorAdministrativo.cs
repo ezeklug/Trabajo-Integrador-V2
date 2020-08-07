@@ -130,7 +130,31 @@ namespace Trabajo_Integrador.Controladores
 
         }
 
-
+        /// <summary>
+        /// Metodo que devuelve una lista de examenes de un usuario ordenados por puntaje
+        /// </summary>
+        /// <param name="pUsuario"></param>
+        /// <returns></returns>
+        public List<Examen> GetRanking(String pUsuario)
+        {
+            List<Examen> listaExamenes = new List<Examen>();
+            try
+            {
+                using (var db = new TrabajoDbContext())
+                {
+                    using (var UoW = new UnitOfWork(db))
+                    {
+                        listaExamenes = (List<Examen>)UoW.ExamenRepository.GetAll();
+                        listaExamenes = listaExamenes.FindAll(ex => ex.Usuario.Id == pUsuario).OrderBy(ex => ex.Puntaje).ToList<Examen>();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Bitacora.GuardarLog("ControladorAdministrativo.GetRanking" + ex.Message);
+            }
+            return listaExamenes;
+        }
 
         /// <summary>
         /// Devuelve todos los logs
@@ -238,27 +262,7 @@ namespace Trabajo_Integrador.Controladores
                 }
             }
         }
-
-
-
-
-        /// <summary>
-        /// Metodo que devuelve los examenes correspondientes a un usuario, ordenados por puntaje descendentemente
-        /// </summary>
-        /// <param name="pUsuario"></param>
-        /// <returns></returns>
-        public List<Examen> GetRanking(string pUsuario)
-        {
-            using (var db = new TrabajoDbContext())
-            {
-                using (var UoW = new UnitOfWork(db))
-                {
-                    List<Examen> examenes = UoW.ExamenRepository.SelectAll(pUsuario);
-                    examenes.Sort((a, b) => b.Puntaje.CompareTo(a.Puntaje));
-                    return examenes;
-                }
-            }
-        }
+      
     }
 }
 
