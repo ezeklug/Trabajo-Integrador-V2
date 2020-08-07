@@ -23,7 +23,7 @@ namespace Trabajo_Integrador
         /// <returns></returns>
         public static String Obtener()
         {
-            string text;
+            string text =  "No se pudo obtener log";
             try {
                 string nombreDefault = "examenvirtual.log";
                 text = new System.IO.StreamReader(nombreDefault).ReadToEnd();
