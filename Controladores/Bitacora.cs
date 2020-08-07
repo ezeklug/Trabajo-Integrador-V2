@@ -21,17 +21,18 @@ namespace Trabajo_Integrador
         /// </summary>
         /// <param name="pId">Id del log</param>
         /// <returns></returns>
-        public Log Obtener(int pId)
+        public static String Obtener()
         {
-
-            using (var db = new TrabajoDbContext())
-            {
-                using (var UoW = new UnitOfWork(db))
-                {
-                    return UoW.RepositorioLogs.Get(pId);
-                }
+            string text;
+            try {
+                string nombreDefault = "examenvirtual.log";
+                text = new System.IO.StreamReader(nombreDefault).ReadToEnd();
             }
-            
+            catch (Exception ex)
+            {
+                Bitacora.GuardarLog("Bitacora.Obtener: "+ ex.Message);
+            }
+            return text;
         }
 
 
