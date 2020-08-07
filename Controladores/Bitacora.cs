@@ -44,8 +44,9 @@ namespace Trabajo_Integrador
             string nombreDefault = "examenvirtual.log";
             var File = new System.IO.StreamWriter(nombreDefault);
             File.WriteLine(pDescripcion);
+            File.Close();
         }
-            
+
 
         public Bitacora()
         {
