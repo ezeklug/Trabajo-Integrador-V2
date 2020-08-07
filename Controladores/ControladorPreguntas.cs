@@ -55,12 +55,12 @@ namespace Trabajo_Integrador.Controladores
 
                         foreach (Pregunta pre in pPreguntas)
                         {
-                            if (db.Preguntas.Find(pre.Id) == null)
+                            if (UoW.RepositorioPreguntas.Get(pre.Id)==null)
                             {
                                 cantidad++;
-                                CategoriaPregunta categoria = db.Categorias.Find(pre.Categoria.Id);
-                                Dificultad dificultad = db.Dificultades.Find(pre.Dificultad.Id);
-                                ConjuntoPreguntas conjunto = db.ConjuntoPreguntas.Find(pre.Conjunto.Id);
+                                CategoriaPregunta categoria = UoW.RepositorioCategorias.Get(pre.Categoria.Id); ;
+                                Dificultad dificultad = UoW.RepositorioDificultades.Get(pre.Dificultad.Id);
+                                ConjuntoPreguntas conjunto = UoW.RepositorioConjuntoPregunta.Get(pre.Conjunto.Id);
 
                                 ///Si la categoria esta en la base de datos la referencia,
                                 ///sino crea una nueva y la inserta en la db
@@ -132,7 +132,7 @@ namespace Trabajo_Integrador.Controladores
                 {
                     using (var UoW = new UnitOfWork(db))
                     {
-                        categoria = db.Categorias.Find(pCategoria);
+                        categoria = UoW.RepositorioCategorias.Get(pCategoria);
                     }
                 }
                 IEstrategiaObtenerPreguntas estrategia = this.GetEstrategia(pConjunto);
@@ -244,7 +244,7 @@ namespace Trabajo_Integrador.Controladores
                         listaCategoria = (List<CategoriaPregunta>)UoW.RepositorioCategorias.GetAll();
                         foreach (CategoriaPregunta cat in listaCategoria)
                         {
-                            List<Pregunta> preguntas = db.Preguntas.Where(pre => (pre.Categoria.Id == cat.Id)).ToList();
+                            List<Pregunta> preguntas = (List<Pregunta>) UoW.RepositorioPreguntas.GetAll().Where(pre => (pre.Categoria.Id == cat.Id));
                             if (preguntas.Count >= n)
                             {
                                 ADevolver.Add(cat);
@@ -276,7 +276,7 @@ namespace Trabajo_Integrador.Controladores
                 {
                     using (var UoW = new UnitOfWork(db))
                     {
-                       aRetornar = db.Preguntas.Where(pre => (pre.Categoria.Id == pIdCateoria)).Count();
+                       aRetornar = UoW.RepositorioPreguntas.GetAll().Where(pre => (pre.Categoria.Id == pIdCateoria)).Count(); ;
                     }
                 }
             }
