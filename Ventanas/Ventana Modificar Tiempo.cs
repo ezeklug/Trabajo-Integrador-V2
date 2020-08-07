@@ -73,9 +73,9 @@ namespace Trabajo_Integrador.Ventanas
             }
             else
             {
-                int control = 0;
+                float control = 0;
                 string conjuntoSeleccionado = ListaConjuntos.SelectedItem.ToString();
-                if ((int.TryParse(tiempo.SelectedText, out control)) || (tiempo.SelectedText==null))
+                if ((float.TryParse(tiempo.SelectedText, out control)) || (tiempo.SelectedText!=null))
                 {
                     string i = tiempo.SelectedText.ToString();
                     float tiempoIngresado = float.Parse(tiempo.Text);
