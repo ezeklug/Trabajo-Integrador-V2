@@ -248,7 +248,26 @@ namespace Trabajo_Integrador.Controladores
         }
 
 
-
+        /// <summary>
+        /// Devuelve verdadero si un usuario es administrador
+        /// </summary>
+        /// <param name="pNombreUsuario"></param>
+        /// <returns></returns>
+        public Boolean EsAdministrador(string pNombreUsuario) 
+        {
+            using (var db = new TrabajoDbContext())
+            {
+                using (var UoW = new UnitOfWork(db))
+                {
+                    Usuario usrDb = UoW.RepositorioUsuarios.Get(pNombreUsuario);
+                    if (usrDb.Administrador == true)
+                    {
+                        return true;
+                    }
+                    else return false;
+                }
+            }
+        }
 
         /// <summary>
         /// Metodo que devuelve los examenes correspondientes a un usuario, ordenados por puntaje descendentemente

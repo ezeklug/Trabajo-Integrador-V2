@@ -219,20 +219,16 @@ namespace Trabajo_Integrador.Controladores
 
         }
 
+
+
+        /// <summary>
+        /// Chequea si un usuario es administrador
+        /// </summary>
+        /// <param name="nombreUsuario"></param>
+        /// <returns></returns>
         public Boolean EsAdministrador(string nombreUsuario)
         {
-            using (var db = new TrabajoDbContext())
-            {
-                using (var UoW = new UnitOfWork(db))
-                {
-                    Usuario usrDb = UoW.RepositorioUsuarios.Get(nombreUsuario);
-                    if (usrDb.Administrador == true)
-                    {
-                        return true;
-                    }
-                    else return false;
-                }
-            }
+            return controladorAdministrativo.EsAdministrador(nombreUsuario);
         }
 
         /// <summary>
