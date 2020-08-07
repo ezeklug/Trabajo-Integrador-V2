@@ -41,7 +41,6 @@ namespace Trabajo_Integrador
                 CultureInfo provider = new CultureInfo("en-us");
                 // Creacion de URL
                 var mUrl =CrearURL(pCantidad,pDificultad,pCategoria.OpentDbId.ToString(provider));
-
                 
                 // Se crea el request http
                 HttpWebRequest mRequest = (HttpWebRequest)WebRequest.Create(mUrl);

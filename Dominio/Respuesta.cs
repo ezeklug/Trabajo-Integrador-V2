@@ -15,11 +15,13 @@ namespace Trabajo_Integrador.Dominio
 
         public Boolean EsCorrecta { get; set; }
 
-        public Respuesta(string pTexto, Pregunta pPregunta, Boolean correcta)
+        public Respuesta(string pTexto, Pregunta pPregunta, Boolean pCorrecta)
         {
             this.Texto = pTexto;
             this.Pregunta = pPregunta;
+            this.EsCorrecta = pCorrecta;
         }
+        public Respuesta() { }
 
     }
 }

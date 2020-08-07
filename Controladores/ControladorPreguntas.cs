@@ -148,10 +148,14 @@ namespace Trabajo_Integrador.Controladores
 
         }
 
+
+        /// <summary>
+        /// Dada una lista de respuestas, las carga en la base de datos
+        /// </summary>
+        /// <param name="pRespuestas"></param>
         public void CargarRespuestas(List<Respuesta> pRespuestas)
         {
-            try
-            {
+          
                 using (var db = new TrabajoDbContext())
                 {
                     using (var UoW = new UnitOfWork(db))
@@ -162,17 +166,16 @@ namespace Trabajo_Integrador.Controladores
                             Respuesta rs =  respuestas.Find(r => (r.Texto == res.Texto) && (r.Pregunta.Id == res.Pregunta.Id));
                             if (rs == null)
                             {
+                                Pregunta pre = UoW.RepositorioPreguntas.Get(res.Pregunta.Id);
+                                res.Pregunta = pre;
                                 UoW.RepositorioRespuesta.Add(res);
                             }
                         }
                         UoW.Complete();
                     }
                 }
-            }
-            catch (Exception ex)
-            {
-                Bitacora.GuardarLog(ex.Message.ToString());
-            }
+            
+            
         }
         /// <summary>
         /// Obtiene preguntas random de la base de datos
