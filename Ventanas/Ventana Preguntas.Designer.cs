@@ -86,9 +86,10 @@
             // 
             // flowLayoutPanel1
             // 
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(12, 170);
+            this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(26, 98);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(762, 221);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(733, 280);
             this.flowLayoutPanel1.TabIndex = 9;
             // 
             // npgsqlCommand1
