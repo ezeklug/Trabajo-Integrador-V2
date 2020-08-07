@@ -136,17 +136,9 @@ namespace Trabajo_Integrador.Controladores
         /// Devuelve todos los logs
         /// </summary>
         /// <returns></returns>
-        public string getLogs()
+        public List<Log> getLogs()
         {
-            string logs = "";
-            try
-            {
-               logs=Bitacora.Obtener();
-            }
-            catch (Exception ex) {
-                Bitacora.GuardarLog("ControladorAdministrativo.getLogs "+ex.Message.ToString());
-            }
-            return logs;
+            return Bitacora.Obtener();
         }
 
         /// <summary>
