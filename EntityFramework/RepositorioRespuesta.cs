@@ -10,5 +10,11 @@ namespace Trabajo_Integrador.EntityFramework
     public class RepositorioRespuesta : Repository<Respuesta, TrabajoDbContext>
     {
         public RepositorioRespuesta(TrabajoDbContext pContext) : base(pContext) { }
+
+        public override IEnumerable<Respuesta> GetAll()
+        {
+            return this.iDBSet.Include("Pregunta").ToList();
+        }
+
     }
 }

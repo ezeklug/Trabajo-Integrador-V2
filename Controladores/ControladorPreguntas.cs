@@ -367,7 +367,7 @@ namespace Trabajo_Integrador.Controladores
                 {
                     using (var UoW = new UnitOfWork(db))
                     {
-                        listaRespuesta = (List<Respuesta>)UoW.RepositorioRespuesta.GetAll();
+                        listaRespuesta = (List<Respuesta>) UoW.RepositorioRespuesta.GetAll();
                         listaRespuesta = listaRespuesta.FindAll(r => r.Pregunta.Id == pPregunta.Id);
                     }
                 }
