@@ -57,7 +57,7 @@ namespace Trabajo_Integrador.Ventanas
 
                 cont++;
                 
-                    dt.Rows.Add(new object[] { cont, pregunta.Id, respuestaCorrecta, respuestasIncorrectas[0], respuestasIncorrectas[3], pregunta.Categoria.Id });
+                    dt.Rows.Add(new object[] { cont, pregunta.Id, respuestaCorrecta, respuestasIncorrectas[0], respuestasIncorrectas[1], respuestasIncorrectas[2], pregunta.Categoria.Id });
                 
                 
             }

@@ -175,6 +175,10 @@
     <Compile Include="Migrations\202002171343047_NuevaLogica3.designer.cs">
       <DependentUpon>202002171343047_NuevaLogica3.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202008070053114_Respuesta.cs" />
+    <Compile Include="Migrations\202008070053114_Respuesta.designer.cs">
+      <DependentUpon>202008070053114_Respuesta.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Controladores\OpentDB.cs" />
     <Compile Include="Dominio\Pregunta.cs" />
@@ -315,6 +319,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202002171343047_NuevaLogica3.resx">
       <DependentUpon>202002171343047_NuevaLogica3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202008070053114_Respuesta.resx">
+      <DependentUpon>202008070053114_Respuesta.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
