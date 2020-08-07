@@ -42,8 +42,9 @@ namespace Trabajo_Integrador
         public static void GuardarLog(String pDescripcion)
         {
             string nombreDefault = "examenvirtual.log";
-            var File = new System.IO.StreamWriter(nombreDefault);
+            var File = new System.IO.StreamWriter(nombreDefault,true);
             File.WriteLine(pDescripcion);
+            File.Flush();
             File.Close();
         }
 
