@@ -136,18 +136,11 @@ namespace Trabajo_Integrador.Controladores
         /// Devuelve todos los logs
         /// </summary>
         /// <returns></returns>
-        public List<Log> getLogs()
+        public string getLogs()
         {
-            List<Log> logs = null;
             try
             {
-                using (var db = new TrabajoDbContext())
-                {
-                    using (var UoW = new UnitOfWork(db))
-                    {
-                        logs = db.Logs.ToList();
-                    }
-                }
+                string logs=Bitacora.Obtener();
             }
             catch (Exception ex) {
                 Bitacora.GuardarLog("ControladorAdministrativo.getLogs "+ex.Message.ToString());
