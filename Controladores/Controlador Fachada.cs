@@ -77,17 +77,7 @@ namespace Trabajo_Integrador.Controladores
         /// <param name="pExamen"></param>
         public void InicarExamen(String pNombreUsuario, Examen pExamen)
         {
-            Usuario usuario;
-            using (var db = new TrabajoDbContext())
-            {
-                using (var UoW = new UnitOfWork(db))
-                {
-
-                    usuario = UoW.RepositorioUsuarios.Get(pNombreUsuario);
-                }
-            }
-
-            controladorExamen.IniciarExamen(usuario, pExamen);
+            controladorExamen.IniciarExamen(pNombreUsuario, pExamen);
         }
 
 
