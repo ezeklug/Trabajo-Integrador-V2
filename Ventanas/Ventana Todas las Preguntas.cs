@@ -32,13 +32,7 @@ namespace Trabajo_Integrador.Ventanas
             dt.Columns.Add("Nº", typeof(int));
             dt.Columns.Add("Pregunta", typeof(string));
             dt.Columns.Add("Categoria", typeof(string));
-            // dt.Columns.Add("Respuesta Correcta", typeof(string));
-            // dt.Columns.Add("Respuesta Incorrecta 1", typeof(string));
-            // dt.Columns.Add("Respuesta Incorrecta 2", typeof(string));
-            // dt.Columns.Add("Respuesta Incorrecta 3", typeof(string));
-
-
-
+         
             foreach (Pregunta pregunta in listaPreguntas)
             {
                 List<Respuesta> listaRespuestas = fachada.RespuestasDePregunta(pregunta);
@@ -53,15 +47,7 @@ namespace Trabajo_Integrador.Ventanas
                     }
                     row = row.Append(respuesta.Texto);
                     i++;
-                    // if (respuesta.EsCorrecta)
-                    //{
-                    //   respuestaCorrecta = respuesta;
-                    //}
-                    //else {
-                    //        respuestasIncorrectas.Add(respuesta);    
-                    //}
-
-                   
+                                   
                    
                 }
                 cont++;

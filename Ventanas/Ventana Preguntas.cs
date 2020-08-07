@@ -52,15 +52,12 @@ namespace Trabajo_Integrador.Ventanas
                 opciones.RemoveAt(i);
             }
 
-            int cont = 1;
-            
+                        
             foreach (Respuesta opcion in listaDesordenada)
-            {
-                
+            {                
                RadioButton rb = new RadioButton();
                 rb.Text += opcion.Texto;
                 rb.Name = opcion.Id.ToString();
-                cont++;
                 flowLayoutPanel1.Controls.Add(rb);
             }
                     
@@ -102,7 +99,13 @@ namespace Trabajo_Integrador.Ventanas
         public void LimpiaControles() //Limpia todos los campos (textBox y checkBox)
         {
             preg.Text = "*";
-            flowLayoutPanel1.Controls.Clear();
+            IEnumerable<RadioButton> controles =flowLayoutPanel1.Controls.OfType<RadioButton>();
+            foreach (RadioButton rb in controles)
+            {
+                flowLayoutPanel1.Controls.Remove(rb);
+                rb.Dispose();
+            }
+            
         }
 
             private void timer_Tick(object sender, EventArgs e) //Tiempo agotado
@@ -136,8 +139,7 @@ namespace Trabajo_Integrador.Ventanas
             {
                 RadioButton opcion = flowLayoutPanel1.Controls.OfType<RadioButton>().FirstOrDefault(r => r.Checked);
                                
-                LimpiaControles();
-                fachada.RespuestaCorrecta(iExamen, obtienePregunta(iNumeroPregunta), Int32.Parse(opcion.Name));
+               fachada.RespuestaCorrecta(iExamen, obtienePregunta(iNumeroPregunta), Int32.Parse(opcion.Name));
                // Console.WriteLine(obtienePregunta(iNumeroPregunta).Id);
                
                LimpiaControles(); // Limpia todos los controles
