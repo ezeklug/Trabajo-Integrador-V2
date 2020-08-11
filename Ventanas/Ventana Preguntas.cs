@@ -23,8 +23,7 @@ namespace Trabajo_Integrador.Ventanas
         {
             InitializeComponent();
             iExamen = unExamen;
-            //iNumeroPreguntas = unExamen.CantidadPreguntas;
-
+            
         }
 
         int tiempo;
@@ -45,7 +44,7 @@ namespace Trabajo_Integrador.Ventanas
             List<Respuesta> listaDesordenada = new List<Respuesta>();
             Random rnd = new Random();
 
-            while (opciones.Count > 0) //Desordena la Lista 
+            while (opciones.Count > 0) //Desordena la Lista
             {
                 int i = rnd.Next(opciones.Count);
                 listaDesordenada.Add(opciones[i]);
@@ -53,37 +52,18 @@ namespace Trabajo_Integrador.Ventanas
             }
 
                         
-            foreach (Respuesta opcion in listaDesordenada)
+            foreach (Respuesta opcion in listaDesordenada) //Muestra las preguntas en RadioButtons
             {                
                RadioButton rb = new RadioButton();
-                rb.Text += opcion.Texto;
+                rb.Text = opcion.Texto;
                 rb.Name = opcion.Id.ToString();
                 flowLayoutPanel1.Controls.Add(rb);
+                
             }
                     
-              
         }
 
-       /* public string RecogerOpcion() //Devuelve cual fue la opcion Seleccionada
-        {
-            RadioButton rbSelected = flowLayoutPanel1.Controls.OfType<RadioButton>().FirstOrDefault(r => r.Checked);
-           /* string respuesta = string.Empty;
-
-                if (opcionA.Checked == true) { respuesta = opcionA.Text;
-                opcionA.Checked = false;  }
-                if (opcionB.Checked == true) { respuesta = opcionB.Text;
-                opcionB.Checked = false;  }
-                if (opcionC.Checked == true) { respuesta = opcionC.Text;
-                opcionC.Checked = false;  }
-                if (opcionD.Checked == true) { respuesta= opcionD.Text;
-                opcionD.Checked = false;  }
-            Console.WriteLine(respuesta);
-                                 
-
-            return rbSelected.Text;
             
-        }*/
-        
          
         public Pregunta obtienePregunta(int numeroPregunta) //Muestra la pregunta iNumeroPregunta en la lista de preguntas del examen 
         {
@@ -122,18 +102,14 @@ namespace Trabajo_Integrador.Ventanas
                      
         }
 
-       /* private Boolean ObtenerEstadoBotonSiguiente()
-        {            
-            // Chquea que alguno de los radio buttons este seleccionado, si se cumple, true
-             return (RecogerOpcion()!=null);
-         }
-       */
+      
         private void siguiente_Click(object sender, EventArgs e)
         {
             if (flowLayoutPanel1.Controls.OfType<RadioButton>().FirstOrDefault(r => r.Checked)!=null)
             {
-                RadioButton opcion = flowLayoutPanel1.Controls.OfType<RadioButton>().FirstOrDefault(r => r.Checked);
-                               
+                
+               RadioButton opcion = flowLayoutPanel1.Controls.OfType<RadioButton>().FirstOrDefault(r => r.Checked);
+                             
                fachada.RespuestaCorrecta(iExamen, obtienePregunta(iNumeroPregunta), Int32.Parse(opcion.Name));
                               
                LimpiaControles(); // Limpia todos los controles
