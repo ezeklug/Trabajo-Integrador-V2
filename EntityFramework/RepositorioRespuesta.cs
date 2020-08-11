@@ -15,6 +15,11 @@ namespace Trabajo_Integrador.EntityFramework
         {
             return this.iDBSet.Include("Pregunta").ToList();
         }
+     /*   public override Respuesta Get(int pId)
+        {
+            Respuesta res=iDBSet.Find(pId);
+            return this.iDBSet.Include("Pregunta").Where(r=>r.Id==res.Id).First();
+        }*/
 
     }
 }

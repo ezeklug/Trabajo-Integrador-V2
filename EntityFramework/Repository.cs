@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Data.Entity;
 using System.Data.Entity.Validation;
 using System.Data.Entity.Core;
+using System.Drawing;
 
 namespace Trabajo_Integrador.EntityFramework
 {
@@ -31,11 +32,9 @@ namespace Trabajo_Integrador.EntityFramework
 
         public void Add(TEntity pEntity)
         {
-           
-                iDBSet.Add(pEntity);
-                 iDbContext.SaveChanges();
-           
-          
+           iDBSet.Add(pEntity);
+           iDbContext.SaveChanges();
+
         }
 
         public void Remove(TEntity pEntity)
@@ -45,7 +44,7 @@ namespace Trabajo_Integrador.EntityFramework
 
         }
 
-        public TEntity Get(int pId)
+        public virtual TEntity Get(int pId)
         {
             return this.iDBSet.Find(pId);
         }

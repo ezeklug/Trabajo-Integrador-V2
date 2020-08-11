@@ -75,8 +75,11 @@ namespace Trabajo_Integrador.Controladores
                 using (var UoW = new UnitOfWork(db))
                 {
                     Respuesta respuesta = UoW.RepositorioRespuesta.Get(idRespuesta);
+                    Pregunta pregunta=UoW.RepositorioPreguntas.Get(pPregunta.Id);
+                    respuesta.Pregunta = pregunta;
                     ExamenPregunta examenPregunta= pExamen.ExamenPreguntas.Find(e => e.Pregunta == pPregunta);
                     examenPregunta.RespuestaElegida = respuesta;
+                   // Console.WriteLine($"{examenPregunta.RespuestaElegida.Pregunta.Id} , {examenPregunta.RespuestaElegida.EsCorrecta}");
                     return respuesta.EsCorrecta;
                 }
             }
