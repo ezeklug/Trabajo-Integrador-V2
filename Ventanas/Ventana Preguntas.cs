@@ -99,12 +99,7 @@ namespace Trabajo_Integrador.Ventanas
         public void LimpiaControles() //Limpia todos los campos (textBox y checkBox)
         {
             preg.Text = "*";
-            IEnumerable<RadioButton> controles =flowLayoutPanel1.Controls.OfType<RadioButton>();
-            foreach (RadioButton rb in controles)
-            {
-                flowLayoutPanel1.Controls.Remove(rb);
-                rb.Dispose();
-            }
+            flowLayoutPanel1.Controls.Clear();
             
         }
 
@@ -140,8 +135,7 @@ namespace Trabajo_Integrador.Ventanas
                 RadioButton opcion = flowLayoutPanel1.Controls.OfType<RadioButton>().FirstOrDefault(r => r.Checked);
                                
                fachada.RespuestaCorrecta(iExamen, obtienePregunta(iNumeroPregunta), Int32.Parse(opcion.Name));
-               // Console.WriteLine(obtienePregunta(iNumeroPregunta).Id);
-               
+                              
                LimpiaControles(); // Limpia todos los controles
 
                 iNumeroPregunta++;
@@ -164,11 +158,7 @@ namespace Trabajo_Integrador.Ventanas
             else
             {
                 MessageBox.Show("Debe seleccionar una resupuesta");
-            }
-
-           
-
-           
+            }      
            
         }
               
