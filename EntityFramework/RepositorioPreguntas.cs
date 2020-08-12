@@ -69,9 +69,13 @@ namespace Trabajo_Integrador.EntityFramework
 
 
         }
+        public override IEnumerable<Pregunta> GetAll()
+        {
+            return this.iDBSet.Include("Categoria").ToList();
+        }
 
 
 
-        
+
     }
 }

@@ -45,7 +45,7 @@ namespace Trabajo_Integrador.Controladores
             {
                 using (var UoW = new UnitOfWork(db))
                 {
-                    listaPreguntas = db.Preguntas.Include("Categoria").ToList();
+                   listaPreguntas= (List<Pregunta>)UoW.RepositorioPreguntas.GetAll();
                 }
             }
 
@@ -58,8 +58,7 @@ namespace Trabajo_Integrador.Controladores
             {
                 using (var UoW = new UnitOfWork(db))
                 {
-                    listaExamenes = db.Examenes.Include("Usuario").ToList<Examen>();
-                    //listaExamenes = (List<Examen>)UoW.ExamenRepository.GetAll();
+                    listaExamenes = (List<Examen>)UoW.ExamenRepository.GetAll();
                 }
             }
 
@@ -131,7 +130,31 @@ namespace Trabajo_Integrador.Controladores
 
         }
 
-
+        /// <summary>
+        /// Metodo que devuelve una lista de examenes de un usuario ordenados por puntaje
+        /// </summary>
+        /// <param name="pUsuario"></param>
+        /// <returns></returns>
+        public List<Examen> GetRanking(String pUsuario)
+        {
+            List<Examen> listaExamenes = new List<Examen>();
+            try
+            {
+                using (var db = new TrabajoDbContext())
+                {
+                    using (var UoW = new UnitOfWork(db))
+                    {
+                        listaExamenes = (List<Examen>)UoW.ExamenRepository.GetAll();
+                        listaExamenes = listaExamenes.FindAll(ex => ex.Usuario.Id == pUsuario).OrderBy(ex => ex.Puntaje).ToList<Examen>();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Bitacora.GuardarLog("ControladorAdministrativo.GetRanking" + ex.Message);
+            }
+            return listaExamenes;
+        }
 
         /// <summary>
         /// Devuelve todos los logs
@@ -139,21 +162,7 @@ namespace Trabajo_Integrador.Controladores
         /// <returns></returns>
         public List<Log> getLogs()
         {
-            List<Log> logs = null;
-            try
-            {
-                using (var db = new TrabajoDbContext())
-                {
-                    using (var UoW = new UnitOfWork(db))
-                    {
-                        logs = db.Logs.ToList();
-                    }
-                }
-            }
-            catch (Exception ex) {
-                Bitacora.GuardarLog("ControladorAdministrativo.getLogs "+ex.Message.ToString());
-            }
-            return logs;
+            return Bitacora.Obtener();
         }
 
         /// <summary>
@@ -195,23 +204,85 @@ namespace Trabajo_Integrador.Controladores
                 }
             }
         }
+
+
         /// <summary>
-        /// Metodo que devuelve los examenes correspondientes a un usuario, ordenados por puntaje descendentemente
+        /// Chequea que el usuario y contrasenia de un usuario existan
         /// </summary>
-        /// <param name="pUsuario"></param>
+        /// <param name="pUsuarioId"></param>
+        /// <param name="pContrasenia"></param>
         /// <returns></returns>
-        public List<Examen> GetRanking(string pUsuario)
+        public Boolean UsuarioValido(string pUsuarioId, string pContrasenia)
         {
             using (var db = new TrabajoDbContext())
             {
                 using (var UoW = new UnitOfWork(db))
                 {
-                    List<Examen> examenes = UoW.ExamenRepository.SelectAll(pUsuario);
-                    examenes.Sort((a, b) => b.Puntaje.CompareTo(a.Puntaje));
-                    return examenes;
+                    Usuario usr = new Usuario(pUsuarioId, pContrasenia);    //Necesario por el hash de contrasenia
+                    Usuario usrDb = UoW.RepositorioUsuarios.Get(pUsuarioId);
+                    if (usrDb != null)
+                    {
+                        if (usrDb.Contrasenia == usr.Contrasenia)
+                        {
+                            return true;
+                        }
+                        else return false;
+                    }
+                    else return false;
+
+
                 }
             }
         }
+
+
+
+        /// <summary>
+        /// Chequea si un usuario existe en la base de datos
+        /// </summary>
+        /// <param name="pUsuarioId"></param>
+        /// <returns></returns>
+        public Boolean UsuarioExiste(string pNombreUsuario)
+        {
+            using (var db = new TrabajoDbContext())
+            {
+                using (var UoW = new UnitOfWork(db))
+                {
+                    Usuario usrDb = UoW.RepositorioUsuarios.Get(pNombreUsuario);
+
+                    if (usrDb != null)
+                    {
+                        if (usrDb.Id == pNombreUsuario)
+                        {
+                            return true;
+                        }
+                        else return false;
+                    }
+                    else return false;
+                }
+            }
+        }
+        /// <summary>
+        /// Devuelve verdadero si un usuario es administrador
+        /// </summary>
+        /// <param name="pNombreUsuario"></param>
+        /// <returns></returns>
+        public Boolean EsAdministrador(string pNombreUsuario)
+        {
+            using (var db = new TrabajoDbContext())
+            {
+                using (var UoW = new UnitOfWork(db))
+                {
+                    Usuario usrDb = UoW.RepositorioUsuarios.Get(pNombreUsuario);
+                    if (usrDb.Administrador == true)
+                    {
+                        return true;
+                    }
+                    else return false;
+                }
+            }
+        }
+
     }
 }
 

@@ -95,7 +95,7 @@ namespace Trabajo_Integrador.Dominio
 
             foreach (var ep in ExamenPreguntas)
             {
-                if (ep.Pregunta.RespuestaEsCorrecta(ep.OpcionElegida))
+                if (ep.RespuestaElegida.EsCorrecta)
                 {
                     cont++;
                 }
@@ -117,30 +117,6 @@ namespace Trabajo_Integrador.Dominio
         }
 
 
-
-
-        /// <summary>
-        /// Dada una pregunta y una respuesta, dice si es correcta o no y guarda el resultado
-        /// </summary>
-        /// <param name="pPregunta"></param>
-        /// <param name="pRespuesta"></param>
-        /// <returns>Verdadero si respuesta es correcta</returns>
-        /// 
-        public Boolean RespuestaCorrecta(Pregunta pPregunta, String pRespuesta)
-        {
-            Boolean respuestaCorrecta = pPregunta.RespuestaEsCorrecta(pRespuesta);
-            ExamenPregunta ep = ExamenPreguntas.Find(e => e.Pregunta.Id == pPregunta.Id);
-            Console.WriteLine(pPregunta.Id);
-            foreach (var examenpre in ExamenPreguntas)
-            {
-                Console.WriteLine(examenpre.Pregunta.Id);
-            }
-
-            ep.OpcionElegida = pRespuesta;
-            return respuestaCorrecta;
-               
-        }
-               
 
         /// <summary>
         /// Da fin a un examen

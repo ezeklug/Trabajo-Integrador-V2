@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Trabajo_Integrador.Dominio;
 
 namespace Trabajo_Integrador
 {
@@ -24,6 +25,6 @@ namespace Trabajo_Integrador
             set { this.iConjunto = value; }
         }
         //metodos abstractos
-        public abstract List<Pregunta> getPreguntas(string pCantidad,string pConjunto, string pDificultad, CategoriaPregunta pCategoria);
+        public abstract (List<Pregunta>, List<Respuesta>) getPreguntas(string pCantidad,string pConjunto, string pDificultad, CategoriaPregunta pCategoria);
     }
 }
