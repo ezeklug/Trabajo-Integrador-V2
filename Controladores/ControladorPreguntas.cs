@@ -135,8 +135,7 @@ namespace Trabajo_Integrador.Controladores
                         categoria = UoW.RepositorioCategorias.Get(pCategoria);
                     }
                 }
-                IEstrategiaObtenerPreguntas estrategia = this.GetEstrategia(pConjunto);
-                (List<Pregunta>, List<Respuesta>) preguntas = estrategia.getPreguntas(pCantidad, pConjunto, pDificultad, categoria);
+                (List<Pregunta>, List<Respuesta>) preguntas = this.GetEstrategia(pConjunto).getPreguntas(pCantidad, pConjunto, pDificultad, categoria);
                 cargadas = CargarPreguntas(preguntas.Item1);
                 CargarRespuestas(preguntas.Item2);
             }

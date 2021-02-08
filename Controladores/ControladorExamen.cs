@@ -79,7 +79,6 @@ namespace Trabajo_Integrador.Controladores
                     respuesta.Pregunta = pregunta;
                     ExamenPregunta examenPregunta= pExamen.ExamenPreguntas.Find(e => e.Pregunta.Id == pPregunta.Id);
                     examenPregunta.RespuestaElegida = respuesta;
-                   // Console.WriteLine($"{examenPregunta.RespuestaElegida.Pregunta.Id} , {examenPregunta.RespuestaElegida.EsCorrecta}");
                     return respuesta.EsCorrecta;
                 }
             }
