@@ -31,12 +31,13 @@ namespace Trabajo_Integrador.Controladores
         private void AsociarExamenPregunta(Examen pExamen, List<Pregunta> pPreguntas)
         {
             List<ExamenPregunta> examenPreguntas = new List<ExamenPregunta>();
+
+            
             foreach (var pregunta in pPreguntas)
             {
                 ExamenPregunta examenPregunta = new ExamenPregunta();
                 examenPregunta.Pregunta = pregunta;
-                examenPreguntas.Add(examenPregunta);
-
+                examenPreguntas.Add(examenPregunta)
             }
             pExamen.ExamenPreguntas = examenPreguntas;
         }

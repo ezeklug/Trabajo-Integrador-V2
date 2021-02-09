@@ -28,30 +28,30 @@ namespace Trabajo_Integrador.EntityFramework
             List<Pregunta> preguntas;
             if ((pCategoria != "0") && (pDificultad == "0"))
             {
-                preguntas = iDBSet.Include("Conjunto").Include("Dificultad").Where(p => ((p.Categoria.Id == pCategoria) && (p.Conjunto.Id == pConjunto))).ToList<Pregunta>();
+                preguntas = iDBSet.Include("Conjunto").Include("Dificultad").Include("Respuestas").Where(p => ((p.Categoria.Id == pCategoria) && (p.Conjunto.Id == pConjunto))).ToList<Pregunta>();
             }
             else 
             {
                 if ((pCategoria == "0") && (pDificultad != "0"))
                 {
-                    preguntas = iDBSet.Include("Conjunto").Include("Dificultad").Where(p => ((p.Dificultad.Id == pDificultad) && (p.Conjunto.Id == pConjunto))).ToList<Pregunta>();
+                    preguntas = iDBSet.Include("Conjunto").Include("Dificultad").Include("Respuestas").Where(p => ((p.Dificultad.Id == pDificultad) && (p.Conjunto.Id == pConjunto))).ToList<Pregunta>();
                 }
                 else
                 {
                     if ((pCategoria == "0") && (pDificultad == "0"))
                     {
-                        preguntas = iDBSet.Include("Conjunto").Include("Dificultad").Where(p => ((p.Conjunto.Id == pConjunto))).ToList<Pregunta>();
+                        preguntas = iDBSet.Include("Conjunto").Include("Dificultad").Include("Respuestas").Where(p => ((p.Conjunto.Id == pConjunto))).ToList<Pregunta>();
                     }
                     else
                     {
-                        preguntas = iDBSet.Include("Conjunto").Include("Dificultad").Where(p => ((p.Dificultad.Id == pDificultad) && (p.Categoria.Id == pCategoria) && (p.Conjunto.Id == pConjunto))).ToList<Pregunta>();
+                        preguntas = iDBSet.Include("Conjunto").Include("Dificultad").Include("Respuestas").Where(p => ((p.Dificultad.Id == pDificultad) && (p.Categoria.Id == pCategoria) && (p.Conjunto.Id == pConjunto))).ToList<Pregunta>();
                     }
                 }
             }
             int cantidad = Convert.ToInt32(pCantidad);
             if (preguntas.Count <= cantidad)
             {
-                List<Pregunta> preguntas2 =iDBSet.Include("Conjunto").Include("Dificultad").Where(p => ((p.Categoria.Id == pCategoria) && (p.Conjunto.Id == pConjunto))).ToList<Pregunta>();
+                List<Pregunta> preguntas2 =iDBSet.Include("Conjunto").Include("Dificultad").Include("Respuestas").Where(p => ((p.Categoria.Id == pCategoria) && (p.Conjunto.Id == pConjunto))).ToList<Pregunta>();
                 foreach(Pregunta preg in preguntas2)
                 {
                     if (!preguntas.Contains(preg) && preguntas.Count<cantidad)
@@ -71,7 +71,7 @@ namespace Trabajo_Integrador.EntityFramework
         }
         public override IEnumerable<Pregunta> GetAll()
         {
-            return this.iDBSet.Include("Categoria").Include("Respuestas").ToList();
+            return this.iDBSet.Include("Categoria").Include("Respuestas").Include("Respuestas").ToList();
         }
 
         public Pregunta Get(string pId)
