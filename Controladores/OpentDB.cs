@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Globalization;
 using Trabajo_Integrador.Dominio;
+using Trabajo_Integrador.Controladores.Bitacora;
 
 namespace Trabajo_Integrador
 {
@@ -98,7 +99,8 @@ namespace Trabajo_Integrador
                 }
                 catch (WebException ex)
                 {
-                    Bitacora.GuardarLog(ex.Message);
+                    var bitacora = new Bitacora();
+                    bitacora.GuardarLog(ex.Message);
                 }
                 return preguntas;
             }

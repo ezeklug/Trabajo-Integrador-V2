@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Trabajo_Integrador.Dominio;
 using Trabajo_Integrador.EntityFramework;
+using Trabajo_Integrador.Controladores.Bitacora;
 
 namespace Trabajo_Integrador.Controladores
 {
@@ -151,7 +152,8 @@ namespace Trabajo_Integrador.Controladores
             }
             catch (Exception ex)
             {
-                Bitacora.GuardarLog("ControladorAdministrativo.GetRanking" + ex.Message);
+                var bitacora = new  Bitacora.Bitacora();
+                bitacora.GuardarLog("ControladorAdministrativo.GetRanking" + ex.Message);
             }
             return listaExamenes;
         }
@@ -160,9 +162,10 @@ namespace Trabajo_Integrador.Controladores
         /// Devuelve todos los logs
         /// </summary>
         /// <returns></returns>
-        public List<Log> getLogs()
+        public ICollection<Log> getLogs()
         {
-            return Bitacora.Obtener();
+            IBitacora bitacora = new Controladores.Bitacora.Bitacora();
+            return bitacora.ObtenerTodos();
         }
 
         /// <summary>

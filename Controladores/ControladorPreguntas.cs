@@ -108,7 +108,8 @@ namespace Trabajo_Integrador.Controladores
             }
             catch (Exception ex)
             {
-                Bitacora.GuardarLog(ex.Message.ToString());
+                var bitacora = new Bitacora.Bitacora();
+                bitacora.GuardarLog(ex.Message.ToString());
             }
             return cantidad;
         }
@@ -146,7 +147,8 @@ namespace Trabajo_Integrador.Controladores
             
             catch (NotImplementedException ex)
             {
-                Bitacora.GuardarLog("ControladorPreguntas.GetPreguntasOnline: " + ex.Message);
+                var bitacora = new Bitacora.Bitacora();
+                bitacora.GuardarLog("ControladorPreguntas.GetPreguntasOnline: " + ex.Message);
             }
             return cargadas;
 
@@ -199,7 +201,8 @@ namespace Trabajo_Integrador.Controladores
             }
             catch (Exception ex)
             {
-                Bitacora.GuardarLog("ControladorPreguntas.GetCategorias" + ex.ToString());
+                var bitacora = new Bitacora.Bitacora();
+                bitacora.GuardarLog("ControladorPreguntas.GetCategorias" + ex.ToString());
             }
             return listaCategoria;
         }
@@ -233,7 +236,8 @@ namespace Trabajo_Integrador.Controladores
             }
             catch (Exception ex)
             {
-                Bitacora.GuardarLog("ControladorPreguntas.GetCategoriasConMasDeNPreguntas" + ex.ToString());
+                var bitacora = new Bitacora.Bitacora();
+                bitacora.GuardarLog("ControladorPreguntas.GetCategoriasConMasDeNPreguntas" + ex.ToString());
             }
             return ADevolver;
         }
@@ -260,7 +264,8 @@ namespace Trabajo_Integrador.Controladores
             }
             catch (Exception ex)
             {
-                Bitacora.GuardarLog("ControladorPreguntas.CantidadDePreguntasParaCategoria" + ex.ToString());
+                var bitacora = new Bitacora.Bitacora();
+                bitacora.GuardarLog("ControladorPreguntas.CantidadDePreguntasParaCategoria" + ex.ToString());
             }
             return aRetornar;
 
@@ -288,7 +293,8 @@ namespace Trabajo_Integrador.Controladores
             }
             catch (Exception ex)
             {
-                Bitacora.GuardarLog("ControladorPreguntas.GetConjuntoPreguntas" + ex.ToString());
+                var bitacora = new Bitacora.Bitacora();
+                bitacora.GuardarLog("ControladorPreguntas.GetConjuntoPreguntas" + ex.ToString());
             }
             return listaConjuntos;
         }
@@ -312,7 +318,8 @@ namespace Trabajo_Integrador.Controladores
             }
             catch (Exception ex)
             {
-                Bitacora.GuardarLog("ControladorPreguntas.GetDificultades" + ex.ToString());
+                var bitacora = new Bitacora.Bitacora();
+                bitacora.GuardarLog("ControladorPreguntas.GetDificultades" + ex.ToString());
             }
             return listaDificultades;
         }

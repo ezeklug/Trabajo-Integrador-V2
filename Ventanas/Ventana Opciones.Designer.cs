@@ -130,7 +130,7 @@
             this.monitoreoBitacora.Name = "monitoreoBitacora";
             this.monitoreoBitacora.Size = new System.Drawing.Size(106, 50);
             this.monitoreoBitacora.TabIndex = 10;
-            this.monitoreoBitacora.Text = "Bitacora Monitoreo";
+            this.monitoreoBitacora.Text = "BitacoraDb Monitoreo";
             this.monitoreoBitacora.UseVisualStyleBackColor = false;
             this.monitoreoBitacora.Click += new System.EventHandler(this.monitoreoBitacora_Click);
             // 

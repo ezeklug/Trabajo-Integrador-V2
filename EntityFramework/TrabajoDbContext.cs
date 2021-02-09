@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Trabajo_Integrador.Dominio;
 using Trabajo_Integrador.Migrations;
+using Trabajo_Integrador.Controladores.Bitacora;
 
 namespace Trabajo_Integrador.EntityFramework
 {

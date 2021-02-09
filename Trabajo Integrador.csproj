@@ -135,6 +135,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controladores\Bitacora\Bitacora.cs" />
+    <Compile Include="Controladores\Bitacora\BitacoraComposite.cs" />
+    <Compile Include="Controladores\Bitacora\BitacoraFile.cs" />
+    <Compile Include="Controladores\Bitacora\IBitacora.cs" />
     <Compile Include="Controladores\Controlador Fachada.cs" />
     <Compile Include="Controladores\ControladorAdministrativo.cs" />
     <Compile Include="Dominio\CategoriaPregunta.cs" />
@@ -159,8 +163,8 @@
     <Compile Include="Controladores\EstrategiaNula.cs" />
     <Compile Include="Controladores\EstrategiaObtenerPreguntas.cs" />
     <Compile Include="Controladores\IEstrategiaObtenerPreguntas.cs" />
-    <Compile Include="Controladores\Bitacora.cs" />
-    <Compile Include="Controladores\Log.cs" />
+    <Compile Include="Controladores\Bitacora\BitacoraDb.cs" />
+    <Compile Include="Controladores\Bitacora\Log.cs" />
     <Compile Include="Migrations\202002092213292_Inital.cs" />
     <Compile Include="Migrations\202002092213292_Inital.designer.cs">
       <DependentUpon>202002092213292_Inital.cs</DependentUpon>

@@ -39,10 +39,10 @@
             this.Bitacora.AutoSize = true;
             this.Bitacora.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Bitacora.Location = new System.Drawing.Point(12, 23);
-            this.Bitacora.Name = "Bitacora";
+            this.Bitacora.Name = "BitacoraDb";
             this.Bitacora.Size = new System.Drawing.Size(186, 20);
             this.Bitacora.TabIndex = 2;
-            this.Bitacora.Text = "Bitacora de Monitoreo";
+            this.Bitacora.Text = "BitacoraDb de Monitoreo";
             // 
             // dataGridView1
             // 

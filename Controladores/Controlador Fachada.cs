@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Web.UI;
 using System.Web.UI.WebControls.WebParts;
 using Trabajo_Integrador.Dominio;
+using Trabajo_Integrador.Controladores.Bitacora;
 using Trabajo_Integrador.EntityFramework;
 
 
@@ -68,7 +69,7 @@ namespace Trabajo_Integrador.Controladores
         /// Devuelve una lista con todos los logs
         /// </summary>
         /// <returns></returns>
-        public List<Log> getLogs()
+        public ICollection<Log> getLogs()
         {
             return controladorAdministrativo.getLogs();
         }
