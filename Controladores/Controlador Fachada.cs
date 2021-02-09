@@ -6,8 +6,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web.UI;
 using System.Web.UI.WebControls.WebParts;
+using Trabajo_Integrador.DTO;
 using Trabajo_Integrador.Dominio;
 using Trabajo_Integrador.EntityFramework;
+
 
 
 
@@ -34,9 +36,15 @@ namespace Trabajo_Integrador.Controladores
         /// </summary>
         /// <param name="pUsuario">Id del usuario</param>
         /// <returns></returns>
-        public List<Examen> GetRanking(String pUsuario)
+        public List<ExamenDTO> GetRanking(String pUsuario)
         {
-            return controladorAdministrativo.GetRanking(pUsuario);
+            List<ExamenDTO> listaExamenes = new List<ExamenDTO>();
+            foreach(Examen examen in controladorAdministrativo.GetRanking(pUsuario))
+            {
+                listaExamenes.Add(new ExamenDTO(examen));
+            }
+        
+            return listaExamenes;
         }
 
 
@@ -45,7 +53,7 @@ namespace Trabajo_Integrador.Controladores
         /// </summary>
         /// <param name="unExamen"></param>
         /// <returns></returns>
-        public float GetTiempoLimite(Examen unExamen)
+        public float GetTiempoLimite(ExamenDTO unExamen)
         {
             return controladorExamen.GetTiempoLimite(unExamen);
         }
@@ -58,7 +66,7 @@ namespace Trabajo_Integrador.Controladores
         /// </summary>
         /// <param name="pUsuario"></param>
         /// <param name="pExamen"></param>
-        public void InicarExamen(String pNombreUsuario, Examen pExamen)
+        public void InicarExamen(String pNombreUsuario, ExamenDTO pExamen)
         {
             controladorExamen.IniciarExamen(pNombreUsuario, pExamen);
         }
@@ -94,9 +102,9 @@ namespace Trabajo_Integrador.Controladores
         /// <param name="pDificultad">Id Dificultad</param>
         /// <returns></returns>
         /// 
-        public Examen InicializarExamen(int pCantidad, String pConjunto, string pCategoria, string pDificultad)
+        public ExamenDTO InicializarExamen(int pCantidad, String pConjunto, string pCategoria, string pDificultad)
         {
-            return controladorExamen.InicializarExamen(pCantidad.ToString(), pConjunto, pCategoria, pDificultad);
+            return (new ExamenDTO(controladorExamen.InicializarExamen(pCantidad.ToString(), pConjunto, pCategoria, pDificultad)));
         }
 
 
@@ -104,7 +112,7 @@ namespace Trabajo_Integrador.Controladores
         /// Metodo que finaliza un examen y lo guarda en la base de datos
         /// </summary>
         /// <param name="pExamen"></param>
-        public void FinalizarExamen(Examen pExamen)
+        public void FinalizarExamen(ExamenDTO pExamen)
         {
             controladorExamen.FinalizarExamen(pExamen);
         }
@@ -113,19 +121,30 @@ namespace Trabajo_Integrador.Controladores
         /// Metodo que devuelve una lista de todos los usuarios
         /// </summary>
         /// <returns></returns>
-        public List<Usuario> GetUsuarios()
+        public List<UsuarioDTO> GetUsuarios()
         {
-            return controladorAdministrativo.GetUsuarios();
+            List<UsuarioDTO> listaUsuariosDTO = new List<UsuarioDTO>();
+            foreach (Usuario usuario in controladorAdministrativo.GetUsuarios())
+            {
+                listaUsuariosDTO.Add(new UsuarioDTO(usuario));
+            }
+            return listaUsuariosDTO;
         }
 
-        /// <summary>
-        /// Metodo que devuelve todas las categorias cargadas en base de datos
-        /// </summary>
-        /// <returns></returns>
-        public List<CategoriaPregunta> GetCategorias()
-        {
-            return controladorAdministrativo.GetCategorias();
-        }
+            /// <summary>
+            /// Metodo que devuelve todas las categorias cargadas en base de datos
+            /// </summary>
+            /// <returns></returns>
+            public List<CategoriaPreguntaDTO> GetCategorias()
+            {
+                List<CategoriaPreguntaDTO> listaCategoriaDTO = new List<CategoriaPreguntaDTO>();
+                List<CategoriaPregunta> listaCategoriaPreguntas = controladorAdministrativo.GetCategorias();
+                foreach (CategoriaPregunta categoria in listaCategoriaPreguntas)
+                {
+                    listaCategoriaDTO.Add(new CategoriaPreguntaDTO(categoria));
+                }
+                return listaCategoriaDTO;
+            }
 
 
 
@@ -134,9 +153,14 @@ namespace Trabajo_Integrador.Controladores
         /// </summary>
         /// <param name="n">Cantida de preguntas</param>
         /// <returns>Lista de Categorias</returns>
-        public List<CategoriaPregunta> GetCategoriaPreguntasConNPreguntas(int n)
+        public List<CategoriaPreguntaDTO> GetCategoriaPreguntasConNPreguntas(int n)
         {
-            return controladorPreguntas.GetCategoriasConMasDeNPreguntas(n);
+            List<CategoriaPreguntaDTO> listaCategoriaDTO = new List<CategoriaPreguntaDTO>();
+            foreach (CategoriaPregunta categoria in listaCategoriaPregucontroladorPreguntas.GetCategoriasConMasDeNPreguntas(n))
+            {
+                listaCategoriaDTO.Add(new CategoriaPreguntaDTO(categoria));
+            }
+            return listaCategoriaDTO;
         }
 
 
@@ -147,17 +171,29 @@ namespace Trabajo_Integrador.Controladores
         /// <returns></returns>
         /// 
 
-        public List<ConjuntoPreguntas> GetConjuntoPreguntas()
+        public List<ConjuntoPreguntasDTO> GetConjuntoPreguntas()
         {
-            return controladorAdministrativo.GetConjuntoPreguntas();
+            List<ConjuntoPreguntasDTO> listaConjuntoPreguntasDTO = new List<ConjuntoPreguntasDTO>();
+            
+            foreach (ConjuntoPreguntas conjuntoPregunta in controladorAdministrativo.GetConjuntoPreguntas())
+            {
+                listaConjuntoPreguntasDTO.Add(new ConjuntoPreguntasDTO(conjuntoPregunta));
+            }
+            return listaConjuntoPreguntasDTO;
         }
         /// <summary>
         /// Metodo que devuelve todas las dificultades cargadas en base de datos
         /// </summary>
         /// <returns></returns>
-        public List<Dificultad> GetDificultades()
+        public List<DificultadDTO> GetDificultades()
         {
-            return controladorAdministrativo.GetDificultades();
+            List<DificultadDTO> listaDificultadDTO = new List<DificultadDTO>();
+         
+            foreach (Dificultad dificultad in controladorAdministrativo.GetDificultades())
+            {
+                listaDificultadDTO.Add(new DificultadDTO(dificultad));
+            }
+            return listaDificultadDTO;
         }
         /// <summary>
         /// Metodo que guarda un usuario en la base de datos de usuarios
@@ -213,7 +249,7 @@ namespace Trabajo_Integrador.Controladores
         /// <param name="pPregunta"></param>
         /// <param name="pRespuesta"></param>
         /// <returns></returns>
-        public Boolean RespuestaCorrecta(Examen pExamen, Pregunta pPregunta, int idRespuesta)
+        public Boolean RespuestaCorrecta(ExamenDTO pExamen, PreguntaDTO pPregunta, int idRespuesta)
         {
             return controladorExamen.RespuestaCorrecta(pExamen, pPregunta, idRespuesta);
         }
@@ -237,9 +273,14 @@ namespace Trabajo_Integrador.Controladores
         /// Devuelve todos los examenes
         /// </summary>
         /// <returns></returns>
-        public List<Examen> GetExamenes()
+        public List<ExamenDTO> GetExamenes()
         {
-            return controladorAdministrativo.GetExamenes();
+            List<ExamenDTO> listaExamenDTO = new List<ExamenDTO>();
+            foreach (Examen examen in controladorAdministrativo.GetExamenes())
+            {
+                listaExamenDTO.Add(new ExamenDTO(examen));
+            }
+            return listaExamenDTO;
         }
 
 
@@ -279,14 +320,24 @@ namespace Trabajo_Integrador.Controladores
         /// Obtiene todas las preguntas de la base de datos
         /// </summary>
         /// <returns></returns>
-        public List<Pregunta> GetPreguntas()
+        public List<PreguntaDTO> GetPreguntas()
         {
-            return controladorAdministrativo.GetPreguntas();
+            List<PreguntaDTO> listaPreguntaDTO = new List<PreguntaDTO>();
+            foreach (Pregunta pregunta in controladorAdministrativo.GetPreguntas())
+            {
+                listaPreguntaDTO.Add(new PreguntaDTO(pregunta));
+            }
+            return listaPreguntaDTO;
         }
 
-        public List<Pregunta> GetPreguntasRandom(string pCantidad, string pConjunto, string pCategoria, string pDificultad)
+        public List<PreguntaDTO> GetPreguntasRandom(string pCantidad, string pConjunto, string pCategoria, string pDificultad)
         {
-            return controladorPreguntas.GetPreguntasRandom(pCantidad, pConjunto, pCategoria, pDificultad);
+            List<PreguntaDTO> listaPreguntasRandomDTO = new List<PreguntaDTO>();
+            foreach (Pregunta pregunta in controladorPreguntas.GetPreguntasRandom(pCantidad, pConjunto, pCategoria, pDificultad))
+            {
+                listaPreguntasRandomDTO.Add(new PreguntaDTO(pregunta));
+            }
+            return listaPreguntasRandomDTO;
         }
 
 
@@ -307,9 +358,14 @@ namespace Trabajo_Integrador.Controladores
         /// </summary>
         /// <param name="pPregunta"></param>
         /// <returns>Una lista de respuestas</returns>
-        public List<Respuesta> RespuestasDePregunta(Pregunta pPregunta)
+        public List<RespuestaDTO> RespuestasDePregunta(PreguntaDTO pPregunta)
         {
-            return controladorPreguntas.RespuestasDePregunta(pPregunta);
+            List<RespuestaDTO> listaRespuestaDTO = new List<RespuestaDTO>();
+            foreach(Respuesta respuesta in controladorPreguntas.RespuestasDePregunta(pPregunta))
+            {
+                listaRespuestaDTO.Add(RespuestaDTO(respuesta));
+            }
+            return listaRespuestaDTO;
         }
 
     }

@@ -381,6 +381,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Diagramas\" />
+    <Folder Include="DTO\" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
