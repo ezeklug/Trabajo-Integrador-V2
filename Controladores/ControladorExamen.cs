@@ -37,7 +37,7 @@ namespace Trabajo_Integrador.Controladores
             {
                 ExamenPregunta examenPregunta = new ExamenPregunta();
                 examenPregunta.Pregunta = pregunta;
-                examenPreguntas.Add(examenPregunta)
+                examenPreguntas.Add(examenPregunta);
             }
             pExamen.ExamenPreguntas = examenPreguntas;
         }
