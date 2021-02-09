@@ -74,13 +74,14 @@ namespace Trabajo_Integrador.Controladores
             {
                 using (var UoW = new UnitOfWork(db))
                 {
-                    Respuesta respuesta = UoW.RepositorioRespuesta.Get(idRespuesta);
                     Pregunta pregunta = UoW.RepositorioPreguntas.Get(pPregunta.Id);
-                    respuesta.Pregunta = pregunta;
                     ExamenPregunta examenPregunta= pExamen.ExamenPreguntas.Find(e => e.Pregunta.Id == pPregunta.Id);
-                    examenPregunta.RespuestaElegida = respuesta;
-                   // Console.WriteLine($"{examenPregunta.RespuestaElegida.Pregunta.Id} , {examenPregunta.RespuestaElegida.EsCorrecta}");
-                    return respuesta.EsCorrecta;
+                   
+                    var respuestaElegida = pPregunta.Respuestas.FirstOrDefault<Respuesta>(p => p.Id == idRespuesta);
+                    examenPregunta.RespuestaElegida = respuestaElegida;
+
+
+                    return respuestaElegida.EsCorrecta;
                 }
             }
         }
@@ -134,7 +135,7 @@ namespace Trabajo_Integrador.Controladores
                     foreach (ExamenPregunta ep in pExamen.ExamenPreguntas)
                     {
                         ep.Pregunta = UoW.RepositorioPreguntas.Get(ep.Pregunta.Id);
-                        ep.RespuestaElegida = UoW.RepositorioRespuesta.Get(ep.RespuestaElegida.Id);
+                        ep.RespuestaElegida = ep.Pregunta.Respuestas.FirstOrDefault(p => p.Id == ep.RespuestaElegida.Id);
                     }
 
 

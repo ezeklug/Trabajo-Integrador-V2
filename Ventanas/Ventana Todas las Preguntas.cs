@@ -35,7 +35,7 @@ namespace Trabajo_Integrador.Ventanas
          
             foreach (Pregunta pregunta in listaPreguntas)
             {
-                List<Respuesta> listaRespuestas = fachada.RespuestasDePregunta(pregunta);
+                ICollection<Respuesta> listaRespuestas = pregunta.Respuestas;
                 IEnumerable<object> row = new object[]{ cont, pregunta.Id, pregunta.Categoria.Id };
                 int i = 1;
                 foreach (Respuesta respuesta in listaRespuestas)

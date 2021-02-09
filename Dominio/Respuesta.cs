@@ -11,14 +11,12 @@ namespace Trabajo_Integrador.Dominio
 
         public int Id { get; set; }
         public string Texto { get; set; }
-        public Pregunta Pregunta { get; set; }
-
         public Boolean EsCorrecta { get; set; }
 
-        public Respuesta(string pTexto, Pregunta pPregunta, Boolean pCorrecta)
+
+        public Respuesta(string pTexto, Boolean pCorrecta)
         {
             this.Texto = pTexto;
-            this.Pregunta = pPregunta;
             this.EsCorrecta = pCorrecta;
         }
         public Respuesta() { }

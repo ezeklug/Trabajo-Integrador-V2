@@ -29,11 +29,11 @@ namespace Trabajo_Integrador
         /// <param name="pDificultad"></param>
         /// <param name="pCategoria"></param>
         /// <returns></returns>
-        public override (List<Pregunta>, List<Respuesta>) getPreguntas(string pCantidad, string pConjunto,string pDificultad, CategoriaPregunta pCategoria)
+        public override List<Pregunta> getPreguntas(string pCantidad, string pConjunto,string pDificultad, CategoriaPregunta pCategoria)
         {
             {
-                List<Pregunta> listaPreguntas = new List<Pregunta>();
-                List<Respuesta> Respuestas = new List<Respuesta>();
+                List<Pregunta> preguntas = new List<Pregunta>();
+                ICollection<Respuesta> respuestas = new List<Respuesta>();
 
                 // Establecimiento del protocolo ssl de transporte
                 System.Net.ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
@@ -75,23 +75,24 @@ namespace Trabajo_Integrador
                             Pregunta preg = new Pregunta(pregunta, dificultad, categoria, new ConjuntoPreguntas(pConjunto));
 
                             //Crea la respuesta correcta
-                            Respuesta respuestaCorrecta = new Respuesta(textorespuestaCorrecta, preg, true);
+                            Respuesta respuestaCorrecta = new Respuesta(textorespuestaCorrecta, true);
                             
                            //Añade respuesta correcta a la lista
-                            Respuestas.Add(respuestaCorrecta);
+                            respuestas.Add(respuestaCorrecta);
 
 
                             //Por cada respuesta incorrecta, crea una respuesta y la añade a la lista
                             foreach (string tri in textoincorrectas)
                             {
-                                Respuesta res = new Respuesta(HttpUtility.HtmlDecode(tri), preg, false);
-                                Respuestas.Add(res);
+                                Respuesta res = new Respuesta(HttpUtility.HtmlDecode(tri), false);
+                                respuestas.Add(res);
                             }
 
-
+                            // Asocias las respuestas con la pregunta
+                            preg.Respuestas = respuestas;
                             
                             //se agrega cada una de las preguntas a la lista
-                            listaPreguntas.Add(preg);
+                            preguntas.Add(preg);
                         }           
                     }
                 }
@@ -99,7 +100,7 @@ namespace Trabajo_Integrador
                 {
                     Bitacora.GuardarLog(ex.Message);
                 }
-                return (listaPreguntas,Respuestas);
+                return preguntas;
             }
         }
         /// <summary>

@@ -23,7 +23,7 @@ namespace Trabajo_Integrador.EntityFramework
 
         public DbSet<ExamenPregunta> PreguntasExamenes { get; set; }
 
-        public DbSet<Dominio.Respuesta> Respuestas { get; set; }
+        //public DbSet<Dominio.Respuesta> Respuestas { get; set; }
 
         public DbSet<Log> Logs { get; set; }
 

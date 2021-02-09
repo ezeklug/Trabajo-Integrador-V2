@@ -55,6 +55,8 @@ namespace Trabajo_Integrador.Controladores
 
                         foreach (Pregunta pre in pPreguntas)
                         {
+
+                            // si la pregunta no existe
                             if (UoW.RepositorioPreguntas.Get(pre.Id)==null)
                             {
                                 cantidad++;
@@ -136,10 +138,12 @@ namespace Trabajo_Integrador.Controladores
                     }
                 }
                 IEstrategiaObtenerPreguntas estrategia = this.GetEstrategia(pConjunto);
-                (List<Pregunta>, List<Respuesta>) preguntas = estrategia.getPreguntas(pCantidad, pConjunto, pDificultad, categoria);
-                cargadas = CargarPreguntas(preguntas.Item1);
-                CargarRespuestas(preguntas.Item2);
+                var preguntas = estrategia.getPreguntas(pCantidad, pConjunto, pDificultad, categoria);
+                cargadas = CargarPreguntas(preguntas);
+                return cargadas;
             }
+           
+            
             catch (NotImplementedException ex)
             {
                 Bitacora.GuardarLog("ControladorPreguntas.GetPreguntasOnline: " + ex.Message);
@@ -149,34 +153,7 @@ namespace Trabajo_Integrador.Controladores
         }
 
 
-        /// <summary>
-        /// Dada una lista de respuestas, las carga en la base de datos
-        /// </summary>
-        /// <param name="pRespuestas"></param>
-        public void CargarRespuestas(List<Respuesta> pRespuestas)
-        {
-          
-                using (var db = new TrabajoDbContext())
-                {
-                    using (var UoW = new UnitOfWork(db))
-                    {
-                        foreach (Respuesta res in pRespuestas)
-                        {
-                            List<Respuesta> respuestas = (List<Respuesta>) UoW.RepositorioRespuesta.GetAll();
-                            Respuesta rs =  respuestas.Find(r => (r.Texto == res.Texto) && (r.Pregunta.Id == res.Pregunta.Id));
-                            if (rs == null)
-                            {
-                                Pregunta pre = UoW.RepositorioPreguntas.Get(res.Pregunta.Id);
-                                res.Pregunta = pre;
-                                UoW.RepositorioRespuesta.Add(res);
-                            }
-                        }
-                        UoW.Complete();
-                    }
-                }
-            
-            
-        }
+
         /// <summary>
         /// Obtiene preguntas random de la base de datos
         /// </summary>
@@ -359,26 +336,6 @@ namespace Trabajo_Integrador.Controladores
         }
 
 
-        public List<Respuesta> RespuestasDePregunta(Pregunta pPregunta)
-        {
-            List<Respuesta> listaRespuesta = new List<Respuesta>();
-            try
-            {
-                using (var db = new TrabajoDbContext())
-                {
-                    using (var UoW = new UnitOfWork(db))
-                    {
-                        listaRespuesta = (List<Respuesta>) UoW.RepositorioRespuesta.GetAll();
-                        listaRespuesta = listaRespuesta.FindAll(r => r.Pregunta.Id == pPregunta.Id);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Bitacora.GuardarLog("ControladorPreguntas.RespuestasDePregunta" + ex.ToString());
-            }
-            return listaRespuesta;
-        }
 
         /// <summary>
         /// Constructor

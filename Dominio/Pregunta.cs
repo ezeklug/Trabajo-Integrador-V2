@@ -13,10 +13,9 @@ namespace Trabajo_Integrador
         public string Id { get; set; }
         public virtual Dificultad Dificultad { get; set; }
         public virtual CategoriaPregunta Categoria { get; set; }
-
         public virtual ConjuntoPreguntas Conjunto { get; set; }
 
-
+        public ICollection<Respuesta> Respuestas { get; set; }
 
         /// <summary>
         /// Constructor de la pregunta

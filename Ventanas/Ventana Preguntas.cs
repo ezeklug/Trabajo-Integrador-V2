@@ -35,7 +35,7 @@ namespace Trabajo_Integrador.Ventanas
 
             List<Respuesta> opciones = new List<Respuesta>(); //Almacena las 4 opciones de respuestas
 
-            List<Respuesta> respuestas = fachada.RespuestasDePregunta(unaPregunta);
+            ICollection<Respuesta> respuestas = unaPregunta.Respuestas;
           
             foreach (Respuesta respuesta in respuestas)
             {

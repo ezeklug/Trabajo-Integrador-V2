@@ -35,7 +35,7 @@ namespace Trabajo_Integrador.EntityFramework
         public RepositorioPreguntaExamen RepositorioPreguntasExamenes { get; set; }
         public RepositorioLogs RepositorioLogs { get; private set; }
         
-        public RepositorioRespuesta RepositorioRespuesta { get; private set;}
+        //public RepositorioRespuesta RepositorioRespuesta { get; private set;}
 
 
 
@@ -85,7 +85,7 @@ namespace Trabajo_Integrador.EntityFramework
             this.RepositorioDificultades = new RepositorioDificultades(pDbContext);
             this.RepositorioPreguntasExamenes = new RepositorioPreguntaExamen(pDbContext);
             this.RepositorioLogs = new RepositorioLogs(pDbContext);
-            this.RepositorioRespuesta = new RepositorioRespuesta(pDbContext);
+           // this.RepositorioRespuesta = new RepositorioRespuesta(pDbContext);
         }
 
 

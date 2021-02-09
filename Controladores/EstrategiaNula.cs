@@ -12,11 +12,14 @@ namespace Trabajo_Integrador
     /// </summary>
     public sealed class EstrategiaNula:EstrategiaObtenerPreguntas
     {
+
+
+
         public EstrategiaNula() : base("Null")
         {
         }
 
-        public override (List<Pregunta>,List<Respuesta>) getPreguntas(string pCantidad, string pConjunto,string pDificultad, CategoriaPregunta pCategoria)
+        public override List<Pregunta> getPreguntas(string pCantidad, string pConjunto,string pDificultad, CategoriaPregunta pCategoria)
         {
             throw new NotImplementedException();
         }

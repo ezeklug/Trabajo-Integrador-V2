@@ -20,6 +20,10 @@ namespace Trabajo_Integrador.EntityFramework
             return this.iDBSet.Include("Usuario").ToList();
         }
 
+        public override Examen Get(int pId)
+        {
+            return this.iDBSet.Include("ExamenPreguntas").FirstOrDefault(e => e.Id == pId);
+        }
 
     }
 }
