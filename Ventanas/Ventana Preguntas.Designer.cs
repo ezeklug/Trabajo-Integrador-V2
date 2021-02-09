@@ -58,7 +58,7 @@
             this.siguiente.BackColor = System.Drawing.Color.LightCoral;
             this.siguiente.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.siguiente.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.siguiente.Location = new System.Drawing.Point(648, 400);
+            this.siguiente.Location = new System.Drawing.Point(648, 272);
             this.siguiente.Name = "siguiente";
             this.siguiente.Size = new System.Drawing.Size(126, 38);
             this.siguiente.TabIndex = 5;
@@ -89,7 +89,7 @@
             this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(26, 98);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(733, 280);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(748, 168);
             this.flowLayoutPanel1.TabIndex = 9;
             // 
             // npgsqlCommand1
@@ -103,7 +103,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(800, 325);
             this.Controls.Add(this.flowLayoutPanel1);
             this.Controls.Add(this.CantidadPreguntas);
             this.Controls.Add(this.siguiente);
