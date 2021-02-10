@@ -12,7 +12,7 @@ namespace Trabajo_Integrador.DTO
         //Propiedades
         public string Id { get; set; }
 
-        public virtual int ConjuntoId { get; set; }
+        public virtual string ConjuntoId { get; set; }
 
 
 
@@ -23,7 +23,7 @@ namespace Trabajo_Integrador.DTO
         /// <param name="pDificultad"></param>
         /// <param name="pCategoria"></param>
         /// <param name="pConjunto"></param>
-        public PreguntaDTO(string pPregunta,  int pConjuntoId)
+        public PreguntaDTO(string pPregunta,  string pConjuntoId)
         {
             Id = pPregunta;
             ConjuntoId = pConjuntoId;

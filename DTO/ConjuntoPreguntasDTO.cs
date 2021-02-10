@@ -11,14 +11,14 @@ namespace Trabajo_Integrador.DTO
     {
         public float TiempoEsperadoRespuesta { get; set; }
 
-        public int Id { get; set; }
+        public string Id { get; set; }
 
         /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="pId"></param>
         /// <param name="pTiempoEsperadoRespuesta"></param>
-        public ConjuntoPreguntasDTO(int pId, float pTiempoEsperadoRespuesta)
+        public ConjuntoPreguntasDTO(string pId, float pTiempoEsperadoRespuesta)
         {
             Id = pId;
             TiempoEsperadoRespuesta = pTiempoEsperadoRespuesta;
@@ -27,7 +27,7 @@ namespace Trabajo_Integrador.DTO
         /// construtor
         /// </summary>
         /// <param name="pId"></param>
-        public ConjuntoPreguntasDTO(int pId)
+        public ConjuntoPreguntasDTO(string pId)
         {
             Id = pId;
             TiempoEsperadoRespuesta = 20;
