@@ -163,21 +163,14 @@ namespace Trabajo_Integrador.Controladores
 
 
 
+
         /// <summary>
-        /// Metodo que devuelve todas los conjuntos de preguntas cargados en base de datos
+        /// Devuelve los nombres de los conjuntos
         /// </summary>
         /// <returns></returns>
-        /// 
-
-        public List<ConjuntoPreguntasDTO> GetConjuntoPreguntas()
+        public IEnumerable<String> GetNombreConjuntos()
         {
-            List<ConjuntoPreguntasDTO> listaConjuntoPreguntasDTO = new List<ConjuntoPreguntasDTO>();
-
-            foreach (ConjuntoPreguntas conjuntoPregunta in controladorAdministrativo.GetConjuntoPreguntas())
-            {
-                listaConjuntoPreguntasDTO.Add(new ConjuntoPreguntasDTO(conjuntoPregunta));
-            }
-            return listaConjuntoPreguntasDTO;
+            return controladorAdministrativo.GetNombresConjuntosPreguntas();
         }
         /// <summary>
         /// Metodo que devuelve todas las dificultades cargadas en base de datos

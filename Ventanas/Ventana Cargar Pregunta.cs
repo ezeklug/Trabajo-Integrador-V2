@@ -73,7 +73,7 @@ namespace Trabajo_Integrador.Ventanas
 
         private void cargarConjunto()   //Le asigno al combobox conjunto la lista conjunto
         {
-            conjuntos = fachada.GetConjuntoPreguntas();
+            conjuntos = fachada.GetNombreConjuntos();
 
             List<string> listaConjuntos = new List<string>();
 
