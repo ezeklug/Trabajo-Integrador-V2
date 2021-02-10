@@ -48,7 +48,14 @@ namespace Trabajo_Integrador.EntityFramework
 
         public IEnumerable<String> NombresDeConjuntos()
         {
-            return this.iDBSet.GroupBy();
+            var resultado = this.iDBSet.GroupBy(c => c.Nombre);
+            var nombres = new HashSet<String>();
+
+            foreach (var r in resultado)
+            {
+                nombres.Add(r.Key);
+            }
+            return nombres;
         }
     }
 }
