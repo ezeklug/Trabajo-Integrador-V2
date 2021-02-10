@@ -24,7 +24,7 @@ namespace Trabajo_Integrador
             get { return this.iConjunto; }
             set { this.iConjunto = value; }
         }
-        //metodos abstractos
-        public abstract List<Pregunta> getPreguntas(string pCantidad,string pConjunto, string pDificultad, CategoriaPregunta pCategoria);
+       
+        public abstract ICollection<Pregunta> getPreguntas(int pCantidad, ConjuntoPreguntas pConjunto);
     }
 }

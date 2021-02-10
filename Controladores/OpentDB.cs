@@ -1,15 +1,12 @@
 ﻿using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Text;
-using System.Threading.Tasks;
 using System.Web;
-using System.Globalization;
-using Trabajo_Integrador.Dominio;
 using Trabajo_Integrador.Controladores.Bitacora;
+using Trabajo_Integrador.Dominio;
 
 namespace Trabajo_Integrador
 {
@@ -20,7 +17,7 @@ namespace Trabajo_Integrador
     {
 
 
-        public OpentDB():base ("OpentDB") {}
+        public OpentDB() : base("OpentDB") { }
 
         /// <summary>
         /// Metodo para poder obtener preguntas de la pagina de OpentDB
@@ -30,19 +27,24 @@ namespace Trabajo_Integrador
         /// <param name="pDificultad"></param>
         /// <param name="pCategoria"></param>
         /// <returns></returns>
-        public override List<Pregunta> getPreguntas(string pCantidad, string pConjunto,string pDificultad, CategoriaPregunta pCategoria)
+        public override ICollection<Pregunta> getPreguntas(int pCantidad, ConjuntoPreguntas pConjunto)
         {
             {
                 List<Pregunta> preguntas = new List<Pregunta>();
                 ICollection<Respuesta> respuestas = new List<Respuesta>();
+
+                string nombreDificultad = pConjunto.Dificultad.Id;
+
+                /// Es el nombre de la categoria en la fuente
+                string providerCategoria = pConjunto.Categoria.ProviderId;
 
                 // Establecimiento del protocolo ssl de transporte
                 System.Net.ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
 
                 CultureInfo provider = new CultureInfo("en-us");
                 // Creacion de URL
-                var mUrl =CrearURL(pCantidad,pDificultad,pCategoria.OpentDbId.ToString(provider));
-                
+                var mUrl = CrearURL(pCantidad.ToString(), nombreDificultad, providerCategoria);
+
                 // Se crea el request http
                 HttpWebRequest mRequest = (HttpWebRequest)WebRequest.Create(mUrl);
 
@@ -63,22 +65,27 @@ namespace Trabajo_Integrador
                         foreach (var bResponseItem in mResponseJSON.results)
                         {
                             // De esta manera se accede a los componentes de cada item
-                            string pregunta = HttpUtility.HtmlDecode(bResponseItem.question.ToString());
+                            string textoPregunta = HttpUtility.HtmlDecode(bResponseItem.question.ToString());
                             CategoriaPregunta categoria = new CategoriaPregunta(bResponseItem.category.ToString());
                             Dificultad dificultad = new Dificultad(HttpUtility.HtmlDecode(bResponseItem.difficulty.ToString()));
-                            
+
+                            if ((categoria.Id != pConjunto.Categoria.Id) || (dificultad.Id != pConjunto.Dificultad.Id))
+                            {
+                                throw new HttpRequestValidationException();
+                            }
+
                             //Obtiene el texto de la respuesta correcta
                             string textorespuestaCorrecta = HttpUtility.HtmlDecode(bResponseItem.correct_answer.ToString());
                             //Obtiene el texto de las respuestas incorrectas
                             List<string> textoincorrectas = bResponseItem.incorrect_answers.ToObject<List<string>>();
-                            
+
                             //Crea la pregunta
-                            Pregunta preg = new Pregunta(pregunta, dificultad, categoria, new ConjuntoPreguntas(pConjunto));
+                            Pregunta preg = new Pregunta(textoPregunta, pConjunto);
 
                             //Crea la respuesta correcta
                             Respuesta respuestaCorrecta = new Respuesta(textorespuestaCorrecta, true);
-                            
-                           //Añade respuesta correcta a la lista
+
+                            //Añade respuesta correcta a la lista
                             respuestas.Add(respuestaCorrecta);
 
 
@@ -91,10 +98,10 @@ namespace Trabajo_Integrador
 
                             // Asocias las respuestas con la pregunta
                             preg.Respuestas = respuestas;
-                            
+
                             //se agrega cada una de las preguntas a la lista
                             preguntas.Add(preg);
-                        }           
+                        }
                     }
                 }
                 catch (WebException ex)

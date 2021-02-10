@@ -11,38 +11,27 @@ namespace Trabajo_Integrador
     /// </summary>
     public class ConjuntoPreguntas
     {
-        /// <summary>
-        /// atributos
-        /// </summary>
+
+        public int Id { get; set; }
+        public String Nombre { get; set; }
         public float TiempoEsperadoRespuesta { get; set; }
+        public Dificultad Dificultad { get; set; }
+        public CategoriaPregunta Categoria { get; set; }
 
-        /// <summary>
-        /// Properties.
-        /// </summary>
-        public string Id { get; set; }
-
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        /// <param name="pDescripcion"></param>
-        /// <param name="pTiempoEsperadoRespuesta"></param>
-        public ConjuntoPreguntas(string pDescripcion, float pTiempoEsperadoRespuesta)
+        public ConjuntoPreguntas(string pNombre, float pTiempoEsperadoRespuesta)
         {
-            Id= pDescripcion;
+            this.Nombre = pNombre;
             TiempoEsperadoRespuesta = pTiempoEsperadoRespuesta;
         }
-        /// <summary>
-        /// construtor
-        /// </summary>
-        /// <param name="pDescripcion"></param>
-        public ConjuntoPreguntas(string pDescripcion)
+
+
+        public ConjuntoPreguntas(string pNombre)
         {
-            Id = pDescripcion;
+            this.Nombre = pNombre;
             TiempoEsperadoRespuesta = 20;
         }
-        /// <summary>
-        /// Constructor
-        /// </summary>
+        
+        
         public ConjuntoPreguntas() { }
 
     }
