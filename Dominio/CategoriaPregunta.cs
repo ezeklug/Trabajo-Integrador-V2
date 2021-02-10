@@ -17,7 +17,7 @@ namespace Trabajo_Integrador
 
 
 
-        public int ProviderId { get; set; }
+        public string ProviderId { get; set; }
 
         public CategoriaPregunta(string pCategoria)
         {

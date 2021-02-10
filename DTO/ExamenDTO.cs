@@ -16,12 +16,12 @@ namespace Trabajo_Integrador.DTO
         public double TiempoUsado { get; set; }
         public DateTime Fecha { get; set; }
         public string UsuarioId { get; set; }
-        public int CantidadPreguntas { get; set; }
+        public double CantidadPreguntas { get; set; }
         
         public ExamenDTO() { }
         public ExamenDTO(List<ExamenPreguntaDTO> pExamenPreguntas, int pId, 
             float pTiempoLimite, double pPuntaje, double pTiempoUsado, 
-            DateTime pFecha, string pUsuarioId, int pCantidadPreguntas)
+            DateTime pFecha, string pUsuarioId, double pCantidadPreguntas)
         {
             this.ExamenPreguntas = pExamenPreguntas;
             this.Id = pId;

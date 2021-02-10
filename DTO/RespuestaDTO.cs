@@ -27,7 +27,6 @@ namespace Trabajo_Integrador.DTO
         public RespuestaDTO(Respuesta respuesta)
         {
             this.Id = respuesta.Id;
-            this.Pregunta = respuesta.Pregunta; // deberia ir new PreguntaDTO(respuesta.Pregunta)
             this.Texto = respuesta.Texto;
             this.EsCorrecta = respuesta.EsCorrecta;
         }

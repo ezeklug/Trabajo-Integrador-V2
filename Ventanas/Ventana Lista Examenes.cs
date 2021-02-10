@@ -45,7 +45,7 @@ namespace Trabajo_Integrador.Ventanas
 
             foreach (ExamenDTO examen in listaExamenes)
             {
-                dt.Rows.Add(new object[] { examen.Usuario.Id, examen.Fecha, examen.Puntaje, examen.TiempoUsado });
+                dt.Rows.Add(new object[] { examen.UsuarioId, examen.Fecha, examen.Puntaje, examen.TiempoUsado });
             }
 
             dataGridView1.DataSource = dt;

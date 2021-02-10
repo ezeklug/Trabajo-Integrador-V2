@@ -72,7 +72,7 @@ namespace Trabajo_Integrador.Controladores
         /// <returns></returns>
         public List<CategoriaPregunta> GetCategorias()
         {
-            return iControladorPreguntas.GetCategorias();
+            return (List<CategoriaPregunta>)iControladorPreguntas.GetCategorias("ola");
         }
 
         /// <summary>
@@ -89,7 +89,7 @@ namespace Trabajo_Integrador.Controladores
         /// <returns></returns>
         public List<Dificultad> GetDificultades()
         {
-            return iControladorPreguntas.GetDificultades();
+            return (List<Dificultad>)iControladorPreguntas.GetDificultades("ola");
         }
 
 

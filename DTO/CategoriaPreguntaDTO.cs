@@ -3,7 +3,7 @@
     public class CategoriaPreguntaDTO
     {
 
-        public int ProviderId
+        public string ProviderId
         { get; set; }
 
         public string Id

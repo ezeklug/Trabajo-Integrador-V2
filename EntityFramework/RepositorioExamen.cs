@@ -13,7 +13,7 @@ namespace Trabajo_Integrador.EntityFramework
             { }
         public List<Examen> SelectAll(string pId)
         {
-            return this.iDBSet.Where(c => c.Usuario.Id == pId).ToList();
+            return this.iDBSet.Where(c => c.UsuarioId == pId).ToList();
         }
         public override IEnumerable<Examen> GetAll()
         {
