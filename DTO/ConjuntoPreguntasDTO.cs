@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Trabajo_Integrador.Dominio;
 
 namespace Trabajo_Integrador.DTO
 {
@@ -10,25 +11,25 @@ namespace Trabajo_Integrador.DTO
     {
         public float TiempoEsperadoRespuesta { get; set; }
 
-        public string Id { get; set; }
+        public int Id { get; set; }
 
         /// <summary>
         /// Constructor
         /// </summary>
-        /// <param name="pDescripcion"></param>
+        /// <param name="pId"></param>
         /// <param name="pTiempoEsperadoRespuesta"></param>
-        public ConjuntoPreguntasDTO(string pDescripcion, float pTiempoEsperadoRespuesta)
+        public ConjuntoPreguntasDTO(int pId, float pTiempoEsperadoRespuesta)
         {
-            Id = pDescripcion;
+            Id = pId;
             TiempoEsperadoRespuesta = pTiempoEsperadoRespuesta;
         }
         /// <summary>
         /// construtor
         /// </summary>
-        /// <param name="pDescripcion"></param>
-        public ConjuntoPreguntasDTO(string pDescripcion)
+        /// <param name="pId"></param>
+        public ConjuntoPreguntasDTO(int pId)
         {
-            Id = pDescripcion;
+            Id = pId;
             TiempoEsperadoRespuesta = 20;
         }
         /// <summary>

@@ -11,10 +11,8 @@ namespace Trabajo_Integrador.DTO
     {
         //Propiedades
         public string Id { get; set; }
-        public virtual string DificultadId { get; set; }
-        public virtual string CategoriaId { get; set; }
 
-        public virtual string ConjuntoId { get; set; }
+        public virtual int ConjuntoId { get; set; }
 
 
 
@@ -25,19 +23,15 @@ namespace Trabajo_Integrador.DTO
         /// <param name="pDificultad"></param>
         /// <param name="pCategoria"></param>
         /// <param name="pConjunto"></param>
-        public PreguntaDTO(string pPregunta, string pDificultadId, string pCategoriaId, string pConjuntoId)
+        public PreguntaDTO(string pPregunta,  int pConjuntoId)
         {
             Id = pPregunta;
-            DificultadId = pDificultadId;
-            CategoriaId = pCategoriaId;
             ConjuntoId = pConjuntoId;
         }
 
         public PreguntaDTO(Pregunta pregunta)
         {
-            this.DificultadId = pregunta.DificultadId;
-            this.ConjuntoId = pregunta.ConjuntoId;
-            this.CategoriaId = pregunta.CategoriaId;
+            this.ConjuntoId = pregunta.Conjunto.Id;
             this.Id = pregunta.Id;
 
         }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Trabajo_Integrador.Controladores.Bitacora;
 using Trabajo_Integrador.Dominio;
 using Trabajo_Integrador.DTO;
 
@@ -77,7 +78,7 @@ namespace Trabajo_Integrador.Controladores
         /// <returns></returns>
         public List<Log> getLogs()
         {
-            return controladorAdministrativo.getLogs();
+            return (List<Log>)controladorAdministrativo.getLogs();
         }
 
 
@@ -240,13 +241,13 @@ namespace Trabajo_Integrador.Controladores
             return controladorAdministrativo.EsAdministrador(nombreUsuario);
         }
 
-        public CategoriaPregunta DTOACategoriaPregunta(CategoriaPreguntaDTO categoriaPreguntaDTO)
+        public static CategoriaPregunta DTOACategoriaPregunta(CategoriaPreguntaDTO categoriaPreguntaDTO)
         {
             return new CategoriaPregunta
             {
                 Id = categoriaPreguntaDTO.Id,
                 iCategoria = categoriaPreguntaDTO.iCategoria,
-                OpentDbId = categoriaPreguntaDTO.OpentDbId
+                ProviderId = categoriaPreguntaDTO.ProviderId
             };
         }
 
@@ -271,13 +272,8 @@ namespace Trabajo_Integrador.Controladores
         {
             return new Pregunta
             {
-
-                CategoriaId = preguntaDTO.CategoriaId,
-                ConjuntoId = preguntaDTO.ConjuntoId, //Deberia ser DTOAConjunto(preguntaDTO.Conjunto)
-                DificultadId = preguntaDTO.DificultadId,
                 Id = preguntaDTO.Id,
-
-
+                Conjunto = this.controladorPreguntas.GetConjuntoPreguntas(preguntaDTO.ConjuntoId)
             };
         }
 
