@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Trabajo_Integrador.Dominio;
+using Trabajo_Integrador.DTO;
 using Trabajo_Integrador.Controladores;
 
 namespace Trabajo_Integrador.Ventanas
@@ -36,14 +36,14 @@ namespace Trabajo_Integrador.Ventanas
 
         private void Ventana_Lista_Examenes_Load(object sender, EventArgs e)
         {
-            List<Examen> listaExamenes = fachada.GetExamenes();
+            List<ExamenDTO> listaExamenes = fachada.GetExamenes();
             DataTable dt = new DataTable();
             dt.Columns.Add("Usuario", typeof(string));
             dt.Columns.Add("Fecha", typeof(DateTime));
             dt.Columns.Add("Puntaje", typeof(float));
             dt.Columns.Add("Tiempo", typeof(float));
 
-            foreach (Examen examen in listaExamenes)
+            foreach (ExamenDTO examen in listaExamenes)
             {
                 dt.Rows.Add(new object[] { examen.Usuario.Id, examen.Fecha, examen.Puntaje, examen.TiempoUsado });
             }

@@ -8,16 +8,16 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Trabajo_Integrador;
-using Trabajo_Integrador.Dominio;
+using Trabajo_Integrador.DTO;
 using Trabajo_Integrador.Controladores;
 
 namespace Trabajo_Integrador.Ventanas
 {
     public partial class Ventana_Examen_Terminado : Form
     {
-        Examen iExamen;
+        ExamenDTO iExamen;
         ControladorFachada fachada = new ControladorFachada();
-        public Ventana_Examen_Terminado(Examen unExamen)
+        public Ventana_Examen_Terminado(ExamenDTO unExamen)
         {
             InitializeComponent();
             iExamen = unExamen;

@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Trabajo_Integrador.Dominio;
+using Trabajo_Integrador.DTO;
 using Trabajo_Integrador;
 using Trabajo_Integrador.Controladores;
 
@@ -15,11 +15,11 @@ namespace Trabajo_Integrador.Ventanas
 {
     public partial class Ventana_Preguntas : Form
     {
-        Examen iExamen;
+        ExamenDTO iExamen;
         ControladorFachada fachada = new ControladorFachada();
         private int iNumeroPregunta = 0;
 
-        public Ventana_Preguntas(Examen unExamen)
+        public Ventana_Preguntas(ExamenDTO unExamen)
         {
             InitializeComponent();
             iExamen = unExamen;
@@ -28,20 +28,20 @@ namespace Trabajo_Integrador.Ventanas
 
         int tiempo;
          
-        public void mostrarPregunta(Pregunta unaPregunta) //Muestra una pregunta con sus opciones
+        public void mostrarPregunta(PreguntaDTO unaPregunta) //Muestra una pregunta con sus opciones
         {
             preg.Text += unaPregunta.Id; //Muestro la Pregunta en el Label
 
-            List<Respuesta> opciones = new List<Respuesta>(); //Almacena las 4 opciones de respuestas
+            List<RespuestaDTO> opciones = new List<RespuestaDTO>(); //Almacena las 4 opciones de respuestas
 
-            List<Respuesta> respuestas = fachada.RespuestasDePregunta(unaPregunta);
+            List<RespuestaDTO> respuestas = fachada.RespuestasDePregunta(unaPregunta);
           
-            foreach (Respuesta respuesta in respuestas)
+            foreach (RespuestaDTO respuesta in respuestas)
             {
                 opciones.Add(respuesta);
             }
 
-            List<Respuesta> listaDesordenada = new List<Respuesta>();
+            List<RespuestaDTO> listaDesordenada = new List<RespuestaDTO>();
             Random rnd = new Random();
 
             while (opciones.Count > 0) //Desordena la Lista
@@ -52,7 +52,7 @@ namespace Trabajo_Integrador.Ventanas
             }
 
                         
-            foreach (Respuesta opcion in listaDesordenada) //Muestra las preguntas en RadioButtons
+            foreach (RespuestaDTO opcion in listaDesordenada) //Muestra las preguntas en RadioButtons
             {                
                RadioButton rb = new RadioButton();
                 rb.Text = opcion.Texto;
@@ -65,9 +65,9 @@ namespace Trabajo_Integrador.Ventanas
 
             
          
-        public Pregunta obtienePregunta(int numeroPregunta) //Muestra la pregunta iNumeroPregunta en la lista de preguntas del examen 
+        public PreguntaDTO obtienePregunta(int numeroPregunta) //Muestra la pregunta iNumeroPregunta en la lista de preguntas del examen 
         {
-            List<Pregunta> listaPreguntas = iExamen.getPreguntas();
+            List<PreguntaDTO> listaPreguntas = iExamen.getPreguntas();
             mostrarPregunta(listaPreguntas[numeroPregunta]);
 
             this.CantidadPreguntas.Text ="Pregunta: " + (numeroPregunta+1).ToString() + "/" + iExamen.CantidadPreguntas.ToString();

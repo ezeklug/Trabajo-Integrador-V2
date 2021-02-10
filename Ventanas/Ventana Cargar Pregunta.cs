@@ -8,16 +8,16 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Trabajo_Integrador.Controladores;
-using Trabajo_Integrador.Dominio;
+using Trabajo_Integrador.DTO;
 
 namespace Trabajo_Integrador.Ventanas
 {
     public partial class Ventana_Cargar_Pregunta : Form
     {
          ControladorFachada fachada = new ControladorFachada();
-        List<CategoriaPregunta> categorias;
-        List<ConjuntoPreguntas >conjuntos;
-        List< Dificultad >dificultades;
+        List<CategoriaPreguntaDTO> categorias;
+        List<ConjuntoPreguntasDTO> conjuntos;
+        List<DificultadDTO> dificultades;
         string iNombreUsuario;
 
         public Ventana_Cargar_Pregunta(string pNombreUsuario)
@@ -40,7 +40,7 @@ namespace Trabajo_Integrador.Ventanas
             categorias = fachada.GetCategorias();
 
             List<string> listaCategorias = new List<string>(); ;
-            foreach (CategoriaPregunta categoria in categorias)
+            foreach (CategoriaPreguntaDTO categoria in categorias)
             {
                 listaCategorias.Add(categoria.Id);
 
@@ -59,7 +59,7 @@ namespace Trabajo_Integrador.Ventanas
             dificultades = fachada.GetDificultades();
 
             List<string> listaDificultades = new List<string>(); ;
-            foreach (Dificultad dificultad in dificultades)
+            foreach (DificultadDTO dificultad in dificultades)
             {
                 listaDificultades.Add(dificultad.Id);
             }
@@ -77,7 +77,7 @@ namespace Trabajo_Integrador.Ventanas
 
             List<string> listaConjuntos = new List<string>();
 
-            foreach (ConjuntoPreguntas conjunto in conjuntos)
+            foreach (ConjuntoPreguntasDTO conjunto in conjuntos)
             {
                 listaConjuntos.Add(conjunto.Id);
             }
