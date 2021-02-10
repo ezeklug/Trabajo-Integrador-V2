@@ -143,6 +143,13 @@
     <Compile Include="Dominio\ExamenPregunta.cs" />
     <Compile Include="Dominio\Respuesta.cs" />
     <Compile Include="Dominio\Usuario.cs" />
+    <Compile Include="DTO\CategoriaPreguntaDTO.cs" />
+    <Compile Include="DTO\ConjuntoPreguntasDTO.cs" />
+    <Compile Include="DTO\DificultadDTO.cs" />
+    <Compile Include="DTO\ExamenDTO.cs" />
+    <Compile Include="DTO\PreguntaDTO.cs" />
+    <Compile Include="DTO\RespuestaDTO.cs" />
+    <Compile Include="DTO\UsuarioDTO.cs" />
     <Compile Include="EntityFramework\RepositorioExamen.cs" />
     <Compile Include="EntityFramework\RepositorioCategorias.cs" />
     <Compile Include="EntityFramework\RepositorioConjuntoPregunta.cs" />
@@ -381,7 +388,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Diagramas\" />
-    <Folder Include="DTO\" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">

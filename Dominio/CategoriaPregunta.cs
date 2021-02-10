@@ -33,5 +33,12 @@ namespace Trabajo_Integrador
         }
         public CategoriaPregunta()
         { }
+
+        public CategoriaPreguntaDTO(CategoriaPregunta categoriaPregunta)
+        {
+            OpentDbId = categoriaPregunta.OpentDbId;
+            Id = categoriaPregunta.Id;
+            iCategoria = categoriaPregunta.iCategoria;
+        }
     }
 }

@@ -156,7 +156,7 @@ namespace Trabajo_Integrador.Controladores
         public List<CategoriaPreguntaDTO> GetCategoriaPreguntasConNPreguntas(int n)
         {
             List<CategoriaPreguntaDTO> listaCategoriaDTO = new List<CategoriaPreguntaDTO>();
-            foreach (CategoriaPregunta categoria in listaCategoriaPregucontroladorPreguntas.GetCategoriasConMasDeNPreguntas(n))
+            foreach (CategoriaPregunta categoria in controladorPreguntas.GetCategoriasConMasDeNPreguntas(n))
             {
                 listaCategoriaDTO.Add(new CategoriaPreguntaDTO(categoria));
             }
@@ -241,17 +241,58 @@ namespace Trabajo_Integrador.Controladores
             return controladorAdministrativo.EsAdministrador(nombreUsuario);
         }
 
-        /// <summary>
-        /// Metodo que determina si una respuesta es correcta o no 
-        /// Almacena el resultado de la respuesta
-        /// </summary>
-        /// <param name="pExamen"></param>
-        /// <param name="pPregunta"></param>
-        /// <param name="pRespuesta"></param>
-        /// <returns></returns>
-        public Boolean RespuestaCorrecta(ExamenDTO pExamen, PreguntaDTO pPregunta, int idRespuesta)
+        public CategoriaPregunta DTOACategoriaPregunta(CategoriaPreguntaDTO categoriaPreguntaDTO)
         {
-            return controladorExamen.RespuestaCorrecta(pExamen, pPregunta, idRespuesta);
+            return new CategoriaPregunta
+            {
+                Id = categoriaPreguntaDTO.Id,
+                iCategoria = categoriaPreguntaDTO.iCategoria,
+                OpentDbId = categoriaPreguntaDTO.OpentDbId
+            };
+        }
+
+        public ConjuntoPreguntas DTOAConjunto(ConjuntoPreguntasDTO conjuntoPreguntasDTO)
+        {
+            return new ConjuntoPreguntas
+            {
+                Id = conjuntoPreguntasDTO.Id,
+                TiempoEsperadoRespuesta = conjuntoPreguntasDTO.TiempoEsperadoRespuesta
+            };
+        }
+
+        public Dificultad DTOADificultad(DificultadDTO dificultadDTO)
+        {
+            return new Dificultad
+            {
+                Id = dificultadDTO.Id,
+                FactorDificultad = dificultadDTO.FactorDificultad
+            };
+        }
+        public Pregunta DTOAPregunta(PreguntaDTO preguntaDTO)
+        {
+            return new Pregunta
+            {
+
+                Categoria = preguntaDTO.Categoria,
+                Conjunto = preguntaDTO.Conjunto, //Deberia ser DTOAConjunto(preguntaDTO.Conjunto)
+                Dificultad = preguntaDTO.Dificultad,
+                Id = preguntaDTO.Id,
+
+
+            };
+        }
+
+            /// <summary>
+            /// Metodo que determina si una respuesta es correcta o no 
+            /// Almacena el resultado de la respuesta
+            /// </summary>
+            /// <param name="pExamen"></param>
+            /// <param name="pPregunta"></param>
+            /// <param name="pRespuesta"></param>
+            /// <returns></returns>
+            public Boolean RespuestaCorrecta(ExamenDTO pExamen, PreguntaDTO pPregunta, int idRespuesta)
+        {
+            return controladorExamen.RespuestaCorrecta(pExamen, DTOAPregunta(pPregunta), idRespuesta);
         }
 
         /// <summary>
@@ -361,9 +402,9 @@ namespace Trabajo_Integrador.Controladores
         public List<RespuestaDTO> RespuestasDePregunta(PreguntaDTO pPregunta)
         {
             List<RespuestaDTO> listaRespuestaDTO = new List<RespuestaDTO>();
-            foreach(Respuesta respuesta in controladorPreguntas.RespuestasDePregunta(pPregunta))
+            foreach(Respuesta respuesta in controladorPreguntas.RespuestasDePregunta(DTOAPregunta(pPregunta)))
             {
-                listaRespuestaDTO.Add(RespuestaDTO(respuesta));
+                listaRespuestaDTO.Add(new RespuestaDTO(respuesta));
             }
             return listaRespuestaDTO;
         }
