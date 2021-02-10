@@ -68,31 +68,27 @@ namespace Trabajo_Integrador.Controladores
         /// Metodo que devuelve todas las categorias cargadas en base de datos
         /// </summary>
         /// <returns></returns>
-        public List<CategoriaPregunta> GetCategorias()
+        public IEnumerable<CategoriaPregunta> GetCategorias(String pNombre)
         {
-            return (List<CategoriaPregunta>)iControladorPreguntas.GetCategorias("ola");
+            return iControladorPreguntas.GetCategorias(pNombre);
         }
 
         /// <summary>
-        /// Devuelve todos los nombres de los conjutos
+        /// Devuelve todos los nombres de los conjuntos
         /// </summary>
         /// <returns></returns>
         public static IEnumerable<String> GetNombresConjuntosPreguntas()
         {
-            IEnumerable<ConjuntoPreguntas> conjuntos;
-            HashSet<String> nombres = new HashSet<string>();
+            IEnumerable<String> nombres;
             using (var db = new TrabajoDbContext())
             {
                 using (var UoW = new UnitOfWork(db))
                 {
-                    conjuntos = UoW.RepositorioConjuntoPregunta.GetAll();
+                    nombres = UoW.RepositorioConjuntoPregunta.NombresDeConjuntos();
                 }
             }
 
-
-
-
-            return iControladorPreguntas.GetAllConjuntoPreguntas();
+            return nombres;
         }
         /// <summary>
         /// Metodo que devuelve todas las dificultades cargadas en base de datos

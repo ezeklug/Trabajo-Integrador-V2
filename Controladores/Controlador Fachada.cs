@@ -130,18 +130,29 @@ namespace Trabajo_Integrador.Controladores
         }
 
         /// <summary>
-        /// Metodo que devuelve todas las categorias cargadas en base de datos
+        /// Devuelve todas las DTOcategorias relacionadas a un conjunto
         /// </summary>
         /// <returns></returns>
-        public List<CategoriaPreguntaDTO> GetCategorias()
+        public static IEnumerable<CategoriaPreguntaDTO> GetCategorias(String pNombre)
         {
-            List<CategoriaPreguntaDTO> listaCategoriaDTO = new List<CategoriaPreguntaDTO>();
-            List<CategoriaPregunta> listaCategoriaPreguntas = controladorAdministrativo.GetCategorias();
-            foreach (CategoriaPregunta categoria in listaCategoriaPreguntas)
+            ICollection<CategoriaPregunta> categorias;
+            using (var db = new TrabajoDbContext())
             {
-                listaCategoriaDTO.Add(new CategoriaPreguntaDTO(categoria));
+                using (var UoW = new UnitOfWork(db))
+                {
+                    categorias = UoW.RepositorioConjuntoPregunta.CategoriasDeUnConjunto(pNombre);
+                }
             }
-            return listaCategoriaDTO;
+
+            var dtos = new CategoriaPreguntaDTO[categorias.Count];
+            int i = 0;
+            foreach (var cat in categorias)
+            {
+                dtos[i] = new CategoriaPreguntaDTO(cat);
+            }
+            return dtos;
+
+
         }
 
 
@@ -168,9 +179,9 @@ namespace Trabajo_Integrador.Controladores
         /// Devuelve los nombres de los conjuntos
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<String> GetNombreConjuntos()
+        public static IEnumerable<String> GetNombreConjuntos()
         {
-            return controladorAdministrativo.GetNombresConjuntosPreguntas();
+            return ControladorAdministrativo.GetNombresConjuntosPreguntas();
         }
         /// <summary>
         /// Metodo que devuelve todas las dificultades cargadas en base de datos
@@ -242,13 +253,17 @@ namespace Trabajo_Integrador.Controladores
             };
         }
 
-        public ConjuntoPreguntas DTOAConjunto(ConjuntoPreguntasDTO conjuntoPreguntasDTO)
+        public static ConjuntoPreguntas DTOAConjunto(ConjuntoPreguntasDTO conjuntoPreguntasDTO)
         {
-            return new ConjuntoPreguntas
+            ConjuntoPreguntas c;
+            using (var db = new TrabajoDbContext())
             {
-                Id = conjuntoPreguntasDTO.Id,
-                TiempoEsperadoRespuesta = conjuntoPreguntasDTO.TiempoEsperadoRespuesta
-            };
+                using (var UoW = new UnitOfWork(db))
+                {
+                    c = UoW.RepositorioConjuntoPregunta.Get(conjuntoPreguntasDTO.Id);
+                }
+            }
+            return c;
         }
 
         public Dificultad DTOADificultad(DificultadDTO dificultadDTO)
@@ -392,5 +407,24 @@ namespace Trabajo_Integrador.Controladores
         }
 
 
+        public static IEnumerable<RespuestaDTO> RespuestasDePregunta(PreguntaDTO pPregunta)
+        {
+            Pregunta pre;
+            using (var db = new TrabajoDbContext())
+            {
+                using (var UoW = new UnitOfWork(db))
+                {
+                    pre = UoW.RepositorioPreguntas.Get(pPregunta.Id);
+                }
+            }
+
+            var respuestas = new List<RespuestaDTO>();
+            foreach (var r in pre.Respuestas)
+            {
+                respuestas.Add(new RespuestaDTO(r));
+            }
+
+            return respuestas;
+        }
     }
 }
