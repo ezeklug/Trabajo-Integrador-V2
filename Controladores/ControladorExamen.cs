@@ -105,8 +105,7 @@ namespace Trabajo_Integrador.Controladores
         {
             Examen examen = new Examen(pExamen);
             examen.TiempoUsado = (DateTime.Now - examen.Fecha).TotalSeconds;
-            examen.Puntaje=5;
-            double varia= this.CantidadRespuestasCorrectas(examen) / examen.CantidadPreguntas * this.GetFactorDificultad(examen) * examen.FactorTiempo;
+            examen.Puntaje= this.CantidadRespuestasCorrectas(examen) / examen.CantidadPreguntas * this.GetFactorDificultad(examen) * examen.FactorTiempo;
             this.GuardarExamen(examen);
         }
 
