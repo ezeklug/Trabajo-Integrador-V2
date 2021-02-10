@@ -50,7 +50,7 @@ namespace Trabajo_Integrador.Controladores
                     List<Pregunta> preguntas = iControladorPreguntas.GetPreguntasRandom(pCantidad, pConjunto, pCategoria, pDificultad);
                     Examen examen = new Examen();
                     this.AsociarExamenPregunta(examen, preguntas);
-                    examen.TiempoLimite = examen.CantidadPreguntas * UoW.RepositorioConjuntoPregunta.Get(UoW.RepositorioPreguntas.Get(examen.ExamenPreguntas.First().PreguntaId).ConjuntoId).TiempoEsperadoRespuesta;
+                    examen.TiempoLimite = (float)examen.CantidadPreguntas * UoW.RepositorioConjuntoPregunta.Get(UoW.RepositorioPreguntas.Get(examen.ExamenPreguntas.First().PreguntaId).Conjunto.Id).TiempoEsperadoRespuesta;
 
                     return examen;
                 }
@@ -72,13 +72,10 @@ namespace Trabajo_Integrador.Controladores
             {
                 using (var UoW = new UnitOfWork(db))
                 {
-                    Respuesta respuesta = UoW.RepositorioRespuesta.Get(idRespuesta);
-                    Pregunta pregunta = UoW.RepositorioPreguntas.Get(pPregunta.Id);
-                    respuesta.Pregunta = pregunta;
                     ExamenPreguntaDTO examenPreguntaDTO= pExamen.ExamenPreguntas.Find(e => e.PreguntaId == pPregunta.Id);
                     ExamenPregunta examenPregunta = UoW.RepositorioPreguntasExamenes.Get(examenPreguntaDTO.Id);
-                    examenPregunta.RespuestaElegidaId = respuesta.Id;
-                    return respuesta.EsCorrecta;
+                    examenPregunta.RespuestaElegidaId = idRespuesta;
+                    return UoW.RepositorioPreguntas.Get(pPregunta.Id).Respuestas.ToList().Find(r => r.Id == idRespuesta).EsCorrecta;
                 }
             }
         }
@@ -107,9 +104,46 @@ namespace Trabajo_Integrador.Controladores
         public void FinalizarExamen(ExamenDTO pExamen)
         {
             Examen examen = new Examen(pExamen);
-            examen.Finalizar();
+            examen.TiempoUsado = (DateTime.Now - examen.Fecha).TotalSeconds;
+            examen.Puntaje=5;
+            double varia= this.CantidadRespuestasCorrectas(examen) / examen.CantidadPreguntas * this.GetFactorDificultad(examen) * examen.FactorTiempo;
             this.GuardarExamen(examen);
         }
+
+        private double GetFactorDificultad(Examen examen)
+        {
+            using (var db = new TrabajoDbContext())
+            {
+                using (var UoW = new UnitOfWork(db))
+                {
+                    return UoW.RepositorioPreguntas.Get(examen.ExamenPreguntas.First().PreguntaId).Conjunto.Dificultad.FactorDificultad;
+                }
+            }
+        }
+
+        private double CantidadRespuestasCorrectas(Examen examen)
+        {
+            double cantidadRespuestasCorrectas = 0;
+            using (var db = new TrabajoDbContext())
+            {
+                using (var UoW = new UnitOfWork(db))
+                {
+                    foreach (ExamenPreguntaDTO examenPreguntaDTO in examen.ExamenPreguntas)
+                    {
+                        if (UoW.RepositorioPreguntas
+                            .Get(examenPreguntaDTO.PreguntaId)
+                            .Respuestas.ToList()
+                            .Find(r => r.Id == examenPreguntaDTO.RespuestaElegidaId)
+                            .EsCorrecta)
+                        {
+                            cantidadRespuestasCorrectas += 1;
+                        }
+                    }
+                }
+            }
+            return cantidadRespuestasCorrectas;
+        }
+
         /// <summary>
         /// Da comienzo a un examen
         /// </summary>

@@ -81,7 +81,7 @@ namespace Trabajo_Integrador.Controladores
         /// <returns></returns>
         public List<ConjuntoPreguntas> GetConjuntoPreguntas()
         {
-            return iControladorPreguntas.GetConjuntoPreguntas();
+            return iControladorPreguntas.GetAllConjuntoPreguntas();
         }
         /// <summary>
         /// Metodo que devuelve todas las dificultades cargadas en base de datos

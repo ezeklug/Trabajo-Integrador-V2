@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Trabajo_Integrador.Controladores.Bitacora;
 using Trabajo_Integrador.Dominio;
 using Trabajo_Integrador.DTO;
 using Trabajo_Integrador.EntityFramework;
@@ -75,7 +76,7 @@ namespace Trabajo_Integrador.Controladores
         /// <returns></returns>
         public List<Log> getLogs()
         {
-            return controladorAdministrativo.getLogs();
+            return (List<Log>)controladorAdministrativo.getLogs();
         }
 
 
@@ -238,7 +239,7 @@ namespace Trabajo_Integrador.Controladores
             return controladorAdministrativo.EsAdministrador(nombreUsuario);
         }
 
-        public CategoriaPregunta DTOACategoriaPregunta(CategoriaPreguntaDTO categoriaPreguntaDTO)
+        public static CategoriaPregunta DTOACategoriaPregunta(CategoriaPreguntaDTO categoriaPreguntaDTO)
         {
             return new CategoriaPregunta
             {
@@ -252,7 +253,7 @@ namespace Trabajo_Integrador.Controladores
         {
             return new ConjuntoPreguntas
             {
-                Nombre = conjuntoPreguntasDTO.Nombre,
+                Id = conjuntoPreguntasDTO.Id,
                 TiempoEsperadoRespuesta = conjuntoPreguntasDTO.TiempoEsperadoRespuesta
             };
         }

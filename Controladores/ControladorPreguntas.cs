@@ -224,7 +224,7 @@ namespace Trabajo_Integrador.Controladores
         /// Metodo que devuelve todas los conjuntos de preguntas cargados en base de datos
         /// </summary>
         /// <returns></returns>
-        public List<ConjuntoPreguntas> GetConjuntoPreguntas()
+        public List<ConjuntoPreguntas> GetAllConjuntoPreguntas()
         {
             List<ConjuntoPreguntas> listaConjuntos = new List<ConjuntoPreguntas>();
             try
@@ -268,6 +268,17 @@ namespace Trabajo_Integrador.Controladores
                 bitacora.GuardarLog("ControladorPreguntas.GetDificultades" + ex.ToString());
             }
             return dificultades;
+        }
+
+        internal ConjuntoPreguntas GetConjuntoPreguntas(string conjuntoId)
+        {
+            using (var db = new TrabajoDbContext())
+            {
+                using (var UoW = new UnitOfWork(db))
+                {
+                    return UoW.RepositorioConjuntoPregunta.Get(conjuntoId);
+                }
+            }
         }
 
 

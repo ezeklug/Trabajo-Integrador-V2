@@ -9,7 +9,7 @@ namespace Trabajo_Integrador.Dominio
     public class ConjuntoPreguntas
     {
 
-        public int Id { get; set; }
+        public string Id { get; set; }
         public String Nombre { get; set; }
         public float TiempoEsperadoRespuesta { get; set; }
         public Dificultad Dificultad { get; set; }

@@ -73,7 +73,7 @@ namespace Trabajo_Integrador.EntityFramework
             return this.iDBSet.Include("Categoria").Include("Respuestas").Include("Respuestas").ToList();
         }
 
-        public Pregunta Get(string pId)
+        public new Pregunta Get(string pId)
         {
             return this.iDBSet.Include("Respuestas").Where(p => p.Id == pId).First<Pregunta>();
         }

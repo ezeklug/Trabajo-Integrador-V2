@@ -22,10 +22,10 @@ namespace Trabajo_Integrador.Dominio
         /// <summary>
         /// Devuelve el factor tiempo para utilizar en el calculo del puntaje
         /// </summary>
-        private double FactorTiempo { 
+        public double FactorTiempo { 
             get 
             {
-                double factor = TiempoUsado / getPreguntas().Count;
+                double factor = TiempoUsado / CantidadPreguntas;
 
                 if (factor < 5)
                 {
@@ -41,76 +41,14 @@ namespace Trabajo_Integrador.Dominio
         /// <summary>
         /// Devuelve el puntaje de un examen
         /// </summary>
-        public double Puntaje { get; private set; }
+        public double Puntaje { get; set; }
         /// <summary>
         /// Tiempo usado en segundos
         /// </summary>
         public double TiempoUsado { set; get; }
         public DateTime Fecha { get; set; }
         public string UsuarioId {get;set;}
-        public int CantidadPreguntas { get { return getPreguntas().Count; } }
-
-
-
-        
-
-/*
-        public List<Pregunta> getPreguntas() 
-        {
-            List<Pregunta> ADevoler = new List<Pregunta>();
-            foreach (var ep in ExamenPreguntas)
-            {
-                ADevoler.Add(ep.Pregunta);
-            }
-
-            return ADevoler;
-        }
-
-*/
-
-
-        /// <summary>
-        /// Devuelve la cantidad de respuestas correctas
-        /// </summary>
-        /// <returns></returns>
-   /*     private int CantidadRespuestasCorrectas() 
-        {
-            int cont = 0;
-
-            foreach (var ep in ExamenPreguntas)
-            {
-                if (ep.RespuestaElegida.EsCorrecta)
-                {
-                    cont++;
-                }
-            }
-
-            return cont;
-
-        }
-
-        */
-        /// <summary>
-        /// Calcula el puntaje de un examen
-        /// </summary>
-        /// <returns></returns>
-        private double CalcularPuntaje() 
-        {
-            int cantidadRespuestasCorrectas = CantidadRespuestasCorrectas();
-            return ((double)cantidadRespuestasCorrectas / (double)getPreguntas().Count) * (double)getPreguntas().First().Dificultad.FactorDificultad * (double)FactorTiempo;
-        }
-
-
-
-        /// <summary>
-        /// Da fin a un examen
-        /// </summary>
-        public void Finalizar()
-        {
-            TiempoUsado = (DateTime.Now - Fecha).TotalSeconds;
-            Puntaje = CalcularPuntaje();
-        }
-
+        public double CantidadPreguntas { get { return this.ExamenPreguntas.Count; } }
 
         /// <summary>
         /// Da inicio a un examen
