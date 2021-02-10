@@ -3,29 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Security.Cryptography;
+using Trabajo_Integrador.Dominio;
 using Trabajo_Integrador.Utils;
 
-namespace Trabajo_Integrador.Dominio
+namespace Trabajo_Integrador.DTO
 {
-    /// <summary>
-    /// Clase que almacena datos pertenecientes a un usuario.
-    /// </summary>
-    public class Usuario
+    public class UsuarioDTO
     {
-        /// <summary>
-        /// Properties.
-        /// </summary>
         public string Id { get; set; }
         public string Contrasenia { get; set; }
         public Boolean Administrador { get; set; }
-        
+
         /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="pId"></param>
         /// <param name="pContrasenia"></param>
-        public Usuario(string pId, string pContrasenia)
+        public UsuarioDTO(string pId, string pContrasenia)
         {
             Id = pId;
             Contrasenia = PasswordHasher.CreateMD5
@@ -33,6 +27,13 @@ namespace Trabajo_Integrador.Dominio
             Administrador = false;
         }
 
-        public Usuario() { }
+        public UsuarioDTO() { }
+
+        public UsuarioDTO(Usuario usuario)
+        {
+            this.Id = usuario.Id;
+            this.Contrasenia = PasswordHasher.CreateMD5(usuario.Contrasenia);
+            this.Administrador = usuario.Administrador;
+        }
     }
 }

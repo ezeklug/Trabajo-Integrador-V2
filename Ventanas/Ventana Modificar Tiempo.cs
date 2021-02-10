@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Trabajo_Integrador.Controladores;
-using Trabajo_Integrador.Dominio;
+using Trabajo_Integrador.DTO;
 
 namespace Trabajo_Integrador.Ventanas
 {
@@ -21,7 +21,7 @@ namespace Trabajo_Integrador.Ventanas
             iNombre = pNombre;
         }
 
-        List<ConjuntoPreguntas> conjuntos;
+        List<ConjuntoPreguntasDTO> conjuntos;
         ControladorFachada fachada = new ControladorFachada();
 
 
@@ -50,7 +50,7 @@ namespace Trabajo_Integrador.Ventanas
 
             List<string> listaConjuntos = new List<string>();
 
-            foreach (ConjuntoPreguntas conjunto in conjuntos)
+            foreach (ConjuntoPreguntasDTO conjunto in conjuntos)
             {
                 listaConjuntos.Add(conjunto.Id);
                 

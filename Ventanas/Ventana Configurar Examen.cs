@@ -7,8 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Trabajo_Integrador.Dominio;
-using Trabajo_Integrador;
+using Trabajo_Integrador.DTO;
+
 using Trabajo_Integrador.Controladores;
 
 
@@ -20,9 +20,9 @@ namespace Trabajo_Integrador.Ventanas
         ControladorFachada fachada = new ControladorFachada();
 
         
-        List<CategoriaPregunta> categorias;
-        List<ConjuntoPreguntas> conjuntos;
-        List<Dificultad> dificultades;
+        List<CategoriaPreguntaDTO> categorias;
+        List<ConjuntoPreguntasDTO> conjuntos;
+        List<DificultadDTO> dificultades;
 
         public Ventana_Configurar_Examen(String pNombreUsuario)
         {
@@ -47,7 +47,7 @@ namespace Trabajo_Integrador.Ventanas
             categorias = fachada.GetCategoriaPreguntasConNPreguntas(10);
 
             List<string> listaCategorias = new List<string>(); ;
-            foreach (CategoriaPregunta categoria in categorias)
+            foreach (CategoriaPreguntaDTO categoria in categorias)
             {
                 listaCategorias.Add(categoria.Id);
             }
@@ -66,7 +66,7 @@ namespace Trabajo_Integrador.Ventanas
             dificultades = fachada.GetDificultades();
             
             List<string> listaDificultades = new List<string>(); ;
-            foreach (Dificultad dificultad in dificultades)
+            foreach (DificultadDTO dificultad in dificultades)
             {
                 listaDificultades.Add(dificultad.Id);
             }
@@ -84,7 +84,7 @@ namespace Trabajo_Integrador.Ventanas
         
              List<string> listaConjuntos = new List<string>(); 
 
-                foreach (ConjuntoPreguntas conjunto in conjuntos)
+                foreach (ConjuntoPreguntasDTO conjunto in conjuntos)
                 {
                     listaConjuntos.Add(conjunto.Id);
                 }
@@ -132,7 +132,7 @@ namespace Trabajo_Integrador.Ventanas
 
                 List<String> categorias = new List<string>();
 
-                foreach (CategoriaPregunta cat in fachada.GetCategoriaPreguntasConNPreguntas(cantidadSeleccionada))
+                foreach (CategoriaPreguntaDTO cat in fachada.GetCategoriaPreguntasConNPreguntas(cantidadSeleccionada))
                 {
                     categorias.Add(cat.Id);
                 }
@@ -145,7 +145,7 @@ namespace Trabajo_Integrador.Ventanas
 
                     if (result == DialogResult.Yes)
                     {
-                        Examen nuevoExamen = fachada.InicializarExamen(n, conjuntoSeleccionado, categoriaSeleccionada, dificultadSeleccionada);
+                        ExamenDTO nuevoExamen = fachada.InicializarExamen(n, conjuntoSeleccionado, categoriaSeleccionada, dificultadSeleccionada);
                         fachada.InicarExamen(iNombreUsuario, nuevoExamen);
 
                         this.Hide();
@@ -158,7 +158,7 @@ namespace Trabajo_Integrador.Ventanas
                 }
                 else
                 {
-                    Examen nuevoExamen = fachada.InicializarExamen(cantidadSeleccionada, conjuntoSeleccionado, categoriaSeleccionada, dificultadSeleccionada);
+                    ExamenDTO nuevoExamen = fachada.InicializarExamen(cantidadSeleccionada, conjuntoSeleccionado, categoriaSeleccionada, dificultadSeleccionada);
                     fachada.InicarExamen(iNombreUsuario, nuevoExamen);
 
                     this.Hide();

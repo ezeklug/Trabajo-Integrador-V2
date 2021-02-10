@@ -1,6 +1,5 @@
 ﻿using System;
 
-
 namespace Trabajo_Integrador
 {
     /// <summary>
@@ -28,5 +27,12 @@ namespace Trabajo_Integrador
         }
         public CategoriaPregunta()
         { }
+
+        public CategoriaPregunta(CategoriaPreguntaDTO categoriaPreguntaDTO)
+        {
+            this.OpentDbId = categoriaPreguntaDTO.OpentDbId;
+            this.Id = categoriaPreguntaDTO.Id;
+            this.iCategoria = categoriaPreguntaDTO.iCategoria;
+        }
     }
 }

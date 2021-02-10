@@ -145,8 +145,7 @@ namespace Trabajo_Integrador.Controladores
                 {
                     using (var UoW = new UnitOfWork(db))
                     {
-                        listaExamenes = (List<Examen>)UoW.ExamenRepository.GetAll();
-                        listaExamenes = listaExamenes.FindAll(ex => ex.Usuario.Id == pUsuario).OrderBy(ex => ex.Puntaje).ToList<Examen>();
+                        listaExamenes = (List<Examen>)UoW.ExamenRepository.GetAll().ToList().FindAll(ex => ex.UsuarioId == pUsuario).OrderBy(ex => ex.Puntaje).ToList<Examen>();
                     }
                 }
             }

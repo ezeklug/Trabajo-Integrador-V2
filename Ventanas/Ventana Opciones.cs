@@ -1,14 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 using System.Windows.Forms;
-using Trabajo_Integrador.Controladores;
-using Trabajo_Integrador.Dominio;
+
 
 namespace Trabajo_Integrador.Ventanas
 {

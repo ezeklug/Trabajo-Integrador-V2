@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Trabajo_Integrador.Controladores;
-using Trabajo_Integrador.Dominio; 
+using Trabajo_Integrador.DTO; 
 
 
 namespace Trabajo_Integrador.Ventanas
@@ -37,9 +37,9 @@ namespace Trabajo_Integrador.Ventanas
 
         private void SetAdministrador_Load(object sender, EventArgs e)
         {
-            List<Usuario> listaUsuarios = fachada.GetUsuarios();
+            List<UsuarioDTO> listaUsuarios = fachada.GetUsuarios();
 
-            foreach (Usuario user in listaUsuarios)
+            foreach (UsuarioDTO user in listaUsuarios)
             {
                 if (fachada.EsAdministrador(user.Id))
                 {
@@ -57,10 +57,10 @@ namespace Trabajo_Integrador.Ventanas
 
         private void setAdmin_Click(object sender, EventArgs e)
         {
-            List<Usuario> listaUsuarios = fachada.GetUsuarios();
+            List<UsuarioDTO> listaUsuarios = fachada.GetUsuarios();
            // Collection usuariosChecked = listaCheckedBox.CheckedItems;
 
-            foreach (Usuario user in listaUsuarios)
+            foreach (UsuarioDTO user in listaUsuarios)
             {
                 if(listaCheckedBox.CheckedItems.Contains(user.Id))
                 {

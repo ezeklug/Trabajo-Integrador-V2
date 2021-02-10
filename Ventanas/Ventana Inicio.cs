@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Trabajo_Integrador;
 using Trabajo_Integrador.Controladores;
-using Trabajo_Integrador.Dominio;
+using Trabajo_Integrador.DTO;
 
 
 namespace Trabajo_Integrador.Ventanas

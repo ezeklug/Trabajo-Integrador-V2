@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Trabajo_Integrador.Controladores;
-using Trabajo_Integrador.Dominio;
+using Trabajo_Integrador.DTO;
 
 namespace Trabajo_Integrador.Ventanas
 {
@@ -35,14 +35,14 @@ namespace Trabajo_Integrador.Ventanas
 
         private void Ventana_Lista_Usuarios_Load(object sender, EventArgs e)
         {
-            List<Usuario> listaUsuarios = fachada.GetUsuarios();
+            List<UsuarioDTO> listaUsuarios = fachada.GetUsuarios();
             DataTable dt = new DataTable();
 
             dt.Columns.Add("Nombre", typeof(string));
             
 
 
-            foreach (Usuario usuario in listaUsuarios)
+            foreach (UsuarioDTO usuario in listaUsuarios)
             {
                 dt.Rows.Add(new object[] { usuario.Id});
             }

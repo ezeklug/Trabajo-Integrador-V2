@@ -22,7 +22,10 @@ namespace Trabajo_Integrador
             Conjunto = pConjunto;
         }
 
-
+        
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public Pregunta() { }
     }
 }

@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Trabajo_Integrador.Controladores;
-using Trabajo_Integrador.Dominio;
+using Trabajo_Integrador.DTO;
 
 namespace Trabajo_Integrador.Ventanas
 {
@@ -25,7 +25,7 @@ namespace Trabajo_Integrador.Ventanas
 
         private void Todas_las_Preguntas_Load(object sender, EventArgs e)
         {
-            List<Pregunta> listaPreguntas = fachada.GetPreguntas();
+            List<PreguntaDTO> listaPreguntas = fachada.GetPreguntas();
             DataTable dt = new DataTable();
             int cont = 0;
             
@@ -33,12 +33,12 @@ namespace Trabajo_Integrador.Ventanas
             dt.Columns.Add("Pregunta", typeof(string));
             dt.Columns.Add("Categoria", typeof(string));
          
-            foreach (Pregunta pregunta in listaPreguntas)
+            foreach (PreguntaDTO pregunta in listaPreguntas)
             {
-                ICollection<Respuesta> listaRespuestas = pregunta.Respuestas;
+                List<RespuestaDTO> listaRespuestas = fachada.RespuestasDePregunta(pregunta);
                 IEnumerable<object> row = new object[]{ cont, pregunta.Id, pregunta.Categoria.Id };
                 int i = 1;
-                foreach (Respuesta respuesta in listaRespuestas)
+                foreach (RespuestaDTO respuesta in listaRespuestas)
                 {
                     if (!dt.Columns.Contains($"Respuesta {i}"))
                     {

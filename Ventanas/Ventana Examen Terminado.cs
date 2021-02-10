@@ -8,16 +8,16 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Trabajo_Integrador;
-using Trabajo_Integrador.Dominio;
+using Trabajo_Integrador.DTO;
 using Trabajo_Integrador.Controladores;
 
 namespace Trabajo_Integrador.Ventanas
 {
     public partial class Ventana_Examen_Terminado : Form
     {
-        Examen iExamen;
+        ExamenDTO iExamen;
         ControladorFachada fachada = new ControladorFachada();
-        public Ventana_Examen_Terminado(Examen unExamen)
+        public Ventana_Examen_Terminado(ExamenDTO unExamen)
         {
             InitializeComponent();
             iExamen = unExamen;
@@ -25,7 +25,7 @@ namespace Trabajo_Integrador.Ventanas
 
         private void ExamenTerminado_Load(object sender, EventArgs e)
         {
-            usuarioNombre.Text += iExamen.Usuario.Id;
+            usuarioNombre.Text += iExamen.UsuarioId;
 
             tiempo.Text += iExamen.TiempoUsado;
 
@@ -39,14 +39,14 @@ namespace Trabajo_Integrador.Ventanas
         private void volverInicio_Click_1(object sender, EventArgs e)
         {
             this.Hide();
-            if (fachada.EsAdministrador(iExamen.Usuario.Id))
+            if (fachada.EsAdministrador(iExamen.UsuarioId))
             {
-                Ventana_Principal_Admi vAdmin = new Ventana_Principal_Admi(iExamen.Usuario.Id);
+                Ventana_Principal_Admi vAdmin = new Ventana_Principal_Admi(iExamen.UsuarioId);
                 vAdmin.ShowDialog();
             }
             else
             {
-                Ventana_Principal volver = new Ventana_Principal(iExamen.Usuario.Id);
+                Ventana_Principal volver = new Ventana_Principal(iExamen.UsuarioId);
                 volver.ShowDialog();
             }
             this.Close();

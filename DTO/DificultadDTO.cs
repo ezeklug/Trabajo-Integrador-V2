@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Trabajo_Integrador.Dominio;
 
-namespace Trabajo_Integrador.Dominio
+namespace Trabajo_Integrador.DTO
 {
-    public class Dificultad
+    public class DificultadDTO
     {
-
         string iDificultad;
-
 
         public string Id
         {
@@ -22,7 +21,7 @@ namespace Trabajo_Integrador.Dominio
         public int FactorDificultad { get; set; }
 
 
-        public Dificultad(string pDificultad)
+        public DificultadDTO(string pDificultad)
 
         {
             Id = pDificultad;
@@ -42,7 +41,13 @@ namespace Trabajo_Integrador.Dominio
                     break;
             }
         }
-        public Dificultad()
+        public DificultadDTO()
         { }
+
+        public DificultadDTO(Dificultad dificultad)
+        {
+            this.Id = dificultad.Id;
+            this.FactorDificultad = dificultad.FactorDificultad;
+        }
     }
 }
