@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using Trabajo_Integrador.Dominio;
 using Trabajo_Integrador.EntityFramework;
 
 namespace Trabajo_Integrador.Controladores
@@ -39,7 +39,7 @@ namespace Trabajo_Integrador.Controladores
         /// Dada una lista de preguntas, las inserta en la base de datos
         /// Devuelve la cantidad de preguntas insertada con exito
         /// </summary>
-        public int CargarPreguntas(List<Pregunta> pPreguntas)
+        public int CargarPreguntas(ICollection<Pregunta> pPreguntas)
         {
             int cantidad = 0;
             try
@@ -56,20 +56,11 @@ namespace Trabajo_Integrador.Controladores
                             if (UoW.RepositorioPreguntas.Get(pre.Id) == null)
                             {
                                 cantidad++;
-                                ConjuntoPreguntas conjunto = UoW.RepositorioConjuntoPregunta.Get(pre.Conjunto.Id);
-
-                                ///Si el conjunto esta en la base de datos la referencia,
-                                ///sino crea uno nuevo y la inserta en la db
-                                if (conjunto == null)
-                                {
-                                    ConjuntoPreguntas conjuntoNuevo = new ConjuntoPreguntas(pre.Conjunto.Id);
-                                }
-                                else
-                                {
-                                    pre.Conjunto = conjunto;
-                                }
-
-
+                                ConjuntoPreguntas conjunto = UoW.RepositorioConjuntoPregunta.
+                                                    ObtenerConjuntoPorDificultadYCategoria(pre.Conjunto.Nombre,
+                                                                                            pre.Conjunto.Dificultad.Id,
+                                                                                            pre.Conjunto.Categoria.Id
+                                                                                            );
                                 UoW.RepositorioPreguntas.Add(pre);
                             }
                         }
@@ -107,7 +98,7 @@ namespace Trabajo_Integrador.Controladores
                 {
                     using (var UoW = new UnitOfWork(db))
                     {
-                        conjunto = UoW.RepositorioConjuntoPregunta.ObtenerConjuntoConDificultadYCategoria(pConjunto, pDificultad, pCategoria);
+                        conjunto = UoW.RepositorioConjuntoPregunta.ObtenerConjuntoPorDificultadYCategoria(pConjunto, pDificultad, pCategoria);
                     }
                 }
                 IEstrategiaObtenerPreguntas estrategia = this.GetEstrategia(pConjunto);
@@ -158,16 +149,16 @@ namespace Trabajo_Integrador.Controladores
         /// Metodo que devuelve todas las categorias cargadas en base de datos
         /// </summary>
         /// <returns></returns>
-        public List<CategoriaPregunta> GetCategorias()
+        public ICollection<CategoriaPregunta> GetCategorias(String pNombreConjunto)
         {
-            List<CategoriaPregunta> listaCategoria = new List<CategoriaPregunta>();
+            ICollection<CategoriaPregunta> categorias = null;
             try
             {
                 using (var db = new TrabajoDbContext())
                 {
                     using (var UoW = new UnitOfWork(db))
                     {
-                        listaCategoria = (List<CategoriaPregunta>)UoW.RepositorioCategorias.GetAll();
+                        categorias = UoW.RepositorioConjuntoPregunta.CategoriasDeUnConjunto(pNombreConjunto);
                     }
                 }
             }
@@ -176,7 +167,7 @@ namespace Trabajo_Integrador.Controladores
                 var bitacora = new Bitacora.Bitacora();
                 bitacora.GuardarLog("ControladorPreguntas.GetCategorias" + ex.ToString());
             }
-            return listaCategoria;
+            return categorias;
         }
 
         /// <summary>
@@ -212,14 +203,13 @@ namespace Trabajo_Integrador.Controladores
         /// <returns></returns>
         public int CantidadDePreguntasParaCategoria(String pIdCategoria)
         {
-            int aRetornar = 0;
             try
             {
                 using (var db = new TrabajoDbContext())
                 {
                     using (var UoW = new UnitOfWork(db))
                     {
-                        aRetornar = UoW.RepositorioPreguntas.GetAll().Where(pre => (pre.Categoria.Id == pIdCategoria)).Count(); ;
+                        return UoW.RepositorioPreguntas.CantidadDePreguntasParaCategoria(pIdCategoria);
                     }
                 }
             }
@@ -227,8 +217,8 @@ namespace Trabajo_Integrador.Controladores
             {
                 var bitacora = new Bitacora.Bitacora();
                 bitacora.GuardarLog("ControladorPreguntas.CantidadDePreguntasParaCategoria" + ex.ToString());
+                return 0;
             }
-            return aRetornar;
 
         }
 
@@ -261,19 +251,19 @@ namespace Trabajo_Integrador.Controladores
         }
 
         /// <summary>
-        /// Metodo que devuelve todas las dificultades cargadas en base de datos
+        /// Metodo que devuelve todas las dificultades cargadas en base de datos de un determinado conjunto
         /// </summary>
         /// <returns></returns>
-        public List<Dificultad> GetDificultades()
+        public ICollection<Dificultad> GetDificultades(String pNombreConjunto)
         {
-            List<Dificultad> listaDificultades = new List<Dificultad>();
+            ICollection<Dificultad> dificultades = null;
             try
             {
                 using (var db = new TrabajoDbContext())
                 {
                     using (var UoW = new UnitOfWork(db))
                     {
-                        listaDificultades = (List<Dificultad>)UoW.RepositorioDificultades.GetAll();
+                        dificultades = UoW.RepositorioConjuntoPregunta.DificultadesDeUnConjunto(pNombreConjunto);
                     }
                 }
             }
@@ -282,7 +272,7 @@ namespace Trabajo_Integrador.Controladores
                 var bitacora = new Bitacora.Bitacora();
                 bitacora.GuardarLog("ControladorPreguntas.GetDificultades" + ex.ToString());
             }
-            return listaDificultades;
+            return dificultades;
         }
 
 

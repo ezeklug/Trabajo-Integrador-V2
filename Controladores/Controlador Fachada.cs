@@ -1,14 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web.UI;
-using System.Web.UI.WebControls.WebParts;
-using Trabajo_Integrador.DTO;
 using Trabajo_Integrador.Dominio;
-using Trabajo_Integrador.EntityFramework;
+using Trabajo_Integrador.DTO;
 
 
 
@@ -39,11 +32,11 @@ namespace Trabajo_Integrador.Controladores
         public List<ExamenDTO> GetRanking(String pUsuario)
         {
             List<ExamenDTO> listaExamenes = new List<ExamenDTO>();
-            foreach(Examen examen in controladorAdministrativo.GetRanking(pUsuario))
+            foreach (Examen examen in controladorAdministrativo.GetRanking(pUsuario))
             {
                 listaExamenes.Add(new ExamenDTO(examen));
             }
-        
+
             return listaExamenes;
         }
 
@@ -137,20 +130,20 @@ namespace Trabajo_Integrador.Controladores
             return listaUsuariosDTO;
         }
 
-            /// <summary>
-            /// Metodo que devuelve todas las categorias cargadas en base de datos
-            /// </summary>
-            /// <returns></returns>
-            public List<CategoriaPreguntaDTO> GetCategorias()
+        /// <summary>
+        /// Metodo que devuelve todas las categorias cargadas en base de datos
+        /// </summary>
+        /// <returns></returns>
+        public List<CategoriaPreguntaDTO> GetCategorias()
+        {
+            List<CategoriaPreguntaDTO> listaCategoriaDTO = new List<CategoriaPreguntaDTO>();
+            List<CategoriaPregunta> listaCategoriaPreguntas = controladorAdministrativo.GetCategorias();
+            foreach (CategoriaPregunta categoria in listaCategoriaPreguntas)
             {
-                List<CategoriaPreguntaDTO> listaCategoriaDTO = new List<CategoriaPreguntaDTO>();
-                List<CategoriaPregunta> listaCategoriaPreguntas = controladorAdministrativo.GetCategorias();
-                foreach (CategoriaPregunta categoria in listaCategoriaPreguntas)
-                {
-                    listaCategoriaDTO.Add(new CategoriaPreguntaDTO(categoria));
-                }
-                return listaCategoriaDTO;
+                listaCategoriaDTO.Add(new CategoriaPreguntaDTO(categoria));
             }
+            return listaCategoriaDTO;
+        }
 
 
 
@@ -180,7 +173,7 @@ namespace Trabajo_Integrador.Controladores
         public List<ConjuntoPreguntasDTO> GetConjuntoPreguntas()
         {
             List<ConjuntoPreguntasDTO> listaConjuntoPreguntasDTO = new List<ConjuntoPreguntasDTO>();
-            
+
             foreach (ConjuntoPreguntas conjuntoPregunta in controladorAdministrativo.GetConjuntoPreguntas())
             {
                 listaConjuntoPreguntasDTO.Add(new ConjuntoPreguntasDTO(conjuntoPregunta));
@@ -194,7 +187,7 @@ namespace Trabajo_Integrador.Controladores
         public List<DificultadDTO> GetDificultades()
         {
             List<DificultadDTO> listaDificultadDTO = new List<DificultadDTO>();
-         
+
             foreach (Dificultad dificultad in controladorAdministrativo.GetDificultades())
             {
                 listaDificultadDTO.Add(new DificultadDTO(dificultad));
@@ -288,19 +281,19 @@ namespace Trabajo_Integrador.Controladores
             };
         }
 
-            /// <summary>
-            /// Metodo que determina si una respuesta es correcta o no 
-            /// Almacena el resultado de la respuesta
-            /// </summary>
-            /// <param name="pExamen"></param>
-            /// <param name="pPregunta"></param>
-            /// <param name="pRespuesta"></param>
-            /// <returns></returns>
-            public Boolean RespuestaCorrecta(ExamenDTO pExamen, PreguntaDTO pPregunta, int idRespuesta)
-            {
-                Examen examen = new Examen(pExamen);
-                return controladorExamen.RespuestaCorrecta(examen, DTOAPregunta(pPregunta), idRespuesta);
-            }
+        /// <summary>
+        /// Metodo que determina si una respuesta es correcta o no 
+        /// Almacena el resultado de la respuesta
+        /// </summary>
+        /// <param name="pExamen"></param>
+        /// <param name="pPregunta"></param>
+        /// <param name="pRespuesta"></param>
+        /// <returns></returns>
+        public Boolean RespuestaCorrecta(ExamenDTO pExamen, PreguntaDTO pPregunta, int idRespuesta)
+        {
+            Examen examen = new Examen(pExamen);
+            return controladorExamen.RespuestaCorrecta(examen, DTOAPregunta(pPregunta), idRespuesta);
+        }
 
         /// <summary>
         /// Metodo que permite cargar preguntas desde una pagina de preguntas hacia la base de datos.
@@ -399,22 +392,9 @@ namespace Trabajo_Integrador.Controladores
         /// <param name="pDificultad"></param>
         public int GetPreguntasOnline(string pCantidad, string pConjunto, string pCategoria, string pDificultad)
         {
-             return controladorPreguntas.GetPreguntasOnline(pCantidad, pConjunto, pCategoria, pDificultad);
+            return controladorPreguntas.GetPreguntasOnline(pCantidad, pConjunto, pCategoria, pDificultad);
         }
-        /// <summary>
-        /// Metodo que sirve para obtener todas las respuestas asociadas a una preguna
-        /// </summary>
-        /// <param name="pPregunta"></param>
-        /// <returns>Una lista de respuestas</returns>
-        public List<RespuestaDTO> RespuestasDePregunta(PreguntaDTO pPregunta)
-        {
-            List<RespuestaDTO> listaRespuestaDTO = new List<RespuestaDTO>();
-            foreach(Respuesta respuesta in controladorPreguntas.RespuestasDePregunta(DTOAPregunta(pPregunta)))
-            {
-                listaRespuestaDTO.Add(new RespuestaDTO(respuesta));
-            }
-            return listaRespuestaDTO;
-        }
+
 
     }
 }

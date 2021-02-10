@@ -1,5 +1,4 @@
-﻿using System;
-
+﻿using Trabajo_Integrador.DTO;
 namespace Trabajo_Integrador
 {
     /// <summary>
@@ -16,11 +15,10 @@ namespace Trabajo_Integrador
             set { iCategoria = value; }
         }
 
-        public String ProviderId { get; set; }
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        /// <param name="pCategoria"></param>
+
+
+        public int ProviderId { get; set; }
+
         public CategoriaPregunta(string pCategoria)
         {
             iCategoria = pCategoria;
@@ -28,11 +26,11 @@ namespace Trabajo_Integrador
         public CategoriaPregunta()
         { }
 
-        public CategoriaPregunta(CategoriaPreguntaDTO categoriaPreguntaDTO)
+        public CategoriaPregunta(CategoriaPreguntaDTO pCategoria)
         {
-            this.OpentDbId = categoriaPreguntaDTO.OpentDbId;
-            this.Id = categoriaPreguntaDTO.Id;
-            this.iCategoria = categoriaPreguntaDTO.iCategoria;
+            this.ProviderId = pCategoria.ProviderId;
+            this.Id = pCategoria.Id;
+            this.iCategoria = pCategoria.iCategoria;
         }
     }
 }
