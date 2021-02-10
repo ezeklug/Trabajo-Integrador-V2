@@ -90,6 +90,7 @@ namespace Trabajo_Integrador.Controladores.Bitacora
 
         public Bitacora()
         {
+            this.bitacoras = new List<BitacoraComposite>();
             bitacoras.Add(new BitacoraDb());
             bitacoras.Add(new BitacoraFile());
         }
