@@ -240,7 +240,7 @@ namespace Trabajo_Integrador.Controladores
             catch (Exception ex)
             {
                 var bitacora = new Bitacora.Bitacora();
-                bitacora.GuardarLog("ControladorPreguntas.GetConjuntoPreguntas" + ex.ToString());
+                bitacora.GuardarLog("ControladorPreguntas.GetNombresConjuntosPreguntas" + ex.ToString());
             }
             return listaConjuntos;
         }

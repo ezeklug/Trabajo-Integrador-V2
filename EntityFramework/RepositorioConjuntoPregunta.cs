@@ -45,5 +45,10 @@ namespace Trabajo_Integrador.EntityFramework
             return dificultades;
         }
 
+
+        public IEnumerable<String> NombresDeConjuntos()
+        {
+            return this.iDBSet.GroupBy();
+        }
     }
 }

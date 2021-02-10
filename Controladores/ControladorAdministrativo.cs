@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Trabajo_Integrador.Controladores.Bitacora;
 using Trabajo_Integrador.Dominio;
 using Trabajo_Integrador.EntityFramework;
-using Trabajo_Integrador.Controladores.Bitacora;
 
 namespace Trabajo_Integrador.Controladores
 {
@@ -46,7 +44,7 @@ namespace Trabajo_Integrador.Controladores
             {
                 using (var UoW = new UnitOfWork(db))
                 {
-                   listaPreguntas= (List<Pregunta>)UoW.RepositorioPreguntas.GetAll();
+                    listaPreguntas = (List<Pregunta>)UoW.RepositorioPreguntas.GetAll();
                 }
             }
 
@@ -76,11 +74,24 @@ namespace Trabajo_Integrador.Controladores
         }
 
         /// <summary>
-        /// Metodo que devuelve todas los conjuntos de preguntas cargados en base de datos
+        /// Devuelve todos los nombres de los conjutos
         /// </summary>
         /// <returns></returns>
-        public List<ConjuntoPreguntas> GetConjuntoPreguntas()
+        public static IEnumerable<String> GetNombresConjuntosPreguntas()
         {
+            IEnumerable<ConjuntoPreguntas> conjuntos;
+            HashSet<String> nombres = new HashSet<string>();
+            using (var db = new TrabajoDbContext())
+            {
+                using (var UoW = new UnitOfWork(db))
+                {
+                    conjuntos = UoW.RepositorioConjuntoPregunta.GetAll();
+                }
+            }
+
+
+
+
             return iControladorPreguntas.GetAllConjuntoPreguntas();
         }
         /// <summary>
@@ -151,7 +162,7 @@ namespace Trabajo_Integrador.Controladores
             }
             catch (Exception ex)
             {
-                var bitacora = new  Bitacora.Bitacora();
+                var bitacora = new Bitacora.Bitacora();
                 bitacora.GuardarLog("ControladorAdministrativo.GetRanking" + ex.Message);
             }
             return listaExamenes;
@@ -287,4 +298,3 @@ namespace Trabajo_Integrador.Controladores
 
     }
 }
-

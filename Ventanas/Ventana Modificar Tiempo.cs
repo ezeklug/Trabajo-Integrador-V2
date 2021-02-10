@@ -46,7 +46,7 @@ namespace Trabajo_Integrador.Ventanas
         private void CargarConjunto()
         {
 
-            conjuntos = fachada.GetConjuntoPreguntas();
+            conjuntos = fachada.GetNombreConjuntos();
 
             List<string> listaConjuntos = new List<string>();
 
