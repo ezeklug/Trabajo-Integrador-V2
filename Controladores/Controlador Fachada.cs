@@ -3,9 +3,7 @@ using System.Collections.Generic;
 using Trabajo_Integrador.Controladores.Bitacora;
 using Trabajo_Integrador.Dominio;
 using Trabajo_Integrador.DTO;
-
-
-
+using Trabajo_Integrador.EntityFramework;
 
 namespace Trabajo_Integrador.Controladores
 {
@@ -247,7 +245,7 @@ namespace Trabajo_Integrador.Controladores
             {
                 Id = categoriaPreguntaDTO.Id,
                 iCategoria = categoriaPreguntaDTO.iCategoria,
-                ProviderId = categoriaPreguntaDTO.ProviderId
+                ProviderId = categoriaPreguntaDTO.ProviderId,
             };
         }
 
@@ -268,12 +266,21 @@ namespace Trabajo_Integrador.Controladores
                 FactorDificultad = dificultadDTO.FactorDificultad
             };
         }
-        public Pregunta DTOAPregunta(PreguntaDTO preguntaDTO)
+        public Pregunta DTOAPregunta(PreguntaDTO pPreguntaDTO)
         {
+            ConjuntoPreguntas conj;
+            using (var db = new TrabajoDbContext())
+            {
+                using (var UoW = new UnitOfWork(db))
+                {
+                    conj = UoW.RepositorioConjuntoPregunta.Get(pPreguntaDTO.ConjuntoId);
+                }
+            }
+
             return new Pregunta
             {
-                Id = preguntaDTO.Id,
-                Conjunto = this.controladorPreguntas.GetConjuntoPreguntas(preguntaDTO.ConjuntoId)
+                Id = pPreguntaDTO.Id,
+                Conjunto = conj,
             };
         }
 
