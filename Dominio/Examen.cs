@@ -5,29 +5,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Trabajo_Integrador.Controladores;
+using Trabajo_Integrador.DTO;
 
 
 namespace Trabajo_Integrador.Dominio
 {
     public class Examen
     {
-        
-
-
-        
-        public List<ExamenPregunta> ExamenPreguntas { get; set; }
-
-      
-
+        public List<ExamenPreguntaDTO> ExamenPreguntas { get; set; }
         public int Id { get; set; }
-
 
         /// <summary>
         /// Tiempo limite en segundos
         /// </summary>
-        public float TiempoLimite { get { return CantidadPreguntas * ExamenPreguntas.First().Pregunta.Conjunto.TiempoEsperadoRespuesta; } }
-
-
+        public float TiempoLimite { get; set; }
         /// <summary>
         /// Devuelve el factor tiempo para utilizar en el calculo del puntaje
         /// </summary>
@@ -47,30 +38,23 @@ namespace Trabajo_Integrador.Dominio
                 else return 1;
             } 
         }
-
-
-
         /// <summary>
         /// Devuelve el puntaje de un examen
         /// </summary>
         public double Puntaje { get; private set; }
-
-
         /// <summary>
         /// Tiempo usado en segundos
         /// </summary>
         public double TiempoUsado { set; get; }
         public DateTime Fecha { get; set; }
-
-        public Usuario Usuario {get;set;}
-
+        public string UsuarioId {get;set;}
         public int CantidadPreguntas { get { return getPreguntas().Count; } }
 
 
 
         
 
-
+/*
         public List<Pregunta> getPreguntas() 
         {
             List<Pregunta> ADevoler = new List<Pregunta>();
@@ -82,14 +66,14 @@ namespace Trabajo_Integrador.Dominio
             return ADevoler;
         }
 
-
+*/
 
 
         /// <summary>
         /// Devuelve la cantidad de respuestas correctas
         /// </summary>
         /// <returns></returns>
-        private int CantidadRespuestasCorrectas() 
+   /*     private int CantidadRespuestasCorrectas() 
         {
             int cont = 0;
 
@@ -105,7 +89,7 @@ namespace Trabajo_Integrador.Dominio
 
         }
 
-
+        */
         /// <summary>
         /// Calcula el puntaje de un examen
         /// </summary>
@@ -152,6 +136,14 @@ namespace Trabajo_Integrador.Dominio
             
         }
 
+        public Examen(ExamenDTO examenDTO)
+        {
+            this.Id = examenDTO.Id;
+            this.Puntaje = examenDTO.Puntaje;
+            this.TiempoLimite = examenDTO.TiempoLimite;
+            this.TiempoUsado = examenDTO.TiempoUsado;
+            this.UsuarioId = examenDTO.UsuarioId;
+        }
       
     }
 }

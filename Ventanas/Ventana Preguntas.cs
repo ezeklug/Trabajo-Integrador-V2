@@ -67,7 +67,7 @@ namespace Trabajo_Integrador.Ventanas
          
         public PreguntaDTO obtienePregunta(int numeroPregunta) //Muestra la pregunta iNumeroPregunta en la lista de preguntas del examen 
         {
-            List<PreguntaDTO> listaPreguntas = iExamen.getPreguntas();
+            List<PreguntaDTO> listaPreguntas = fachada.GetPreguntasDeExamen(iExamen.Id);
             mostrarPregunta(listaPreguntas[numeroPregunta]);
 
             this.CantidadPreguntas.Text ="Pregunta: " + (numeroPregunta+1).ToString() + "/" + iExamen.CantidadPreguntas.ToString();

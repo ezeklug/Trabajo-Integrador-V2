@@ -68,7 +68,13 @@ namespace Trabajo_Integrador.Controladores
         /// <param name="pExamen"></param>
         public void InicarExamen(String pNombreUsuario, ExamenDTO pExamen)
         {
-            controladorExamen.IniciarExamen(pNombreUsuario, pExamen);
+            Examen examen = new Examen(pExamen);
+            controladorExamen.IniciarExamen(pNombreUsuario, examen);
+        }
+
+        internal List<PreguntaDTO> GetPreguntasDeExamen(int examenId)
+        {
+            return controladorExamen.GetPreguntasDeExamen(examenId);
         }
 
 
@@ -273,9 +279,9 @@ namespace Trabajo_Integrador.Controladores
             return new Pregunta
             {
 
-                Categoria = preguntaDTO.Categoria,
-                Conjunto = preguntaDTO.Conjunto, //Deberia ser DTOAConjunto(preguntaDTO.Conjunto)
-                Dificultad = preguntaDTO.Dificultad,
+                CategoriaId = preguntaDTO.CategoriaId,
+                ConjuntoId = preguntaDTO.ConjuntoId, //Deberia ser DTOAConjunto(preguntaDTO.Conjunto)
+                DificultadId = preguntaDTO.DificultadId,
                 Id = preguntaDTO.Id,
 
 
@@ -291,9 +297,10 @@ namespace Trabajo_Integrador.Controladores
             /// <param name="pRespuesta"></param>
             /// <returns></returns>
             public Boolean RespuestaCorrecta(ExamenDTO pExamen, PreguntaDTO pPregunta, int idRespuesta)
-        {
-            return controladorExamen.RespuestaCorrecta(pExamen, DTOAPregunta(pPregunta), idRespuesta);
-        }
+            {
+                Examen examen = new Examen(pExamen);
+                return controladorExamen.RespuestaCorrecta(examen, DTOAPregunta(pPregunta), idRespuesta);
+            }
 
         /// <summary>
         /// Metodo que permite cargar preguntas desde una pagina de preguntas hacia la base de datos.

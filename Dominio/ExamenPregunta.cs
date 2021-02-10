@@ -18,9 +18,9 @@ namespace Trabajo_Integrador.Dominio
     {
         public int Id { get; set; }
         
-        public Pregunta Pregunta  { get; set; }
+        public string PreguntaId  { get; set; }
         
-        public Respuesta RespuestaElegida { get; set; }
+        public int RespuestaElegidaId { get; set; }
 
 
     }

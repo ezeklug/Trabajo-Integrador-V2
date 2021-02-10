@@ -3,17 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Trabajo_Integrador.Dominio;
 
 namespace Trabajo_Integrador.DTO
 {
-   public class PreguntaDTO
+    public class PreguntaDTO
     {
         //Propiedades
         public string Id { get; set; }
-        public virtual Dificultad Dificultad { get; set; }
-        public virtual CategoriaPregunta Categoria { get; set; }
+        public virtual string DificultadId { get; set; }
+        public virtual string CategoriaId { get; set; }
 
-        public virtual ConjuntoPreguntas Conjunto { get; set; }
+        public virtual string ConjuntoId { get; set; }
 
 
 
@@ -24,19 +25,19 @@ namespace Trabajo_Integrador.DTO
         /// <param name="pDificultad"></param>
         /// <param name="pCategoria"></param>
         /// <param name="pConjunto"></param>
-        public PreguntaDTO(string pPregunta, Dificultad pDificultad, CategoriaPregunta pCategoria, ConjuntoPreguntas pConjunto)
+        public PreguntaDTO(string pPregunta, string pDificultadId, string pCategoriaId, string pConjuntoId)
         {
             Id = pPregunta;
-            Dificultad = pDificultad;
-            Categoria = pCategoria;
-            Conjunto = pConjunto;
+            DificultadId = pDificultadId;
+            CategoriaId = pCategoriaId;
+            ConjuntoId = pConjuntoId;
         }
 
         public PreguntaDTO(Pregunta pregunta)
         {
-            this.Dificultad = pregunta.Dificultad;
-            this.Conjunto = pregunta.Conjunto;
-            this.Categoria = new CategoriaPregunta(pregunta.Categoria);
+            this.DificultadId = pregunta.DificultadId;
+            this.ConjuntoId = pregunta.ConjuntoId;
+            this.CategoriaId = pregunta.CategoriaId;
             this.Id = pregunta.Id;
 
         }

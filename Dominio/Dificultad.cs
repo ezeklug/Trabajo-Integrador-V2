@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Trabajo_Integrador
+namespace Trabajo_Integrador.Dominio
 {
     public class Dificultad
     {

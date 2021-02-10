@@ -16,8 +16,8 @@ namespace Trabajo_Integrador.Dominio
         /// <summary>
         /// Properties.
         /// </summary>
-        public String Id { get; set; }
-        public String Contrasenia { get; set; }
+        public string Id { get; set; }
+        public string Contrasenia { get; set; }
         public Boolean Administrador { get; set; }
         
         /// <summary>

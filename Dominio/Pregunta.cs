@@ -11,10 +11,10 @@ namespace Trabajo_Integrador
     {
         //Propiedades
         public string Id { get; set; }
-        public virtual Dificultad Dificultad { get; set; }
-        public virtual CategoriaPregunta Categoria { get; set; }
+        public virtual string DificultadId { get; set; }
+        public virtual string CategoriaId { get; set; }
 
-        public virtual ConjuntoPreguntas Conjunto { get; set; }
+        public virtual string ConjuntoId { get; set; }
 
 
 
@@ -27,12 +27,12 @@ namespace Trabajo_Integrador
         /// <param name="pDificultad"></param>
         /// <param name="pCategoria"></param>
         /// <param name="pConjunto"></param>
-        public Pregunta(string pPregunta,Dificultad pDificultad,CategoriaPregunta pCategoria, ConjuntoPreguntas pConjunto)
+        public Pregunta(string pPreguntaId, string pDificultadId, string pCategoriaId, string pConjuntoId)
         {
-            Id = pPregunta;
-            Dificultad = pDificultad;
-            Categoria = pCategoria;
-            Conjunto = pConjunto;
+            Id = pPreguntaId;
+            DificultadId = pDificultadId;
+            CategoriaId = pCategoriaId;
+            ConjuntoId = pConjuntoId;
         }
 
         

@@ -25,7 +25,7 @@ namespace Trabajo_Integrador.Ventanas
 
         private void ExamenTerminado_Load(object sender, EventArgs e)
         {
-            usuarioNombre.Text += iExamen.Usuario.Id;
+            usuarioNombre.Text += iExamen.UsuarioId;
 
             tiempo.Text += iExamen.TiempoUsado;
 
@@ -39,14 +39,14 @@ namespace Trabajo_Integrador.Ventanas
         private void volverInicio_Click_1(object sender, EventArgs e)
         {
             this.Hide();
-            if (fachada.EsAdministrador(iExamen.Usuario.Id))
+            if (fachada.EsAdministrador(iExamen.UsuarioId))
             {
-                Ventana_Principal_Admi vAdmin = new Ventana_Principal_Admi(iExamen.Usuario.Id);
+                Ventana_Principal_Admi vAdmin = new Ventana_Principal_Admi(iExamen.UsuarioId);
                 vAdmin.ShowDialog();
             }
             else
             {
-                Ventana_Principal volver = new Ventana_Principal(iExamen.Usuario.Id);
+                Ventana_Principal volver = new Ventana_Principal(iExamen.UsuarioId);
                 volver.ShowDialog();
             }
             this.Close();

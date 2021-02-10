@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using Trabajo_Integrador.DTO;
 
 namespace Trabajo_Integrador
 {
@@ -34,11 +34,11 @@ namespace Trabajo_Integrador
         public CategoriaPregunta()
         { }
 
-        public CategoriaPreguntaDTO(CategoriaPregunta categoriaPregunta)
+        public CategoriaPregunta(CategoriaPreguntaDTO categoriaPreguntaDTO)
         {
-            OpentDbId = categoriaPregunta.OpentDbId;
-            Id = categoriaPregunta.Id;
-            iCategoria = categoriaPregunta.iCategoria;
+            this.OpentDbId = categoriaPreguntaDTO.OpentDbId;
+            this.Id = categoriaPreguntaDTO.Id;
+            this.iCategoria = categoriaPreguntaDTO.iCategoria;
         }
     }
 }

@@ -10,8 +10,8 @@ namespace Trabajo_Integrador.DTO
 {
     public class UsuarioDTO
     {
-        public String Id { get; set; }
-        public String Contrasenia { get; set; }
+        public string Id { get; set; }
+        public string Contrasenia { get; set; }
         public Boolean Administrador { get; set; }
 
         /// <summary>

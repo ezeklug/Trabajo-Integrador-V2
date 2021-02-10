@@ -4,7 +4,6 @@ using Trabajo_Integrador.EntityFramework;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Trabajo_Integrador;
 using Trabajo_Integrador.Dominio;
 
 namespace Trabajo_Integrador.Controladores
@@ -58,19 +57,19 @@ namespace Trabajo_Integrador.Controladores
                             if (UoW.RepositorioPreguntas.Get(pre.Id)==null)
                             {
                                 cantidad++;
-                                CategoriaPregunta categoria = UoW.RepositorioCategorias.Get(pre.Categoria.Id); ;
-                                Dificultad dificultad = UoW.RepositorioDificultades.Get(pre.Dificultad.Id);
-                                ConjuntoPreguntas conjunto = UoW.RepositorioConjuntoPregunta.Get(pre.Conjunto.Id);
+                                CategoriaPregunta categoria = UoW.RepositorioCategorias.Get(pre.CategoriaId); ;
+                                Dificultad dificultad = UoW.RepositorioDificultades.Get(pre.DificultadId);
+                                ConjuntoPreguntas conjunto = UoW.RepositorioConjuntoPregunta.Get(pre.ConjuntoId);
 
                                 ///Si la categoria esta en la base de datos la referencia,
                                 ///sino crea una nueva y la inserta en la db
                                 if (categoria == null)
                                 {
-                                    CategoriaPregunta categoriaNueva = new CategoriaPregunta(pre.Categoria.Id);
+                                    CategoriaPregunta categoriaNueva = new CategoriaPregunta(pre.CategoriaId);
                                 }
                                 else
                                 {
-                                    pre.Categoria = categoria;
+                                    pre.CategoriaId = categoria.Id;
                                 }
 
 
@@ -78,22 +77,22 @@ namespace Trabajo_Integrador.Controladores
                                 ///sino crea una nueva y la inserta en la db
                                 if (dificultad == null)
                                 {
-                                    Dificultad dificultadNueva = new Dificultad(pre.Dificultad.Id);
+                                    Dificultad dificultadNueva = new Dificultad(pre.DificultadId);
                                 }
                                 else
                                 {
-                                    pre.Dificultad = dificultad;
+                                    pre.DificultadId = dificultad.Id;
                                 }
 
                                 ///Si el conjunto esta en la base de datos la referencia,
                                 ///sino crea uno nuevo y la inserta en la db
                                 if (conjunto == null)
                                 {
-                                    ConjuntoPreguntas conjuntoNuevo = new ConjuntoPreguntas(pre.Conjunto.Id);
+                                    ConjuntoPreguntas conjuntoNuevo = new ConjuntoPreguntas(pre.ConjuntoId);
                                 }
                                 else
                                 {
-                                    pre.Conjunto = conjunto;
+                                    pre.ConjuntoId = conjunto.Id;
                                 }
 
 
@@ -244,7 +243,7 @@ namespace Trabajo_Integrador.Controladores
                         foreach (CategoriaPregunta cat in listaCategoria)
                         {
                             List<Pregunta> preguntas = (List<Pregunta>)UoW.RepositorioPreguntas.GetAll();
-                            preguntas=preguntas.FindAll(pre => (pre.Categoria.Id == cat.Id));
+                            preguntas=preguntas.FindAll(pre => (pre.CategoriaId == cat.Id));
                             if (preguntas.Count >= n)
                             {
                                 ADevolver.Add(cat);
@@ -276,7 +275,7 @@ namespace Trabajo_Integrador.Controladores
                 {
                     using (var UoW = new UnitOfWork(db))
                     {
-                       aRetornar = UoW.RepositorioPreguntas.GetAll().Where(pre => (pre.Categoria.Id == pIdCategoria)).Count(); ;
+                       aRetornar = UoW.RepositorioPreguntas.GetAll().Where(pre => (pre.CategoriaId == pIdCategoria)).Count(); ;
                     }
                 }
             }

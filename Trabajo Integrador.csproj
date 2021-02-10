@@ -147,6 +147,7 @@
     <Compile Include="DTO\ConjuntoPreguntasDTO.cs" />
     <Compile Include="DTO\DificultadDTO.cs" />
     <Compile Include="DTO\ExamenDTO.cs" />
+    <Compile Include="DTO\ExamenPreguntaDTO.cs" />
     <Compile Include="DTO\PreguntaDTO.cs" />
     <Compile Include="DTO\RespuestaDTO.cs" />
     <Compile Include="DTO\UsuarioDTO.cs" />
