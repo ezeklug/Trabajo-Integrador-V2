@@ -1,15 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using Trabajo_Integrador.DTO;
-using Trabajo_Integrador;
 using Trabajo_Integrador.Controladores;
+using Trabajo_Integrador.DTO;
 
 namespace Trabajo_Integrador.Ventanas
 {
@@ -23,19 +17,19 @@ namespace Trabajo_Integrador.Ventanas
         {
             InitializeComponent();
             iExamen = unExamen;
-            
+
         }
 
         int tiempo;
-         
+
         public void mostrarPregunta(PreguntaDTO unaPregunta) //Muestra una pregunta con sus opciones
         {
             preg.Text += unaPregunta.Id; //Muestro la Pregunta en el Label
 
             List<RespuestaDTO> opciones = new List<RespuestaDTO>(); //Almacena las 4 opciones de respuestas
 
-            List<RespuestaDTO> respuestas = fachada.RespuestasDePregunta(unaPregunta);
-          
+            List<RespuestaDTO> respuestas = ControladorFachada.RespuestasDePregunta(unaPregunta);
+
             foreach (RespuestaDTO respuesta in respuestas)
             {
                 opciones.Add(respuesta);
@@ -51,26 +45,26 @@ namespace Trabajo_Integrador.Ventanas
                 opciones.RemoveAt(i);
             }
 
-                        
+
             foreach (RespuestaDTO opcion in listaDesordenada) //Muestra las preguntas en RadioButtons
-            {                
-               RadioButton rb = new RadioButton();
+            {
+                RadioButton rb = new RadioButton();
                 rb.Text = opcion.Texto;
                 rb.Name = opcion.Id.ToString();
                 flowLayoutPanel1.Controls.Add(rb);
-                
+
             }
-                    
+
         }
 
-          
-         
+
+
         public PreguntaDTO obtienePregunta(int numeroPregunta) //Muestra la pregunta iNumeroPregunta en la lista de preguntas del examen 
         {
             List<PreguntaDTO> listaPreguntas = fachada.GetPreguntasDeExamen(iExamen.Id);
             mostrarPregunta(listaPreguntas[numeroPregunta]);
 
-            this.CantidadPreguntas.Text ="Pregunta: " + (numeroPregunta+1).ToString() + "/" + iExamen.CantidadPreguntas.ToString();
+            this.CantidadPreguntas.Text = "Pregunta: " + (numeroPregunta + 1).ToString() + "/" + iExamen.CantidadPreguntas.ToString();
 
             return listaPreguntas[numeroPregunta];
 
@@ -80,15 +74,15 @@ namespace Trabajo_Integrador.Ventanas
         {
             preg.Text = "*";
             flowLayoutPanel1.Controls.Clear();
-            
+
         }
 
-            private void timer_Tick(object sender, EventArgs e) //Tiempo agotado
-        {        
-            if (tiempo>0)
+        private void timer_Tick(object sender, EventArgs e) //Tiempo agotado
+        {
+            if (tiempo > 0)
             {
                 tiempo--;
-                this.time.Text = "Tiempo Restante: "+ tiempo.ToString();
+                this.time.Text = "Tiempo Restante: " + tiempo.ToString();
             }
             else
             {
@@ -99,20 +93,20 @@ namespace Trabajo_Integrador.Ventanas
                     finalizado.ShowDialog();
                 this.Close();
             }
-                     
+
         }
 
-      
+
         private void siguiente_Click(object sender, EventArgs e)
         {
-            if (flowLayoutPanel1.Controls.OfType<RadioButton>().FirstOrDefault(r => r.Checked)!=null)
+            if (flowLayoutPanel1.Controls.OfType<RadioButton>().FirstOrDefault(r => r.Checked) != null)
             {
-                
-               RadioButton opcion = flowLayoutPanel1.Controls.OfType<RadioButton>().FirstOrDefault(r => r.Checked);
-                             
-               fachada.RespuestaCorrecta(iExamen, obtienePregunta(iNumeroPregunta), Int32.Parse(opcion.Name));
-                              
-               LimpiaControles(); // Limpia todos los controles
+
+                RadioButton opcion = flowLayoutPanel1.Controls.OfType<RadioButton>().FirstOrDefault(r => r.Checked);
+
+                fachada.RespuestaCorrecta(iExamen, obtienePregunta(iNumeroPregunta), Int32.Parse(opcion.Name));
+
+                LimpiaControles(); // Limpia todos los controles
 
                 iNumeroPregunta++;
 
@@ -134,17 +128,17 @@ namespace Trabajo_Integrador.Ventanas
             else
             {
                 MessageBox.Show("Debe seleccionar una resupuesta");
-            }      
-           
+            }
+
         }
-              
+
         private void VPreguntas_Load(object sender, EventArgs e)
         {
             tiempo = Convert.ToInt32(iExamen.TiempoLimite);
             this.timer.Enabled = true;
             this.time.Text = "Tiempo Restante: " + tiempo.ToString();
             obtienePregunta(iNumeroPregunta);
-            
+
         }
 
     }

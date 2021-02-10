@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Trabajo_Integrador.Dominio;
+using Trabajo_Integrador.DTO;
 using Trabajo_Integrador.EntityFramework;
 
 namespace Trabajo_Integrador.Controladores
@@ -113,6 +114,19 @@ namespace Trabajo_Integrador.Controladores
         }
 
 
+
+        public static CategoriaPreguntaDTO CategoriaDePregunta(PreguntaDTO pPregunta)
+        {
+            CategoriaPregunta c;
+            using (var db = new TrabajoDbContext())
+            {
+                using (var UoW = new UnitOfWork(db))
+                {
+                    c = UoW.RepositorioPreguntas.Get(pPregunta.Id).Conjunto.Categoria;
+                }
+            }
+            return new CategoriaPreguntaDTO(c);
+        }
 
         /// <summary>
         /// Obtiene preguntas random de la base de datos
