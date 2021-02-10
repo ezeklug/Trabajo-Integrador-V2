@@ -12,11 +12,9 @@ namespace Trabajo_Integrador.Controladores.Bitacora
     /// <summary>
     /// Almacena los logs en la base de datos
     /// </summary>
-    public class BitacoraDb : BitacoraComposite, IBitacora
+    public class BitacoraDb : BitacoraComposite
     {
-
-
-        public void GuardarLog(Log pLog)
+        public override void GuardarLog(Log pLog)
         {
             using (var db = new TrabajoDbContext())
             {
@@ -27,7 +25,7 @@ namespace Trabajo_Integrador.Controladores.Bitacora
             }
         }
 
-        public ICollection<Log> ObtenerTodos()
+        public override ICollection<Log> ObtenerTodos()
         {
             ICollection<Log> logs;
             using (var db = new TrabajoDbContext())
@@ -42,7 +40,7 @@ namespace Trabajo_Integrador.Controladores.Bitacora
 
         }
 
-        public Log Obtener(int pId)
+        public override Log Obtener(int pId)
         {
             Log log;
             using (var db = new TrabajoDbContext())
@@ -56,7 +54,7 @@ namespace Trabajo_Integrador.Controladores.Bitacora
             return log;
         }
 
-        public ICollection<Log> Obtener(DateTime pDesde, DateTime pHasta)
+        public override ICollection<Log> Obtener(DateTime pDesde, DateTime pHasta)
         {
             ICollection<Log> logs;
             using (var db = new TrabajoDbContext())
@@ -74,7 +72,7 @@ namespace Trabajo_Integrador.Controladores.Bitacora
             return false;
         }
 
-        public int ObtenerSiguienteId()
+        public override int ObtenerSiguienteId()
         {
             int i = 0;
             using (var db = new TrabajoDbContext())

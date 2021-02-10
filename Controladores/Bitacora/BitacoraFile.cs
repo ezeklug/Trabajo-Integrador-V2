@@ -10,11 +10,11 @@ namespace Trabajo_Integrador.Controladores.Bitacora
     /// <summary>
     /// Almacena logs en un archivo de texto
     /// </summary>
-    class BitacoraFile : BitacoraComposite, IBitacora
+    class BitacoraFile : BitacoraComposite
     {
-        private static string nombreDefault = "examenvirtual.log";
+        private const string nombreDefault = "examenvirtual.log";
 
-        public void GuardarLog(Log pLog)
+        public override void GuardarLog(Log pLog)
         {
             String pDescripcion = pLog.Id.ToString() + "," + pLog.Fecha.ToString() + "," + pLog.Descripcion;
 
@@ -24,22 +24,22 @@ namespace Trabajo_Integrador.Controladores.Bitacora
             File.Close();
         }
 
-        public Log Obtener(int pId)
+        public override Log Obtener(int pId)
         {
             return this.ObtenerTodos().FirstOrDefault(l => l.Id == pId);
         }
 
-        public ICollection<Log> Obtener(DateTime pDesde, DateTime pHasta)
+        public override ICollection<Log> Obtener(DateTime pDesde, DateTime pHasta)
         {
             return this.ObtenerTodos().Where(l => (l.Fecha <= pHasta) && (pDesde < l.Fecha)).ToArray();
         }
 
-        public int ObtenerSiguienteId()
+        public override int ObtenerSiguienteId()
         {
             return this.ObtenerTodos().Max(l => l.Id);
         }
 
-        public ICollection<Log> ObtenerTodos()
+        public override ICollection<Log> ObtenerTodos()
         {
 
             // Primera implementacion

@@ -13,7 +13,7 @@ namespace Trabajo_Integrador.Controladores.Bitacora
     /// </summary>
     public class Bitacora : IBitacora
     {
-        private List<IBitacora> bitacoras;
+        private List<BitacoraComposite> bitacoras;
 
         public void GuardarLog(String pDescripcion)
         {
@@ -72,7 +72,7 @@ namespace Trabajo_Integrador.Controladores.Bitacora
         }
 
 
-        public void AgregarBitacora(IBitacora pBitacora)
+        public void AgregarBitacora(BitacoraComposite pBitacora)
         {
             bitacoras.Add(pBitacora);
         }
