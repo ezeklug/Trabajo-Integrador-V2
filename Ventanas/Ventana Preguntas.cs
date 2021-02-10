@@ -28,7 +28,7 @@ namespace Trabajo_Integrador.Ventanas
 
             List<RespuestaDTO> opciones = new List<RespuestaDTO>(); //Almacena las 4 opciones de respuestas
 
-            List<RespuestaDTO> respuestas = ControladorFachada.RespuestasDePregunta(unaPregunta);
+            IEnumerable<RespuestaDTO> respuestas = ControladorFachada.RespuestasDePregunta(unaPregunta);
 
             foreach (RespuestaDTO respuesta in respuestas)
             {

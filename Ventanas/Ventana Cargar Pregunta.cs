@@ -1,11 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Trabajo_Integrador.Controladores;
 using Trabajo_Integrador.DTO;
@@ -14,9 +8,9 @@ namespace Trabajo_Integrador.Ventanas
 {
     public partial class Ventana_Cargar_Pregunta : Form
     {
-         ControladorFachada fachada = new ControladorFachada();
-        List<CategoriaPreguntaDTO> categorias;
-        List<ConjuntoPreguntasDTO> conjuntos;
+        ControladorFachada fachada = new ControladorFachada();
+        IEnumerable<CategoriaPreguntaDTO> iCategorias;
+        IEnumerable<String> iNombreConjuntos;
         List<DificultadDTO> dificultades;
         string iNombreUsuario;
 
@@ -37,7 +31,14 @@ namespace Trabajo_Integrador.Ventanas
 
         private void cargarCategoria()
         {
-            categorias = fachada.GetCategorias();
+
+            ///
+            ///
+            /// Para cargar las categorias primero se debe seleccionar un conjunto
+            /// Las categorias dependen del conjunto
+            ///
+            ///
+            iCategorias = fachada.GetCategorias();
 
             List<string> listaCategorias = new List<string>(); ;
             foreach (CategoriaPreguntaDTO categoria in categorias)
@@ -45,12 +46,12 @@ namespace Trabajo_Integrador.Ventanas
                 listaCategorias.Add(categoria.Id);
 
             }
-            for(int i=0; i<listaCategorias.Count; i++)
+            for (int i = 0; i < listaCategorias.Count; i++)
             {
                 categoria.Items.Add(listaCategorias[i]);
             }
 
-           
+
         } //Le asigno al combobox categoria la lista categorias
 
 
@@ -73,13 +74,13 @@ namespace Trabajo_Integrador.Ventanas
 
         private void cargarConjunto()   //Le asigno al combobox conjunto la lista conjunto
         {
-            conjuntos = fachada.GetNombreConjuntos();
+            iNombreConjuntos = ControladorFachada.GetNombreConjuntos();
 
             List<string> listaConjuntos = new List<string>();
 
-            foreach (ConjuntoPreguntasDTO conjunto in conjuntos)
+            foreach (var nombre in iNombreConjuntos)
             {
-                listaConjuntos.Add(conjunto.Id);
+                listaConjuntos.Add(nombre);
             }
 
             for (int i = 0; i < listaConjuntos.Count; i++)
@@ -100,7 +101,7 @@ namespace Trabajo_Integrador.Ventanas
 
         private void cargarPreguntas_Click(object sender, EventArgs e)
         {
-           
+
 
             if ((categoria.SelectedItem == null) || (dificultad.SelectedItem == null) || (conjunto.SelectedItem == null) || (cantidad.Value == null))
             {
