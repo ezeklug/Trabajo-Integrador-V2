@@ -51,16 +51,11 @@ namespace Trabajo_Integrador.Controladores
 
                         foreach (Pregunta pre in pPreguntas)
                         {
-
                             // si la pregunta no existe
                             if (UoW.RepositorioPreguntas.Get(pre.Id) == null)
                             {
                                 cantidad++;
-                                ConjuntoPreguntas conjunto = UoW.RepositorioConjuntoPregunta.
-                                                    ObtenerConjuntoPorDificultadYCategoria(pre.Conjunto.Nombre,
-                                                                                            pre.Conjunto.Dificultad.Id,
-                                                                                            pre.Conjunto.Categoria.Id
-                                                                                            );
+                                ConjuntoPreguntas conjunto = UoW.RepositorioConjuntoPregunta.Get(pre.Conjunto.Id);
                                 UoW.RepositorioPreguntas.Add(pre);
                             }
                         }

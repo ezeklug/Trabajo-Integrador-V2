@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Trabajo_Integrador.Dominio
 {
@@ -13,6 +14,7 @@ namespace Trabajo_Integrador.Dominio
         public float TiempoEsperadoRespuesta { get; set; }
         public Dificultad Dificultad { get; set; }
         public CategoriaPregunta Categoria { get; set; }
+        public ICollection<Pregunta> Preguntas { get; set; }
 
         public ConjuntoPreguntas(string pNombre, float pTiempoEsperadoRespuesta, Dificultad pDificultad, CategoriaPregunta pCategoria)
         {
