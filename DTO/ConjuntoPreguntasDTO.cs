@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using Trabajo_Integrador.Dominio;
 
 namespace Trabajo_Integrador.DTO
 {
@@ -11,7 +11,7 @@ namespace Trabajo_Integrador.DTO
     {
         public float TiempoEsperadoRespuesta { get; set; }
 
-        public int Id { get; set; }
+        public string Id { get; set; }
         public string Nombre { get; set; }
 
         public ConjuntoPreguntasDTO(string pNombre, float pTiempoEsperadoRespuesta)

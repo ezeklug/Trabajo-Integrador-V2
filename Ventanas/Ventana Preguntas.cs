@@ -63,7 +63,7 @@ namespace Trabajo_Integrador.Ventanas
                     
         }
 
-            
+          
          
         public PreguntaDTO obtienePregunta(int numeroPregunta) //Muestra la pregunta iNumeroPregunta en la lista de preguntas del examen 
         {
