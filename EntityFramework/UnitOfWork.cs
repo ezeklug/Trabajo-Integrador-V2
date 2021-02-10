@@ -23,20 +23,21 @@ namespace Trabajo_Integrador.EntityFramework
         ///////
         /// Properties
         ///////
-        public  RepositorioExamen ExamenRepository { get; private set; }
+        public RepositorioExamen ExamenRepository { get; private set; }
         public RepositorioPreguntas RepositorioPreguntas { get; private set; }
         public RepositorioUsuarios RepositorioUsuarios { get; private set; }
         public RepositorioConjuntoPregunta RepositorioConjuntoPregunta { get; private set; }
 
-        public RepositorioDificultades RepositorioDificultades { get; private set; }
-
-        public RepositorioCategorias RepositorioCategorias { get; private set; }
+        
 
         public RepositorioPreguntaExamen RepositorioPreguntasExamenes { get; set; }
         public RepositorioLogs RepositorioLogs { get; private set; }
 
+        //public RepositorioRespuesta RepositorioRespuesta { get; private set;}
 
+        //public RepositorioDificultades RepositorioDificultades { get; private set; }
 
+        //public RepositorioCategorias RepositorioCategorias { get; private set; }
 
         protected virtual void Dispose(bool pDisposing)
         {
@@ -80,10 +81,12 @@ namespace Trabajo_Integrador.EntityFramework
             this.RepositorioPreguntas = new RepositorioPreguntas(pDbContext);
             this.RepositorioUsuarios = new RepositorioUsuarios(pDbContext);
             this.ExamenRepository = new RepositorioExamen(pDbContext);
-            this.RepositorioCategorias = new RepositorioCategorias(pDbContext);
-            this.RepositorioDificultades = new RepositorioDificultades(pDbContext);
+           
             this.RepositorioPreguntasExamenes = new RepositorioPreguntaExamen(pDbContext);
             this.RepositorioLogs = new RepositorioLogs(pDbContext);
+            // this.RepositorioRespuesta = new RepositorioRespuesta(pDbContext);
+            //this.RepositorioCategorias = new RepositorioCategorias(pDbContext);
+            //this.RepositorioDificultades = new RepositorioDificultades(pDbContext);
         }
 
 

@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Trabajo_Integrador.Dominio;
 using Trabajo_Integrador.Migrations;
+using Trabajo_Integrador.Controladores.Bitacora;
 
 namespace Trabajo_Integrador.EntityFramework
 {
@@ -22,6 +23,8 @@ namespace Trabajo_Integrador.EntityFramework
         public DbSet<CategoriaPregunta> Categorias { get; set; }
 
         public DbSet<ExamenPregunta> PreguntasExamenes { get; set; }
+
+        //public DbSet<Dominio.Respuesta> Respuestas { get; set; }
 
         public DbSet<Log> Logs { get; set; }
 

@@ -31,12 +31,13 @@ namespace Trabajo_Integrador.Controladores
         private void AsociarExamenPregunta(Examen pExamen, List<Pregunta> pPreguntas)
         {
             List<ExamenPregunta> examenPreguntas = new List<ExamenPregunta>();
+
+            
             foreach (var pregunta in pPreguntas)
             {
                 ExamenPregunta examenPregunta = new ExamenPregunta();
                 examenPregunta.Pregunta = pregunta;
                 examenPreguntas.Add(examenPregunta);
-
             }
             pExamen.ExamenPreguntas = examenPreguntas;
         }
@@ -59,7 +60,7 @@ namespace Trabajo_Integrador.Controladores
             return examen;
         }
 
-                              
+
         /// <summary>
         /// Dado un examen, una pregunta y una respuesta, devuelve verdadero si la respuesta es correcta.
         /// Almacena el resultado de la respuesta
@@ -68,9 +69,22 @@ namespace Trabajo_Integrador.Controladores
         /// <param name="pPregunta"></param>
         /// <param name="pRespuesta"></param>
         /// <returns></returns>
-        public Boolean RespuestaCorrecta(Examen pExamen, Pregunta pPregunta, String pRespuesta)
+        public Boolean RespuestaCorrecta(Examen pExamen, Pregunta pPregunta, int idRespuesta)
         {
-            return pExamen.RespuestaCorrecta(pPregunta, pRespuesta);
+            using (var db = new TrabajoDbContext())
+            {
+                using (var UoW = new UnitOfWork(db))
+                {
+                    Pregunta pregunta = UoW.RepositorioPreguntas.Get(pPregunta.Id);
+                    ExamenPregunta examenPregunta= pExamen.ExamenPreguntas.Find(e => e.Pregunta.Id == pPregunta.Id);
+                   
+                    var respuestaElegida = pPregunta.Respuestas.FirstOrDefault<Respuesta>(p => p.Id == idRespuesta);
+                    examenPregunta.RespuestaElegida = respuestaElegida;
+
+
+                    return respuestaElegida.EsCorrecta;
+                }
+            }
         }
         
         /// <summary>
@@ -91,9 +105,19 @@ namespace Trabajo_Integrador.Controladores
         /// </summary>
         /// <param name="pUsuario"></param>
         /// <param name="pExamen"></param>
-        public void IniciarExamen(Usuario pUsuario, Examen pExamen)
+        public void IniciarExamen(string pNombreUsuario, Examen pExamen)
         {
-            pExamen.Usuario = pUsuario;
+            Usuario usuario;
+            using (var db = new TrabajoDbContext())
+            {
+                using (var UoW = new UnitOfWork(db))
+                {
+
+                    usuario = UoW.RepositorioUsuarios.Get(pNombreUsuario);
+                }
+            }
+
+            pExamen.Usuario = usuario;
             pExamen.Iniciar();
         }
 
@@ -108,9 +132,11 @@ namespace Trabajo_Integrador.Controladores
             {
                 using (var UoW = new UnitOfWork(db))
                 {
-                    foreach (var ep in pExamen.ExamenPreguntas)
+
+                    foreach (ExamenPregunta ep in pExamen.ExamenPreguntas)
                     {
                         ep.Pregunta = UoW.RepositorioPreguntas.Get(ep.Pregunta.Id);
+                        ep.RespuestaElegida = ep.Pregunta.Respuestas.FirstOrDefault(p => p.Id == ep.RespuestaElegida.Id);
                     }
 
 

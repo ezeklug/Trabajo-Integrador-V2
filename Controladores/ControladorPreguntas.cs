@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using Trabajo_Integrador.EntityFramework;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Trabajo_Integrador;
-using Trabajo_Integrador.Dominio;
+using Trabajo_Integrador.EntityFramework;
 
 namespace Trabajo_Integrador.Controladores
 {
@@ -55,35 +51,12 @@ namespace Trabajo_Integrador.Controladores
 
                         foreach (Pregunta pre in pPreguntas)
                         {
-                            if (db.Preguntas.Find(pre.Id) == null)
+
+                            // si la pregunta no existe
+                            if (UoW.RepositorioPreguntas.Get(pre.Id) == null)
                             {
                                 cantidad++;
-                                CategoriaPregunta categoria = db.Categorias.Find(pre.Categoria.Id);
-                                Dificultad dificultad = db.Dificultades.Find(pre.Dificultad.Id);
-                                ConjuntoPreguntas conjunto = db.ConjuntoPreguntas.Find(pre.Conjunto.Id);
-
-                                ///Si la categoria esta en la base de datos la referencia,
-                                ///sino crea una nueva y la inserta en la db
-                                if (categoria == null)
-                                {
-                                    CategoriaPregunta categoriaNueva = new CategoriaPregunta(pre.Categoria.Id);
-                                }
-                                else
-                                {
-                                    pre.Categoria = categoria;
-                                }
-
-
-                                ///Si la dificultad esta en la base de datos la referencia,
-                                ///sino crea una nueva y la inserta en la db
-                                if (dificultad == null)
-                                {
-                                    Dificultad dificultadNueva = new Dificultad(pre.Dificultad.Id);
-                                }
-                                else
-                                {
-                                    pre.Dificultad = dificultad;
-                                }
+                                ConjuntoPreguntas conjunto = UoW.RepositorioConjuntoPregunta.Get(pre.Conjunto.Id);
 
                                 ///Si el conjunto esta en la base de datos la referencia,
                                 ///sino crea uno nuevo y la inserta en la db
@@ -106,7 +79,8 @@ namespace Trabajo_Integrador.Controladores
             }
             catch (Exception ex)
             {
-                Bitacora.GuardarLog(ex.Message.ToString());
+                var bitacora = new Bitacora.Bitacora();
+                bitacora.GuardarLog(ex.Message.ToString());
             }
             return cantidad;
         }
@@ -127,26 +101,31 @@ namespace Trabajo_Integrador.Controladores
             int cargadas = 0;
             try
             {
-                CategoriaPregunta categoria;
+
+                ConjuntoPreguntas conjunto;
                 using (var db = new TrabajoDbContext())
                 {
                     using (var UoW = new UnitOfWork(db))
                     {
-                        categoria = db.Categorias.Find(pCategoria);
+                        conjunto = UoW.RepositorioConjuntoPregunta.ObtenerConjuntoConDificultadYCategoria(pConjunto, pDificultad, pCategoria);
                     }
                 }
                 IEstrategiaObtenerPreguntas estrategia = this.GetEstrategia(pConjunto);
-                List<Pregunta> preguntas = estrategia.getPreguntas(pCantidad, pConjunto, pDificultad, categoria);
+                var preguntas = estrategia.getPreguntas(int.Parse(pCantidad), conjunto);
                 cargadas = CargarPreguntas(preguntas);
-               
+                return cargadas;
             }
+
+
             catch (NotImplementedException ex)
             {
-                Bitacora.GuardarLog("ControladorPreguntas.GetPreguntasOnline: " + ex.Message);
+                var bitacora = new Bitacora.Bitacora();
+                bitacora.GuardarLog("ControladorPreguntas.GetPreguntasOnline: " + ex.Message);
             }
             return cargadas;
 
         }
+
 
 
         /// <summary>
@@ -194,7 +173,8 @@ namespace Trabajo_Integrador.Controladores
             }
             catch (Exception ex)
             {
-                Bitacora.GuardarLog("ControladorPreguntas.GetCategorias" + ex.ToString());
+                var bitacora = new Bitacora.Bitacora();
+                bitacora.GuardarLog("ControladorPreguntas.GetCategorias" + ex.ToString());
             }
             return listaCategoria;
         }
@@ -203,35 +183,26 @@ namespace Trabajo_Integrador.Controladores
         /// Devuelve todas las categorias que tengan mas (o igual) de N preguntas
         /// </summary>
         /// <returns>Lista de categorias</returns>
-        public List<CategoriaPregunta> GetCategoriasConMasDeNPreguntas(int n)
+        public ICollection<CategoriaPregunta> GetCategoriasConMasDeNPreguntas(int n)
         {
-            List<CategoriaPregunta> listaCategoria = new List<CategoriaPregunta>();
-            List<CategoriaPregunta> ADevolver = new List<CategoriaPregunta>();
             try
             {
                 using (var db = new TrabajoDbContext())
                 {
                     using (var UoW = new UnitOfWork(db))
                     {
-                        listaCategoria = (List<CategoriaPregunta>)UoW.RepositorioCategorias.GetAll();
-                        foreach (CategoriaPregunta cat in listaCategoria)
-                        {
-                            List<Pregunta> preguntas = db.Preguntas.Where(pre => (pre.Categoria.Id == cat.Id)).ToList();
-                            if (preguntas.Count >= n)
-                            {
-                                ADevolver.Add(cat);
-                            }
-                        }
+                        return UoW.RepositorioPreguntas.CategoriasConMasDeNPreguntas(n);
                     }
                 }
             }
             catch (Exception ex)
             {
-                Bitacora.GuardarLog("ControladorPreguntas.GetCategoriasConMasDeNPreguntas" + ex.ToString());
+                var bitacora = new Bitacora.Bitacora();
+                bitacora.GuardarLog("ControladorPreguntas.GetCategoriasConMasDeNPreguntas" + ex.ToString());
+                return null;
             }
-            return ADevolver;
         }
-    
+
 
 
         /// <summary>
@@ -239,7 +210,7 @@ namespace Trabajo_Integrador.Controladores
         /// </summary>
         /// <param name="pIdCateoria">El id de la categoria</param>
         /// <returns></returns>
-        public int CantidadDePreguntasParaCategoria(String pIdCateoria)
+        public int CantidadDePreguntasParaCategoria(String pIdCategoria)
         {
             int aRetornar = 0;
             try
@@ -248,18 +219,19 @@ namespace Trabajo_Integrador.Controladores
                 {
                     using (var UoW = new UnitOfWork(db))
                     {
-                       aRetornar = db.Preguntas.Where(pre => (pre.Categoria.Id == pIdCateoria)).Count();
+                        aRetornar = UoW.RepositorioPreguntas.GetAll().Where(pre => (pre.Categoria.Id == pIdCategoria)).Count(); ;
                     }
                 }
             }
             catch (Exception ex)
             {
-                Bitacora.GuardarLog("ControladorPreguntas.CantidadDePreguntasParaCategoria" + ex.ToString());
+                var bitacora = new Bitacora.Bitacora();
+                bitacora.GuardarLog("ControladorPreguntas.CantidadDePreguntasParaCategoria" + ex.ToString());
             }
             return aRetornar;
 
         }
-    
+
 
 
 
@@ -282,7 +254,8 @@ namespace Trabajo_Integrador.Controladores
             }
             catch (Exception ex)
             {
-                Bitacora.GuardarLog("ControladorPreguntas.GetConjuntoPreguntas" + ex.ToString());
+                var bitacora = new Bitacora.Bitacora();
+                bitacora.GuardarLog("ControladorPreguntas.GetConjuntoPreguntas" + ex.ToString());
             }
             return listaConjuntos;
         }
@@ -306,7 +279,8 @@ namespace Trabajo_Integrador.Controladores
             }
             catch (Exception ex)
             {
-                Bitacora.GuardarLog("ControladorPreguntas.GetDificultades" + ex.ToString());
+                var bitacora = new Bitacora.Bitacora();
+                bitacora.GuardarLog("ControladorPreguntas.GetDificultades" + ex.ToString());
             }
             return listaDificultades;
         }
@@ -328,7 +302,6 @@ namespace Trabajo_Integrador.Controladores
                 return cinstancia;
             }
         }
-
 
 
 

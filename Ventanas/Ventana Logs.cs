@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Trabajo_Integrador.Controladores.Bitacora;
 using Trabajo_Integrador.Controladores;
 
 namespace Trabajo_Integrador.Ventanas
@@ -24,7 +25,7 @@ namespace Trabajo_Integrador.Ventanas
 
         private void Ventana_Logs_Load(object sender, EventArgs e)
         {
-            List<Log> listaLogs = fachada.getLogs();
+            ICollection<Log> listaLogs = fachada.getLogs();
             DataTable dt = new DataTable();
 
             dt.Columns.Add("Id", typeof(int));

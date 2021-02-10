@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Trabajo_Integrador.Dominio;
 
 namespace Trabajo_Integrador
 {
@@ -11,6 +12,6 @@ namespace Trabajo_Integrador
     /// </summary>
     public interface IEstrategiaObtenerPreguntas
     {
-       List<Pregunta> getPreguntas(string pCantidad,string pConjunto, string pDificultad, CategoriaPregunta pCategoria);
+       ICollection<Pregunta> getPreguntas(int pCantidad, ConjuntoPreguntas pConjunto);
     }
 }

@@ -11,7 +11,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{6AAE9D8F-2359-4A92-BA17-CE66D1283B6C}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Exe</OutputType>
     <RootNamespace>Trabajo_Integrador</RootNamespace>
     <AssemblyName>Trabajo Integrador</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
@@ -69,7 +69,10 @@
     <GenerateManifests>true</GenerateManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <SignManifests>true</SignManifests>
+    <SignManifests>false</SignManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <NoWin32Manifest>true</NoWin32Manifest>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
@@ -132,12 +135,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controladores\Bitacora\Bitacora.cs" />
+    <Compile Include="Controladores\Bitacora\BitacoraComposite.cs" />
+    <Compile Include="Controladores\Bitacora\BitacoraFile.cs" />
+    <Compile Include="Controladores\Bitacora\IBitacora.cs" />
     <Compile Include="Controladores\Controlador Fachada.cs" />
     <Compile Include="Controladores\ControladorAdministrativo.cs" />
     <Compile Include="Dominio\CategoriaPregunta.cs" />
     <Compile Include="Dominio\ConjuntoPreguntas.cs" />
     <Compile Include="Controladores\ControladorExamen.cs" />
     <Compile Include="Dominio\ExamenPregunta.cs" />
+    <Compile Include="Dominio\Respuesta.cs" />
     <Compile Include="Dominio\Usuario.cs" />
     <Compile Include="EntityFramework\RepositorioExamen.cs" />
     <Compile Include="EntityFramework\RepositorioCategorias.cs" />
@@ -155,8 +163,8 @@
     <Compile Include="Controladores\EstrategiaNula.cs" />
     <Compile Include="Controladores\EstrategiaObtenerPreguntas.cs" />
     <Compile Include="Controladores\IEstrategiaObtenerPreguntas.cs" />
-    <Compile Include="Controladores\Bitacora.cs" />
-    <Compile Include="Controladores\Log.cs" />
+    <Compile Include="Controladores\Bitacora\BitacoraDb.cs" />
+    <Compile Include="Controladores\Bitacora\Log.cs" />
     <Compile Include="Migrations\202002092213292_Inital.cs" />
     <Compile Include="Migrations\202002092213292_Inital.designer.cs">
       <DependentUpon>202002092213292_Inital.cs</DependentUpon>
@@ -172,6 +180,10 @@
     <Compile Include="Migrations\202002171343047_NuevaLogica3.cs" />
     <Compile Include="Migrations\202002171343047_NuevaLogica3.designer.cs">
       <DependentUpon>202002171343047_NuevaLogica3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202008070053114_Respuesta.cs" />
+    <Compile Include="Migrations\202008070053114_Respuesta.designer.cs">
+      <DependentUpon>202008070053114_Respuesta.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Controladores\OpentDB.cs" />
@@ -314,6 +326,9 @@
     <EmbeddedResource Include="Migrations\202002171343047_NuevaLogica3.resx">
       <DependentUpon>202002171343047_NuevaLogica3.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202008070053114_Respuesta.resx">
+      <DependentUpon>202008070053114_Respuesta.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -381,6 +396,9 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="CosasParaTestear.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

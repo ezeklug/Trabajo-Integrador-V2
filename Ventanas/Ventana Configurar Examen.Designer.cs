@@ -80,7 +80,7 @@
             this.categoria.Location = new System.Drawing.Point(430, 96);
             this.categoria.Name = "categoria";
             this.categoria.Size = new System.Drawing.Size(192, 21);
-            this.categoria.TabIndex = 3;
+            this.categoria.TabIndex = 1;
             // 
             // saludo
             // 
@@ -99,7 +99,7 @@
             this.volver.Location = new System.Drawing.Point(600, 406);
             this.volver.Name = "volver";
             this.volver.Size = new System.Drawing.Size(101, 32);
-            this.volver.TabIndex = 5;
+            this.volver.TabIndex = 6;
             this.volver.Text = "Volver";
             this.volver.UseVisualStyleBackColor = false;
             this.volver.Click += new System.EventHandler(this.volver_Click);
@@ -112,7 +112,7 @@
             this.btnComenzarExamen.Location = new System.Drawing.Point(432, 301);
             this.btnComenzarExamen.Name = "btnComenzarExamen";
             this.btnComenzarExamen.Size = new System.Drawing.Size(189, 48);
-            this.btnComenzarExamen.TabIndex = 6;
+            this.btnComenzarExamen.TabIndex = 5;
             this.btnComenzarExamen.Text = "Comenzar Examen";
             this.btnComenzarExamen.UseVisualStyleBackColor = false;
             this.btnComenzarExamen.Click += new System.EventHandler(this.btnComenzarExamen_Click);
@@ -125,7 +125,7 @@
             this.dificultad.Location = new System.Drawing.Point(430, 151);
             this.dificultad.Name = "dificultad";
             this.dificultad.Size = new System.Drawing.Size(192, 21);
-            this.dificultad.TabIndex = 9;
+            this.dificultad.TabIndex = 2;
             // 
             // cantidadPreguntas
             // 
@@ -137,13 +137,12 @@
             0});
             this.cantidadPreguntas.Name = "cantidadPreguntas";
             this.cantidadPreguntas.Size = new System.Drawing.Size(189, 20);
-            this.cantidadPreguntas.TabIndex = 10;
+            this.cantidadPreguntas.TabIndex = 3;
             this.cantidadPreguntas.Value = new decimal(new int[] {
             10,
             0,
             0,
             0});
-            
             // 
             // label4
             // 
@@ -163,7 +162,7 @@
             this.conjunto.Location = new System.Drawing.Point(429, 247);
             this.conjunto.Name = "conjunto";
             this.conjunto.Size = new System.Drawing.Size(192, 21);
-            this.conjunto.TabIndex = 12;
+            this.conjunto.TabIndex = 4;
             // 
             // Ventana_Configurar_Examen
             // 

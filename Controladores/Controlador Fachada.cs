@@ -4,7 +4,10 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.UI;
+using System.Web.UI.WebControls.WebParts;
 using Trabajo_Integrador.Dominio;
+using Trabajo_Integrador.Controladores.Bitacora;
 using Trabajo_Integrador.EntityFramework;
 
 
@@ -34,10 +37,7 @@ namespace Trabajo_Integrador.Controladores
         /// <returns></returns>
         public List<Examen> GetRanking(String pUsuario)
         {
-            using (var db = new TrabajoDbContext())
-            {
-                return db.Examenes.Where(e => e.Usuario.Id == pUsuario).OrderBy(ex => ex.Puntaje).ToList<Examen>();
-            }
+            return controladorAdministrativo.GetRanking(pUsuario);
         }
 
 
@@ -61,17 +61,7 @@ namespace Trabajo_Integrador.Controladores
         /// <param name="pExamen"></param>
         public void InicarExamen(String pNombreUsuario, Examen pExamen)
         {
-            Usuario usuario;
-            using (var db = new TrabajoDbContext())
-            {
-                using (var UoW = new UnitOfWork(db))
-                {
-
-                    usuario = UoW.RepositorioUsuarios.Get(pNombreUsuario);
-                }
-            }
-
-            controladorExamen.IniciarExamen(usuario, pExamen);
+            controladorExamen.IniciarExamen(pNombreUsuario, pExamen);
         }
 
 
@@ -79,7 +69,7 @@ namespace Trabajo_Integrador.Controladores
         /// Devuelve una lista con todos los logs
         /// </summary>
         /// <returns></returns>
-        public List<Log> getLogs()
+        public ICollection<Log> getLogs()
         {
             return controladorAdministrativo.getLogs();
         }
@@ -107,21 +97,6 @@ namespace Trabajo_Integrador.Controladores
         /// 
         public Examen InicializarExamen(int pCantidad, String pConjunto, string pCategoria, string pDificultad)
         {
-            /*
-            ConjuntoPreguntas conjunto;
-            CategoriaPregunta categoria;
-            Dificultad dificultad;
-
-            using (var db = new TrabajoDbContext())
-            {
-                using (var UoW = new UnitOfWork(db))
-                {
-                    conjunto = UoW.RepositorioConjuntoPregunta.Get(pConjunto);
-                    categoria = UoW.RepositorioCategorias.Get(pCategoria);
-                    dificultad = UoW.RepositorioDificultades.Get(pDificultad);
-                }
-            }
-            */
             return controladorExamen.InicializarExamen(pCantidad.ToString(), pConjunto, pCategoria, pDificultad);
         }
 
@@ -205,25 +180,7 @@ namespace Trabajo_Integrador.Controladores
         /// <returns>Verdadero si usuario y contraseña existen </returns>
         public Boolean UsuarioValido(string pUsuarioId, string pContrasenia)
         {
-            using (var db = new TrabajoDbContext())
-            {
-                using (var UoW = new UnitOfWork(db))
-                {
-                    Usuario usr = new Usuario(pUsuarioId, pContrasenia);
-                    Usuario usrDb = UoW.RepositorioUsuarios.Get(pUsuarioId);
-                    if (usrDb != null)
-                    {
-                        if (usrDb.Contrasenia == usr.Contrasenia)
-                        {
-                            return true;
-                        }
-                        else return false;
-                    }
-                    else return false;
-
-
-                }
-            }
+            return controladorAdministrativo.UsuarioValido(pUsuarioId, pContrasenia);
         }
 
         /// <summary>
@@ -233,40 +190,20 @@ namespace Trabajo_Integrador.Controladores
         /// <returns></returns>
         public Boolean UsuarioExiste(string pNombreUsuario)
         {
-            using (var db = new TrabajoDbContext())
-            {
-                using (var UoW = new UnitOfWork(db))
-                {
-                    Usuario usrDb = UoW.RepositorioUsuarios.Get(pNombreUsuario);
-
-                    if (usrDb != null)
-                    {
-                        if (usrDb.Id == pNombreUsuario)
-                        {
-                            return true;
-                        }
-                        else return false;
-                    }
-                    else return false;
-                }
-            }
+            return controladorAdministrativo.UsuarioExiste(pNombreUsuario);
 
         }
 
+
+
+        /// <summary>
+        /// Chequea si un usuario es administrador
+        /// </summary>
+        /// <param name="nombreUsuario"></param>
+        /// <returns></returns>
         public Boolean EsAdministrador(string nombreUsuario)
         {
-            using (var db = new TrabajoDbContext())
-            {
-                using (var UoW = new UnitOfWork(db))
-                {
-                    Usuario usrDb = UoW.RepositorioUsuarios.Get(nombreUsuario);
-                    if (usrDb.Administrador == true)
-                    {
-                        return true;
-                    }
-                    else return false;
-                }
-            }
+            return controladorAdministrativo.EsAdministrador(nombreUsuario);
         }
 
         /// <summary>
@@ -277,9 +214,9 @@ namespace Trabajo_Integrador.Controladores
         /// <param name="pPregunta"></param>
         /// <param name="pRespuesta"></param>
         /// <returns></returns>
-        public Boolean RespuestaCorrecta(Examen pExamen, Pregunta pPregunta, String pRespuesta)
+        public Boolean RespuestaCorrecta(Examen pExamen, Pregunta pPregunta, int idRespuesta)
         {
-            return controladorExamen.RespuestaCorrecta(pExamen, pPregunta, pRespuesta);
+            return controladorExamen.RespuestaCorrecta(pExamen, pPregunta, idRespuesta);
         }
 
         /// <summary>
@@ -366,6 +303,7 @@ namespace Trabajo_Integrador.Controladores
         {
              return controladorPreguntas.GetPreguntasOnline(pCantidad, pConjunto, pCategoria, pDificultad);
         }
+      
 
     }
 }
