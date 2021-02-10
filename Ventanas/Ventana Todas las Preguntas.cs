@@ -36,7 +36,7 @@ namespace Trabajo_Integrador.Ventanas
             foreach (PreguntaDTO pregunta in listaPreguntas)
             {
                 List<RespuestaDTO> listaRespuestas = fachada.RespuestasDePregunta(pregunta);
-                IEnumerable<object> row = new object[]{ cont, pregunta.Id, pregunta.Categoria.Id };
+               IEnumerable<object> row = new object[]{ cont, pregunta.Id, pregunta.Categoria.Id };
                 int i = 1;
                 foreach (RespuestaDTO respuesta in listaRespuestas)
                 {
@@ -54,6 +54,7 @@ namespace Trabajo_Integrador.Ventanas
                 dt.Rows.Add(row.ToArray<object>());
             }
             dataGridView1.DataSource = dt;
+        
         }
 
         private void button1_Click(object sender, EventArgs e)

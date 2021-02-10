@@ -4,12 +4,12 @@
     {
         //Propiedades
         public string Id { get; set; }
-        public int ConjuntoId { get; set; }
+        public string ConjuntoId { get; set; }
 
 
 
 
-        public PreguntaDTO(string pPregunta, int pConjuntoId)
+        public PreguntaDTO(string pPregunta, string pConjuntoId)
         {
             Id = pPregunta;
             ConjuntoId = pConjuntoId;
