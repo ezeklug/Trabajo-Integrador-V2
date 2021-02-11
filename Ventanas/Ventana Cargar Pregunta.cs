@@ -11,8 +11,9 @@ namespace Trabajo_Integrador.Ventanas
         ControladorFachada fachada = new ControladorFachada();
         IEnumerable<CategoriaPreguntaDTO> iCategorias;
         IEnumerable<String> iNombreConjuntos;
-        List<DificultadDTO> dificultades;
+        IEnumerable<DificultadDTO> dificultades;
         string iNombreUsuario;
+        string categoriaSeleccionada;
 
         public Ventana_Cargar_Pregunta(string pNombreUsuario)
         {
@@ -31,7 +32,6 @@ namespace Trabajo_Integrador.Ventanas
 
         private void cargarCategoria()
         {
-
             ///
             ///
             /// Para cargar las categorias primero se debe seleccionar un conjunto
@@ -43,15 +43,11 @@ namespace Trabajo_Integrador.Ventanas
             iCategorias = ControladorFachada.GetCategorias(nombreConjunto);
 
             List<string> listaCategorias = new List<string>(); ;
-            foreach (CategoriaPreguntaDTO categoria in iCategorias)
+            foreach (CategoriaPreguntaDTO categ in iCategorias)
             {
-                listaCategorias.Add(categoria.Id);
-
+                this.categoria.Items.Add(categ.Id);
             }
-            for (int i = 0; i < listaCategorias.Count; i++)
-            {
-                categoria.Items.Add(listaCategorias[i]);
-            }
+            
 
 
         } //Le asigno al combobox categoria la lista categorias
@@ -59,18 +55,14 @@ namespace Trabajo_Integrador.Ventanas
 
         private void cargarDificultad() //Le asigno al combobox dificultad la lista dificultades
         {
-            dificultades = fachada.GetDificultades();
+            String nombreConjunto = "OpentDB";
+            dificultades =  ControladorFachada.GetDificultades(nombreConjunto);
 
-            List<string> listaDificultades = new List<string>(); ;
-            foreach (DificultadDTO dificultad in dificultades)
+            foreach (DificultadDTO dific in dificultades)
             {
-                listaDificultades.Add(dificultad.Id);
+                dificultad.Items.Add(dific.Id);
             }
 
-            for (int i = 0; i < listaDificultades.Count; i++)
-            {
-                dificultad.Items.Add(listaDificultades[i]);
-            }
         }
 
 
@@ -78,17 +70,11 @@ namespace Trabajo_Integrador.Ventanas
         {
             iNombreConjuntos = ControladorFachada.GetNombreConjuntos();
 
-            List<string> listaConjuntos = new List<string>();
-
             foreach (var nombre in iNombreConjuntos)
             {
-                listaConjuntos.Add(nombre);
+                conjunto.Items.Add(nombre);
             }
-
-            for (int i = 0; i < listaConjuntos.Count; i++)
-            {
-                conjunto.Items.Add(listaConjuntos[i]);
-            }
+            
         }
 
 

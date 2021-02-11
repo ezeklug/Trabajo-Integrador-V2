@@ -46,7 +46,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(73, 110);
+            this.label1.Location = new System.Drawing.Point(73, 294);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(204, 20);
             this.label1.TabIndex = 0;
@@ -75,7 +75,7 @@
             // categoria
             // 
             this.categoria.FormattingEnabled = true;
-            this.categoria.Location = new System.Drawing.Point(299, 112);
+            this.categoria.Location = new System.Drawing.Point(299, 293);
             this.categoria.Name = "categoria";
             this.categoria.Size = new System.Drawing.Size(170, 21);
             this.categoria.TabIndex = 3;
@@ -109,7 +109,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(73, 294);
+            this.label4.Location = new System.Drawing.Point(79, 125);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(198, 20);
             this.label4.TabIndex = 6;
@@ -153,12 +153,12 @@
             // conjunto
             // 
             this.conjunto.FormattingEnabled = true;
-            this.conjunto.Location = new System.Drawing.Point(299, 294);
+            this.conjunto.Location = new System.Drawing.Point(299, 124);
             this.conjunto.Name = "conjunto";
             this.conjunto.Size = new System.Drawing.Size(170, 21);
             this.conjunto.TabIndex = 11;
             // 
-            // Ventana_Cargar_Examen
+            // Ventana_Cargar_Pregunta
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -175,7 +175,7 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Name = "Ventana_Cargar_Examen";
+            this.Name = "Ventana_Cargar_Pregunta";
             this.Text = "Cargar Examen";
             this.Load += new System.EventHandler(this.Ventana_Cargar_Examen_Load);
             ((System.ComponentModel.ISupportInitialize)(this.cantidad)).EndInit();

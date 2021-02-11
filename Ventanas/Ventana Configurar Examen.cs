@@ -13,9 +13,10 @@ namespace Trabajo_Integrador.Ventanas
         ControladorFachada fachada = new ControladorFachada();
 
 
-        List<CategoriaPreguntaDTO> categorias;
+        IEnumerable<CategoriaPreguntaDTO> categorias;
         IEnumerable<String> iNombreConjuntos;
-        List<DificultadDTO> dificultades;
+        IEnumerable<DificultadDTO> dificultades;
+        String conjuntoSeleccionado;
 
         public Ventana_Configurar_Examen(String pNombreUsuario)
         {
@@ -29,49 +30,52 @@ namespace Trabajo_Integrador.Ventanas
         {
             saludo.Text += iNombreUsuario; //Nombre que aparece junto con el Bienvenido 
 
-            cargarCategoria();
-            cargarDificultad();
-            cargarConjunto();
+            //cargarCategoria();
+            //cargarDificultad();
+            cargarConjuntos();
         }
 
         private void cargarCategoria()
         {
-
-            categorias = fachada.GetCategoriaPreguntasConNPreguntas(10);
-
-            List<string> listaCategorias = new List<string>(); ;
-            foreach (CategoriaPreguntaDTO categoria in categorias)
+            if (conjuntoSeleccionado == null)
             {
-                listaCategorias.Add(categoria.Id);
-            }
 
-            categoria.Items.Add("Random");
-            for (int i = 0; i < listaCategorias.Count; i++)
-            {
-                categoria.Items.Add(listaCategorias[i]);
             }
+            else
+            {
+                categorias = ControladorFachada.GetCategoriaPreguntasConNPreguntas(conjuntoSeleccionado, 10);
+
+                foreach (CategoriaPreguntaDTO categ in categorias)
+                {
+                    categoria.Items.Add(categ.Id);
+                   
+                }
+
+            }
+            
         }
 
 
 
         private void cargarDificultad() //Le asigno al combobox dificultad el array dificultades
         {
-            dificultades = fachada.GetDificultades();
-
-            List<string> listaDificultades = new List<string>(); ;
-            foreach (DificultadDTO dificultad in dificultades)
+            if (conjuntoSeleccionado == null)
             {
-                listaDificultades.Add(dificultad.Id);
+
             }
-
-            for (int i = 0; i < listaDificultades.Count; i++)
+            else
             {
-                dificultad.Items.Add(listaDificultades[i]);
+                dificultades = ControladorFachada.GetDificultades(conjuntoSeleccionado);
+
+                foreach (DificultadDTO dific in dificultades)
+                {
+                    dificultad.Items.Add(dific.Id);
+                }
             }
         }
 
 
-        private void cargarConjunto()   //Le asigno al combobox conjunto el array conjunto
+        private void cargarConjuntos()   //Le asigno al combobox conjunto el array conjunto
         {
             var nombreConjuntos = ControladorFachada.GetNombreConjuntos();
             foreach (var nombre in nombreConjuntos)
@@ -119,8 +123,9 @@ namespace Trabajo_Integrador.Ventanas
                 int cantidadSeleccionada = Convert.ToInt32(cantidadPreguntas.Value); //Cantidad de preguntas a responder  
 
                 List<String> categorias = new List<string>();
+                IEnumerable<CategoriaPreguntaDTO> categoriaPreguntas = ControladorFachada.GetCategoriaPreguntasConNPreguntas(conjuntoSeleccionado, cantidadSeleccionada);
 
-                foreach (CategoriaPreguntaDTO cat in fachada.GetCategoriaPreguntasConNPreguntas(cantidadSeleccionada))
+                foreach (CategoriaPreguntaDTO cat in categoriaPreguntas)
                 {
                     categorias.Add(cat.Id);
                 }
@@ -162,6 +167,12 @@ namespace Trabajo_Integrador.Ventanas
 
         }
 
+        private void conjunto_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            conjuntoSeleccionado = this.conjunto.SelectedItem.ToString();
+            cargarCategoria();
+            cargarDificultad();
+        }
     }
 
 

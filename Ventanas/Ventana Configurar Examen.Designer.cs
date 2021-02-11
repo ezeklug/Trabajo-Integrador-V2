@@ -46,7 +46,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(76, 99);
+            this.label1.Location = new System.Drawing.Point(76, 247);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(313, 18);
             this.label1.TabIndex = 0;
@@ -77,7 +77,7 @@
             this.categoria.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.categoria.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.categoria.FormattingEnabled = true;
-            this.categoria.Location = new System.Drawing.Point(430, 96);
+            this.categoria.Location = new System.Drawing.Point(432, 248);
             this.categoria.Name = "categoria";
             this.categoria.Size = new System.Drawing.Size(192, 21);
             this.categoria.TabIndex = 1;
@@ -148,7 +148,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(210, 246);
+            this.label4.Location = new System.Drawing.Point(210, 109);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(179, 18);
             this.label4.TabIndex = 11;
@@ -159,10 +159,11 @@
             this.conjunto.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.conjunto.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.conjunto.FormattingEnabled = true;
-            this.conjunto.Location = new System.Drawing.Point(429, 247);
+            this.conjunto.Location = new System.Drawing.Point(433, 109);
             this.conjunto.Name = "conjunto";
             this.conjunto.Size = new System.Drawing.Size(192, 21);
             this.conjunto.TabIndex = 4;
+            this.conjunto.SelectedIndexChanged += new System.EventHandler(this.conjunto_SelectedIndexChanged);
             // 
             // Ventana_Configurar_Examen
             // 
