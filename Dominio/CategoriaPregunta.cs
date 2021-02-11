@@ -19,9 +19,10 @@ namespace Trabajo_Integrador
 
         public string ProviderId { get; set; }
 
-        public CategoriaPregunta(string pCategoria)
+        public CategoriaPregunta(string pCategoria, string pProviderId)
         {
             iCategoria = pCategoria;
+            ProviderId = pProviderId;
         }
         public CategoriaPregunta()
         { }

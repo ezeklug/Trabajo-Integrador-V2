@@ -27,15 +27,16 @@ namespace UnitTests
             List<Respuesta> respuestas;
 
 
-            CategoriaPregunta cat = new CategoriaPregunta("Science: Computers");
+            CategoriaPregunta cat = new CategoriaPregunta("Science: Computers", "18");
             Dificultad dif = new Dificultad("hard");
             ConjuntoPreguntas conj = new ConjuntoPreguntas("OpentDB", dif, cat);
             preguntas = op.getPreguntas(10, conj);
             foreach (Pregunta pre in preguntas)
             {
-                Console.WriteLine($"La pregunta es: {pre.Id}");
+                Console.WriteLine($"La pregunta es: {pre.Id}, idConj: {pre.Conjunto.Nombre}, idCat: {pre.Conjunto.Categoria.Id}");
             }
         }
+
 
 
 

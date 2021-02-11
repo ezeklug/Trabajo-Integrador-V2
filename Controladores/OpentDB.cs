@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
@@ -10,6 +11,8 @@ using Trabajo_Integrador.Dominio;
 
 namespace Trabajo_Integrador
 {
+
+
     /// <summary>
     /// Clase que obtiene y procesa los datos obtenidos en OpentDb para transformarlos en preguntas
     /// </summary>
@@ -66,13 +69,15 @@ namespace Trabajo_Integrador
                         {
                             // De esta manera se accede a los componentes de cada item
                             string textoPregunta = HttpUtility.HtmlDecode(bResponseItem.question.ToString());
-                            CategoriaPregunta categoria = new CategoriaPregunta(bResponseItem.category.ToString());
+                            string nombreCategoria = bResponseItem.category.ToString();
                             Dificultad dificultad = new Dificultad(HttpUtility.HtmlDecode(bResponseItem.difficulty.ToString()));
 
-                            if ((categoria.Id != pConjunto.Categoria.Id) || (dificultad.Id != pConjunto.Dificultad.Id))
+                            if ((nombreCategoria != pConjunto.Categoria.Id) || (dificultad.Id != pConjunto.Dificultad.Id))
                             {
-                                throw new HttpRequestValidationException();
+                                throw new FormatException(String.Format("Recibio otra cosa de la api {0} = {1}, {2} = {3}",
+                                    nombreCategoria, pConjunto.Categoria.Id, dificultad.Id, pConjunto.Dificultad.Id));
                             }
+
 
                             //Obtiene el texto de la respuesta correcta
                             string textorespuestaCorrecta = HttpUtility.HtmlDecode(bResponseItem.correct_answer.ToString());
