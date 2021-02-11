@@ -1,15 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using Trabajo_Integrador.DTO;
-
 using Trabajo_Integrador.Controladores;
+using Trabajo_Integrador.DTO;
 
 
 namespace Trabajo_Integrador.Ventanas
@@ -19,9 +12,9 @@ namespace Trabajo_Integrador.Ventanas
         String iNombreUsuario;
         ControladorFachada fachada = new ControladorFachada();
 
-        
+
         List<CategoriaPreguntaDTO> categorias;
-        List<ConjuntoPreguntasDTO> conjuntos;
+        IEnumerable<String> iNombreConjuntos;
         List<DificultadDTO> dificultades;
 
         public Ventana_Configurar_Examen(String pNombreUsuario)
@@ -64,35 +57,28 @@ namespace Trabajo_Integrador.Ventanas
         private void cargarDificultad() //Le asigno al combobox dificultad el array dificultades
         {
             dificultades = fachada.GetDificultades();
-            
+
             List<string> listaDificultades = new List<string>(); ;
             foreach (DificultadDTO dificultad in dificultades)
             {
                 listaDificultades.Add(dificultad.Id);
             }
-           
+
             for (int i = 0; i < listaDificultades.Count; i++)
             {
                 dificultad.Items.Add(listaDificultades[i]);
             }
         }
-    
+
 
         private void cargarConjunto()   //Le asigno al combobox conjunto el array conjunto
         {
-            conjuntos = fachada.GetNombreConjuntos();
-        
-             List<string> listaConjuntos = new List<string>(); 
-
-                foreach (ConjuntoPreguntasDTO conjunto in conjuntos)
-                {
-                    listaConjuntos.Add(conjunto.Id);
-                }
-
-            for (int i = 0; i < listaConjuntos.Count; i++)
+            var nombreConjuntos = ControladorFachada.GetNombreConjuntos();
+            foreach (var nombre in nombreConjuntos)
             {
-                conjunto.Items.Add(listaConjuntos[i]);
+                conjunto.Items.Add(nombre);
             }
+
         }
 
 
@@ -104,7 +90,9 @@ namespace Trabajo_Integrador.Ventanas
                 Ventana_Principal_Admi vAdmin = new Ventana_Principal_Admi(iNombreUsuario);
                 vAdmin.ShowDialog();
             }
-            else { Ventana_Principal vPrinicpal = new Ventana_Principal(iNombreUsuario);
+            else
+            {
+                Ventana_Principal vPrinicpal = new Ventana_Principal(iNombreUsuario);
                 vPrinicpal.ShowDialog();
             }
             this.Close();

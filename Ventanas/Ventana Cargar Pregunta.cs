@@ -38,10 +38,12 @@ namespace Trabajo_Integrador.Ventanas
             /// Las categorias dependen del conjunto
             ///
             ///
-            iCategorias = fachada.GetCategorias();
+
+            String nombreConjunto = "OpentDB";
+            iCategorias = ControladorFachada.GetCategorias(nombreConjunto);
 
             List<string> listaCategorias = new List<string>(); ;
-            foreach (CategoriaPreguntaDTO categoria in categorias)
+            foreach (CategoriaPreguntaDTO categoria in iCategorias)
             {
                 listaCategorias.Add(categoria.Id);
 

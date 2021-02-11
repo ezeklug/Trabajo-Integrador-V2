@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Trabajo_Integrador.EntityFramework;
 using Trabajo_Integrador.Dominio;
-using System.Data.Entity.Migrations;
 using Trabajo_Integrador.DTO;
+using Trabajo_Integrador.EntityFramework;
 
 namespace Trabajo_Integrador.Controladores
 {
@@ -50,7 +47,8 @@ namespace Trabajo_Integrador.Controladores
                     List<Pregunta> preguntas = iControladorPreguntas.GetPreguntasRandom(pCantidad, pConjunto, pCategoria, pDificultad);
                     Examen examen = new Examen();
                     this.AsociarExamenPregunta(examen, preguntas);
-                    examen.TiempoLimite = (float)examen.CantidadPreguntas * UoW.RepositorioConjuntoPregunta.Get(UoW.RepositorioPreguntas.Get(examen.ExamenPreguntas.First().PreguntaId).Conjunto.Id).TiempoEsperadoRespuesta;
+                    Pregunta pre = UoW.RepositorioPreguntas.Get(examen.ExamenPreguntas.First().PreguntaId);
+                    examen.TiempoLimite = (float)examen.CantidadPreguntas * pre.Conjunto.TiempoEsperadoRespuesta;
 
                     return examen;
                 }
@@ -72,7 +70,7 @@ namespace Trabajo_Integrador.Controladores
             {
                 using (var UoW = new UnitOfWork(db))
                 {
-                    ExamenPreguntaDTO examenPreguntaDTO= pExamen.ExamenPreguntas.Find(e => e.PreguntaId == pPregunta.Id);
+                    ExamenPreguntaDTO examenPreguntaDTO = pExamen.ExamenPreguntas.Find(e => e.PreguntaId == pPregunta.Id);
                     ExamenPregunta examenPregunta = UoW.RepositorioPreguntasExamenes.Get(examenPreguntaDTO.Id);
                     examenPregunta.RespuestaElegidaId = idRespuesta;
                     return UoW.RepositorioPreguntas.Get(pPregunta.Id).Respuestas.ToList().Find(r => r.Id == idRespuesta).EsCorrecta;
@@ -87,7 +85,7 @@ namespace Trabajo_Integrador.Controladores
             {
                 using (var UoW = new UnitOfWork(db))
                 {
-                    foreach(ExamenPreguntaDTO examenPregunta in UoW.ExamenRepository.Get(examenId).ExamenPreguntas)
+                    foreach (ExamenPreguntaDTO examenPregunta in UoW.ExamenRepository.Get(examenId).ExamenPreguntas)
                     {
                         Pregunta pregunta = UoW.RepositorioPreguntas.Get(examenPregunta.PreguntaId);
                         PreguntaDTO preguntaDTO = new PreguntaDTO(pregunta);
@@ -105,7 +103,7 @@ namespace Trabajo_Integrador.Controladores
         {
             Examen examen = new Examen(pExamen);
             examen.TiempoUsado = (DateTime.Now - examen.Fecha).TotalSeconds;
-            examen.Puntaje= this.CantidadRespuestasCorrectas(examen) / examen.CantidadPreguntas * this.GetFactorDificultad(examen) * examen.FactorTiempo;
+            examen.Puntaje = this.CantidadRespuestasCorrectas(examen) / examen.CantidadPreguntas * this.GetFactorDificultad(examen) * examen.FactorTiempo;
             this.GuardarExamen(examen);
         }
 
@@ -167,7 +165,7 @@ namespace Trabajo_Integrador.Controladores
         /// Guarda un examen la base de datos
         /// </summary>
         /// <param name="pExamen"></param>
-        public void GuardarExamen(Examen pExamen) 
+        public void GuardarExamen(Examen pExamen)
         {
             using (var db = new TrabajoDbContext())
             {
@@ -194,7 +192,7 @@ namespace Trabajo_Integrador.Controladores
                               }
                     */
                     UoW.ExamenRepository.Add(pExamen);
-                    UoW.Complete();       
+                    UoW.Complete();
                 }
             }
         }
@@ -209,12 +207,12 @@ namespace Trabajo_Integrador.Controladores
             {
                 using (var UoW = new UnitOfWork(db))
                 {
-                    Examen ex =UoW.ExamenRepository.Get(unExamen.Id);
+                    Examen ex = UoW.ExamenRepository.Get(unExamen.Id);
                     return ex.TiempoLimite;
                 }
             }
         }
-        public ControladorExamen() 
+        public ControladorExamen()
         {
             iControladorPreguntas = new ControladorPreguntas();
         }

@@ -94,9 +94,9 @@ namespace Trabajo_Integrador.Controladores
         /// Metodo que devuelve todas las dificultades cargadas en base de datos
         /// </summary>
         /// <returns></returns>
-        public List<Dificultad> GetDificultades()
+        public IEnumerable<Dificultad> GetDificultades()
         {
-            return (List<Dificultad>)iControladorPreguntas.GetDificultades("ola");
+            return iControladorPreguntas.GetDificultades("OpentDb");
         }
 
 

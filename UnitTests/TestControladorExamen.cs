@@ -1,19 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using NUnit.Framework;
 using Trabajo_Integrador.Controladores;
 using Trabajo_Integrador.Dominio;
 using Trabajo_Integrador.DTO;
-using Trabajo_Integrador.EntityFramework;
-using NUnit.Framework;
 
 namespace UnitTests
 {
     public class TestControladorExamen
     {
-        
 
-        [Test]
+
+        //[Test]
         public void Test1()
         {
             ControladorExamen controladorExamen = new ControladorExamen();

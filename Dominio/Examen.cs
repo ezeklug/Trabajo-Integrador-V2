@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Trabajo_Integrador.Controladores;
 using Trabajo_Integrador.DTO;
 
 
@@ -18,12 +14,14 @@ namespace Trabajo_Integrador.Dominio
         /// <summary>
         /// Tiempo limite en segundos
         /// </summary>
+        [NotMapped]
         public float TiempoLimite { get; set; }
         /// <summary>
         /// Devuelve el factor tiempo para utilizar en el calculo del puntaje
         /// </summary>
-        public double FactorTiempo { 
-            get 
+        public double FactorTiempo
+        {
+            get
             {
                 double factor = TiempoUsado / CantidadPreguntas;
 
@@ -36,7 +34,7 @@ namespace Trabajo_Integrador.Dominio
                     return 3;
                 }
                 else return 1;
-            } 
+            }
         }
         /// <summary>
         /// Devuelve el puntaje de un examen
@@ -47,20 +45,20 @@ namespace Trabajo_Integrador.Dominio
         /// </summary>
         public double TiempoUsado { set; get; }
         public DateTime Fecha { get; set; }
-        public string UsuarioId {get;set;}
+        public string UsuarioId { get; set; }
         public double CantidadPreguntas { get { return this.ExamenPreguntas.Count; } }
 
         /// <summary>
         /// Da inicio a un examen
         /// </summary>
-        public void Iniciar() 
+        public void Iniciar()
         {
             Fecha = DateTime.Now;
         }
 
 
 
-   
+
 
         /// <summary>
         /// Constructor de examen
@@ -71,7 +69,7 @@ namespace Trabajo_Integrador.Dominio
         /// 
         public Examen()
         {
-            
+
         }
 
         public Examen(ExamenDTO examenDTO)
@@ -82,6 +80,6 @@ namespace Trabajo_Integrador.Dominio
             this.TiempoUsado = examenDTO.TiempoUsado;
             this.UsuarioId = examenDTO.UsuarioId;
         }
-      
+
     }
 }

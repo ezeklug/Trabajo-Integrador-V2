@@ -70,12 +70,12 @@ namespace Trabajo_Integrador.EntityFramework
         }
         public override IEnumerable<Pregunta> GetAll()
         {
-            return this.iDBSet.Include("Categoria").Include("Respuestas").Include("Respuestas").ToList();
+            return this.iDBSet.Include("Conjunto").Include("Respuestas").ToList();
         }
 
         public new Pregunta Get(string pId)
         {
-            return this.iDBSet.Include("Respuestas").Where(p => p.Id == pId).First<Pregunta>();
+            return this.iDBSet.Include("Conjunto").Include("Respuestas").Where(p => p.Id == pId).First<Pregunta>();
         }
 
 

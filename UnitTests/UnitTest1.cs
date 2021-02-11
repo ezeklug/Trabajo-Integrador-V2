@@ -10,18 +10,6 @@ namespace UnitTests
 {
     public class Tests
     {
-        [SetUp]
-        public void Setup()
-        {
-        }
-
-        [Test]
-        public void Test1()
-        {
-            Assert.Pass();
-        }
-
-
         //[TestMethod]
 
         public void testEscribirLog()
@@ -31,15 +19,12 @@ namespace UnitTests
             bitacora.GuardarLog(descripcion);
         }
 
-        // [TestMethod]
+        [Test]
         public void testGetPreguntas()
         {
-            ControladorPreguntas cont = new ControladorPreguntas();
-
             OpentDB op = new OpentDB();
             ICollection<Pregunta> preguntas;
             List<Respuesta> respuestas;
-            Console.WriteLine("Esta acas");
 
 
             CategoriaPregunta cat = new CategoriaPregunta("Science: Computers");
@@ -48,11 +33,8 @@ namespace UnitTests
             preguntas = op.getPreguntas(10, conj);
             foreach (Pregunta pre in preguntas)
             {
-                //Console.WriteLine($"La pregunta es: {pre.Id}");
+                Console.WriteLine($"La pregunta es: {pre.Id}");
             }
-
-
-            cont.CargarPreguntas(preguntas);
         }
 
 

@@ -1,11 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Trabajo_Integrador.Controladores;
 using Trabajo_Integrador.DTO;
@@ -45,25 +39,12 @@ namespace Trabajo_Integrador.Ventanas
 
         private void CargarConjunto()
         {
-
-            conjuntos = fachada.GetNombreConjuntos();
-
-            List<string> listaConjuntos = new List<string>();
-
-            foreach (ConjuntoPreguntasDTO conjunto in conjuntos)
+            var nombresConjuntos = ControladorFachada.GetNombreConjuntos();
+            foreach (var nombre in nombresConjuntos)
             {
-                listaConjuntos.Add(conjunto.Id);
-                
+                ListaConjuntos.Items.Add(nombre);
             }
-
-            string[] conjuntosArray = listaConjuntos.ToArray();
-
-            for (int i = 0; i < conjuntosArray.Length; i++)
-            {
-
-                ListaConjuntos.Items.Add(conjuntosArray[i]); //Le asigno al combobox categoria el array categorias
-            }
-        } //Muestra todos los conjuntos disponibles en el combobox ListaConjuntos
+        }
 
         private void modificar_Click_1(object sender, EventArgs e)
         {
@@ -75,7 +56,7 @@ namespace Trabajo_Integrador.Ventanas
             {
                 float control = 0;
                 string conjuntoSeleccionado = ListaConjuntos.SelectedItem.ToString();
-                if ((float.TryParse(tiempo.SelectedText, out control)) || (tiempo.SelectedText!=null))
+                if ((float.TryParse(tiempo.SelectedText, out control)) || (tiempo.SelectedText != null))
                 {
                     string i = tiempo.SelectedText.ToString();
                     float tiempoIngresado = float.Parse(tiempo.Text);
@@ -87,10 +68,9 @@ namespace Trabajo_Integrador.Ventanas
                     MessageBox.Show("Debe ingresar números");
                 }
             }
-            
+
         }
 
-       
+
     }
 }
-
