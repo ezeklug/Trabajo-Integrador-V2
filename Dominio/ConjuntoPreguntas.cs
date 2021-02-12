@@ -3,9 +3,6 @@ using System.Collections.Generic;
 
 namespace Trabajo_Integrador.Dominio
 {
-    /// <summary>
-    /// Clase que indica de donde se obtienen las preguntas.
-    /// </summary>
     public class ConjuntoPreguntas
     {
 

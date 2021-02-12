@@ -119,7 +119,7 @@ namespace Trabajo_Integrador.Ventanas
 
                 string cantidadSeleccionada = cantidad.Value.ToString();
 
-                int cargadas = fachada.GetPreguntasOnline(cantidadSeleccionada, conjuntoSeleccionado, categoriaSeleccionada, dificultadSeleccionada);
+                int cargadas = ControladorFachada.GetPreguntasOnline(cantidadSeleccionada, conjuntoSeleccionado, categoriaSeleccionada, dificultadSeleccionada);
 
                 MessageBox.Show($"Se cargaron exitosamente {cargadas} preguntas");
             }

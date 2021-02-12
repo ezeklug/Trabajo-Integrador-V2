@@ -401,9 +401,9 @@ namespace Trabajo_Integrador.Controladores
         /// <param name="pConjunto"></param>
         /// <param name="pCategoria"></param>
         /// <param name="pDificultad"></param>
-        public int GetPreguntasOnline(string pCantidad, string pConjunto, string pCategoria, string pDificultad)
+        public static int GetPreguntasOnline(string pCantidad, string pConjunto, string pCategoria, string pDificultad)
         {
-            return controladorPreguntas.GetPreguntasOnline(pCantidad, pConjunto, pCategoria, pDificultad);
+            return ControladorPreguntas.GetPreguntasOnline(pCantidad, pConjunto, pCategoria, pDificultad);
         }
 
 

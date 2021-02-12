@@ -13,8 +13,6 @@ namespace Trabajo_Integrador.Controladores
         /// atributos
         /// </summary>
         private static ControladorPreguntas cinstancia = null;
-        private IEstrategiaObtenerPreguntas iEstrategiaObtenerPreguntas;
-        private List<IEstrategiaObtenerPreguntas> iEstrategias;
 
         /// <summary>
         /// Obtiene la estrategia a utilizar teniendo como parametro el conjunto de preguntas
@@ -22,17 +20,16 @@ namespace Trabajo_Integrador.Controladores
         /// </summary>
         /// <param name="nombre"></param>
         /// <returns></returns>
-        public IEstrategiaObtenerPreguntas GetEstrategia(String nombre)
+        public static IEstrategiaObtenerPreguntas GetEstrategia(String nombre)
         {
-            IEstrategiaObtenerPreguntas estrategiaRetorno = new EstrategiaNula();
-            foreach (EstrategiaObtenerPreguntas est in iEstrategias)
+            switch (nombre)
             {
-                if (est.Conjunto == nombre)
-                {
-                    estrategiaRetorno = est;
-                }
+                case "OpentDb":
+                    return new OpentDB();
+
+                default:
+                    return new EstrategiaNula();
             }
-            return estrategiaRetorno;
         }
 
 
@@ -40,7 +37,7 @@ namespace Trabajo_Integrador.Controladores
         /// Dada una lista de preguntas, las inserta en la base de datos
         /// Devuelve la cantidad de preguntas insertada con exito
         /// </summary>
-        public int CargarPreguntas(ICollection<Pregunta> pPreguntas)
+        public static int CargarPreguntas(IEnumerable<Pregunta> pPreguntas)
         {
             int cantidad = 0;
             try
@@ -73,6 +70,22 @@ namespace Trabajo_Integrador.Controladores
         }
 
 
+        public static IEnumerable<Pregunta> ObtenerPreguntasDeInternet(string pCantidad, string pConjunto, string pCategoria, string pDificultad)
+        {
+            ConjuntoPreguntas conjunto;
+            using (var db = new TrabajoDbContext())
+            {
+                using (var UoW = new UnitOfWork(db))
+                {
+                    conjunto = UoW.RepositorioConjuntoPregunta.ObtenerConjuntoPorDificultadYCategoria(pConjunto, pDificultad, pCategoria);
+                }
+            }
+            IEstrategiaObtenerPreguntas estrategia = ControladorPreguntas.GetEstrategia(pConjunto);
+            var preguntas = estrategia.getPreguntas(int.Parse(pCantidad), conjunto);
+            return preguntas;
+
+        }
+
 
         /// <summary>
         /// Obtiene las preguntas de internet y se cargan en la base de datos.
@@ -83,33 +96,15 @@ namespace Trabajo_Integrador.Controladores
         /// <param name="pCategoria"></param>
         /// <param name="pDificultad"></param>
         /// <returns></returns>
-        public int GetPreguntasOnline(string pCantidad, string pConjunto, string pCategoria, string pDificultad)
+        public static int GetPreguntasOnline(string pCantidad, string pConjunto, string pCategoria, string pDificultad)
         {
             int cargadas = 0;
-            try
-            {
+            var preguntas = ControladorPreguntas.ObtenerPreguntasDeInternet(pCantidad, pConjunto, pCategoria, pDificultad);
 
-                ConjuntoPreguntas conjunto;
-                using (var db = new TrabajoDbContext())
-                {
-                    using (var UoW = new UnitOfWork(db))
-                    {
-                        conjunto = UoW.RepositorioConjuntoPregunta.ObtenerConjuntoPorDificultadYCategoria(pConjunto, pDificultad, pCategoria);
-                    }
-                }
-                IEstrategiaObtenerPreguntas estrategia = this.GetEstrategia(pConjunto);
-                var preguntas = estrategia.getPreguntas(int.Parse(pCantidad), conjunto);
-                cargadas = CargarPreguntas(preguntas);
-                return cargadas;
-            }
-
-
-            catch (NotImplementedException ex)
-            {
-                var bitacora = new Bitacora.Bitacora();
-                bitacora.GuardarLog("ControladorPreguntas.GetPreguntasOnline: " + ex.Message);
-            }
+            cargadas = ControladorPreguntas.CargarPreguntas(preguntas);
             return cargadas;
+
+
 
         }
 
@@ -158,7 +153,7 @@ namespace Trabajo_Integrador.Controladores
         /// Metodo que devuelve todas las categorias cargadas en base de datos
         /// </summary>
         /// <returns></returns>
-        public ICollection<CategoriaPregunta> GetCategorias(String pNombreConjunto)
+        public static ICollection<CategoriaPregunta> GetCategorias(String pNombreConjunto)
         {
             ICollection<CategoriaPregunta> categorias = null;
             try
@@ -320,9 +315,6 @@ namespace Trabajo_Integrador.Controladores
         /// </summary>
         public ControladorPreguntas()
         {
-            iEstrategias = new List<IEstrategiaObtenerPreguntas>();
-            iEstrategias.Add(new OpentDB());
-            iEstrategiaObtenerPreguntas = this.GetEstrategia("OpentDB");
         }
     }
 }

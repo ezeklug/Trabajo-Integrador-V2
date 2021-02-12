@@ -1,10 +1,10 @@
 ﻿using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Trabajo_Integrador;
 using Trabajo_Integrador.Controladores;
 using Trabajo_Integrador.Controladores.Bitacora;
-using Trabajo_Integrador.Dominio;
 
 namespace UnitTests
 {
@@ -22,24 +22,26 @@ namespace UnitTests
         [Test]
         public void testGetPreguntas()
         {
-            OpentDB op = new OpentDB();
-            ICollection<Pregunta> preguntas;
-            List<Respuesta> respuestas;
-
-
-            CategoriaPregunta cat = new CategoriaPregunta("Science: Computers", "18");
-            Dificultad dif = new Dificultad("hard");
-            ConjuntoPreguntas conj = new ConjuntoPreguntas("OpentDB", dif, cat);
-            preguntas = op.getPreguntas(10, conj);
-            foreach (Pregunta pre in preguntas)
-            {
-                Console.WriteLine($"La pregunta es: {pre.Id}, idConj: {pre.Conjunto.Nombre}, idCat: {pre.Conjunto.Categoria.Id}");
-            }
+            IEnumerable<Pregunta> preguntas = ControladorPreguntas.ObtenerPreguntasDeInternet("10", "OpentDb", "Science: Computers", "hard");
+            var pre = preguntas.ToList();
+            Assert.Equals(10, pre.Count);
         }
 
+        //[Test]
+        public void testCargarPreguntas()
+        {
+            ControladorPreguntas.GetPreguntasOnline("10", "OpentDb", "Science: Computers", "hard");
+        }
 
-
-
+        //[Test]
+        public void testCargarTodasLasCategorias()
+        {
+            var conj = ControladorPreguntas.GetCategorias("OpentDb");
+            foreach (var c in conj)
+            {
+                Console.WriteLine(c.Id);
+            }
+        }
 
         //[TestMethod]
         public void TestCategoriaMayorN()

@@ -16,7 +16,7 @@ namespace Trabajo_Integrador.Controladores
 
         public void CargarPreguntas(string pCantidad, string pConjunto, string pCategoria, string pDificultad)
         {
-            iControladorPreguntas.GetPreguntasOnline(pCantidad, pConjunto, pCategoria, pDificultad);
+            ControladorPreguntas.GetPreguntasOnline(pCantidad, pConjunto, pCategoria, pDificultad);
         }
         public List<Usuario> GetUsuarios()
         {
@@ -65,12 +65,12 @@ namespace Trabajo_Integrador.Controladores
 
         }
         /// <summary>
-        /// Metodo que devuelve todas las categorias cargadas en base de datos
+        /// Devuelve todas las categorias cargadas en la base de datos para un conjunto
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<CategoriaPregunta> GetCategorias(String pNombre)
+        public static IEnumerable<CategoriaPregunta> GetCategorias(String pNombre)
         {
-            return iControladorPreguntas.GetCategorias(pNombre);
+            return ControladorPreguntas.GetCategorias(pNombre);
         }
 
         /// <summary>
