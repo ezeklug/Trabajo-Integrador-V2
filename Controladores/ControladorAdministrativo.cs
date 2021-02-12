@@ -18,14 +18,14 @@ namespace Trabajo_Integrador.Controladores
         {
             ControladorPreguntas.GetPreguntasOnline(pCantidad, pConjunto, pCategoria, pDificultad);
         }
-        public List<Usuario> GetUsuarios()
+        public static IEnumerable<Usuario> GetUsuarios()
         {
             List<Usuario> listaUsuarios = new List<Usuario>();
             using (var db = new TrabajoDbContext())
             {
                 using (var UoW = new UnitOfWork(db))
                 {
-                    listaUsuarios = (List<Usuario>)UoW.RepositorioUsuarios.GetAll();
+                    listaUsuarios = UoW.RepositorioUsuarios.GetAll().ToList();
                 }
             }
 

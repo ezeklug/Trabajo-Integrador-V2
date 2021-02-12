@@ -119,14 +119,14 @@ namespace Trabajo_Integrador.Controladores
         /// Metodo que devuelve una lista de todos los usuarios
         /// </summary>
         /// <returns></returns>
-        public List<UsuarioDTO> GetUsuarios()
+        public static IEnumerable<UsuarioDTO> GetUsuarios()
         {
-            List<UsuarioDTO> listaUsuariosDTO = new List<UsuarioDTO>();
-            foreach (Usuario usuario in controladorAdministrativo.GetUsuarios())
+            var usuarios = new List<UsuarioDTO>();
+            foreach (Usuario usuario in ControladorAdministrativo.GetUsuarios())
             {
-                listaUsuariosDTO.Add(new UsuarioDTO(usuario));
+                usuarios.Add(new UsuarioDTO(usuario));
             }
-            return listaUsuariosDTO;
+            return usuarios;
         }
 
         /// <summary>

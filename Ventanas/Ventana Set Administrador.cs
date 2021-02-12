@@ -1,15 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Trabajo_Integrador.Controladores;
-using Trabajo_Integrador.DTO; 
+using Trabajo_Integrador.DTO;
 
 
 namespace Trabajo_Integrador.Ventanas
@@ -23,7 +15,7 @@ namespace Trabajo_Integrador.Ventanas
         }
 
         string nombreUsuario;
-       
+
 
         private void Volver_Click(object sender, EventArgs e)
         {
@@ -33,11 +25,11 @@ namespace Trabajo_Integrador.Ventanas
             this.Close();
         }
 
-      
+
 
         private void SetAdministrador_Load(object sender, EventArgs e)
         {
-            List<UsuarioDTO> listaUsuarios = fachada.GetUsuarios();
+            var listaUsuarios = ControladorFachada.GetUsuarios();
 
             foreach (UsuarioDTO user in listaUsuarios)
             {
@@ -57,15 +49,15 @@ namespace Trabajo_Integrador.Ventanas
 
         private void setAdmin_Click(object sender, EventArgs e)
         {
-            List<UsuarioDTO> listaUsuarios = fachada.GetUsuarios();
-           // Collection usuariosChecked = listaCheckedBox.CheckedItems;
+            var listaUsuarios = ControladorFachada.GetUsuarios();
+            // Collection usuariosChecked = listaCheckedBox.CheckedItems;
 
             foreach (UsuarioDTO user in listaUsuarios)
             {
-                if(listaCheckedBox.CheckedItems.Contains(user.Id))
+                if (listaCheckedBox.CheckedItems.Contains(user.Id))
                 {
                     fachada.SetAdministrador(user.Id);
-                   
+
                 }
                 else
                 {

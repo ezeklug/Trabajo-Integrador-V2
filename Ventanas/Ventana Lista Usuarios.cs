@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Trabajo_Integrador.Controladores;
 using Trabajo_Integrador.DTO;
@@ -23,7 +17,7 @@ namespace Trabajo_Integrador.Ventanas
             iNombre = pNombre;
         }
 
-      
+
 
         private void Volver_Click(object sender, EventArgs e)
         {
@@ -35,21 +29,21 @@ namespace Trabajo_Integrador.Ventanas
 
         private void Ventana_Lista_Usuarios_Load(object sender, EventArgs e)
         {
-            List<UsuarioDTO> listaUsuarios = fachada.GetUsuarios();
+            var listaUsuarios = ControladorFachada.GetUsuarios();
             DataTable dt = new DataTable();
 
             dt.Columns.Add("Nombre", typeof(string));
-            
+
 
 
             foreach (UsuarioDTO usuario in listaUsuarios)
             {
-                dt.Rows.Add(new object[] { usuario.Id});
+                dt.Rows.Add(new object[] { usuario.Id });
             }
 
             dataGridView1.DataSource = dt;
         }
 
-        
+
     }
 }
