@@ -8,7 +8,7 @@ namespace Trabajo_Integrador.Dominio
 {
     public class Examen
     {
-        public List<ExamenPreguntaDTO> ExamenPreguntas { get; set; }
+        public ICollection<ExamenPregunta> ExamenPreguntas { get; set; }
         public int Id { get; set; }
 
         /// <summary>
@@ -72,6 +72,17 @@ namespace Trabajo_Integrador.Dominio
 
         }
 
+        private static ICollection<ExamenPregunta> DTOaExamenPregunta(IEnumerable<ExamenPreguntaDTO> pExamenPreguntas)
+        {
+            var dtos = new List<ExamenPregunta>();
+            foreach (var ep in pExamenPreguntas)
+            {
+                dtos.Add(new ExamenPregunta(ep));
+            }
+            return dtos;
+        }
+
+
         public Examen(ExamenDTO examenDTO)
         {
             this.Id = examenDTO.Id;
@@ -79,6 +90,7 @@ namespace Trabajo_Integrador.Dominio
             this.TiempoLimite = examenDTO.TiempoLimite;
             this.TiempoUsado = examenDTO.TiempoUsado;
             this.UsuarioId = examenDTO.UsuarioId;
+            this.ExamenPreguntas = Examen.DTOaExamenPregunta(examenDTO.ExamenPreguntas);
         }
 
     }

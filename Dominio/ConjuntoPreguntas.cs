@@ -1,17 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace Trabajo_Integrador.Dominio
 {
     public class ConjuntoPreguntas
     {
 
-        public string Id { get; set; }
+        public String Id { get; set; }
         public String Nombre { get; set; }
         public float TiempoEsperadoRespuesta { get; set; }
         public Dificultad Dificultad { get; set; }
         public CategoriaPregunta Categoria { get; set; }
-        public ICollection<Pregunta> Preguntas { get; set; }
+
 
         public ConjuntoPreguntas(string pNombre, float pTiempoEsperadoRespuesta, Dificultad pDificultad, CategoriaPregunta pCategoria)
         {
@@ -20,6 +19,8 @@ namespace Trabajo_Integrador.Dominio
             this.Categoria = pCategoria;
             this.TiempoEsperadoRespuesta = pTiempoEsperadoRespuesta;
         }
+
+
 
 
         public ConjuntoPreguntas(string pNombre, Dificultad pDificultad, CategoriaPregunta pCategoria)

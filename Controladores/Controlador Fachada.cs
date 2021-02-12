@@ -58,15 +58,16 @@ namespace Trabajo_Integrador.Controladores
         /// </summary>
         /// <param name="pUsuario"></param>
         /// <param name="pExamen"></param>
-        public void InicarExamen(String pNombreUsuario, ExamenDTO pExamen)
+        public static ExamenDTO InicarExamen(String pNombreUsuario, ExamenDTO pExamen)
         {
             Examen examen = new Examen(pExamen);
-            controladorExamen.IniciarExamen(pNombreUsuario, examen);
+            ExamenDTO dto = new ExamenDTO(ControladorExamen.IniciarExamen(pNombreUsuario, examen));
+            return dto;
         }
 
-        internal List<PreguntaDTO> GetPreguntasDeExamen(int examenId)
+        internal static IEnumerable<PreguntaDTO> GetPreguntasDeExamen(int examenId)
         {
-            return controladorExamen.GetPreguntasDeExamen(examenId);
+            return ControladorExamen.GetPreguntasDeExamen(examenId);
         }
 
 
@@ -100,9 +101,9 @@ namespace Trabajo_Integrador.Controladores
         /// <param name="pDificultad">Id Dificultad</param>
         /// <returns></returns>
         /// 
-        public ExamenDTO InicializarExamen(int pCantidad, String pConjunto, string pCategoria, string pDificultad)
+        public static ExamenDTO InicializarExamen(int pCantidad, String pConjunto, string pCategoria, string pDificultad)
         {
-            return (new ExamenDTO(controladorExamen.InicializarExamen(pCantidad.ToString(), pConjunto, pCategoria, pDificultad)));
+            return (new ExamenDTO(ControladorExamen.InicializarExamen(pCantidad.ToString(), pConjunto, pCategoria, pDificultad)));
         }
 
 
@@ -110,9 +111,9 @@ namespace Trabajo_Integrador.Controladores
         /// Metodo que finaliza un examen y lo guarda en la base de datos
         /// </summary>
         /// <param name="pExamen"></param>
-        public void FinalizarExamen(ExamenDTO pExamen)
+        public static void FinalizarExamen(ExamenDTO pExamen)
         {
-            controladorExamen.FinalizarExamen(pExamen);
+            ControladorExamen.FinalizarExamen(pExamen);
         }
 
         /// <summary>
@@ -190,7 +191,6 @@ namespace Trabajo_Integrador.Controladores
         public static IEnumerable<DificultadDTO> GetDificultades(String pNombreConjunto)
         {
             var dificultadesDTO = new List<DificultadDTO>();
-
             foreach (Dificultad dificultad in ControladorPreguntas.GetDificultades(pNombreConjunto))
             {
                 dificultadesDTO.Add(new DificultadDTO(dificultad));
@@ -274,7 +274,7 @@ namespace Trabajo_Integrador.Controladores
                 FactorDificultad = dificultadDTO.FactorDificultad
             };
         }
-        public Pregunta DTOAPregunta(PreguntaDTO pPreguntaDTO)
+        public static Pregunta DTOAPregunta(PreguntaDTO pPreguntaDTO)
         {
             ConjuntoPreguntas conj;
             using (var db = new TrabajoDbContext())
@@ -300,10 +300,10 @@ namespace Trabajo_Integrador.Controladores
         /// <param name="pPregunta"></param>
         /// <param name="pRespuesta"></param>
         /// <returns></returns>
-        public Boolean RespuestaCorrecta(ExamenDTO pExamen, PreguntaDTO pPregunta, int idRespuesta)
+        public static Boolean RespuestaCorrecta(ExamenDTO pExamen, PreguntaDTO pPregunta, int idRespuesta)
         {
             Examen examen = new Examen(pExamen);
-            return controladorExamen.RespuestaCorrecta(examen, DTOAPregunta(pPregunta), idRespuesta);
+            return ControladorExamen.RespuestaCorrecta(examen, ControladorFachada.DTOAPregunta(pPregunta), idRespuesta);
         }
 
         /// <summary>
@@ -385,7 +385,7 @@ namespace Trabajo_Integrador.Controladores
         public List<PreguntaDTO> GetPreguntasRandom(string pCantidad, string pConjunto, string pCategoria, string pDificultad)
         {
             List<PreguntaDTO> listaPreguntasRandomDTO = new List<PreguntaDTO>();
-            foreach (Pregunta pregunta in controladorPreguntas.GetPreguntasRandom(pCantidad, pConjunto, pCategoria, pDificultad))
+            foreach (Pregunta pregunta in ControladorPreguntas.GetPreguntasRandom(pCantidad, pConjunto, pCategoria, pDificultad))
             {
                 listaPreguntasRandomDTO.Add(new PreguntaDTO(pregunta));
             }

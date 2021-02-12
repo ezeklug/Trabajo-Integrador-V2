@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using Trabajo_Integrador.Dominio;
 
@@ -34,7 +35,8 @@ namespace Trabajo_Integrador.EntityFramework
 
         public ICollection<Dificultad> DificultadesDeUnConjunto(String pNombreConjunto)
         {
-            var conjunto = this.iDBSet.Where(c => c.Nombre == pNombreConjunto);
+
+            var conjunto = this.iDBSet.Include(c => c.Dificultad).Where(c => c.Nombre == pNombreConjunto);
             var dificultades = new HashSet<Dificultad>();
 
             foreach (var c in conjunto)
@@ -57,5 +59,59 @@ namespace Trabajo_Integrador.EntityFramework
             }
             return nombres;
         }
+
+        public void AgregarConjuntos(IEnumerable<ConjuntoPreguntas> pConjuntos)
+        {
+            foreach (var conjunto in pConjuntos)
+            {
+                try
+                {
+                    var categoria = this.iDBSet.First(c => c.Categoria.Id == conjunto.Categoria.Id).Categoria;
+                    conjunto.Categoria = categoria;
+                }
+                catch (InvalidOperationException e)
+                {
+
+                }
+
+                try
+                {
+                    var dificultad = this.iDBSet.First(c => c.Dificultad.Id == conjunto.Dificultad.Id).Dificultad;
+                    conjunto.Dificultad = dificultad;
+                }
+                catch (InvalidOperationException e)
+                {
+
+                }
+                Console.WriteLine($"Va a guardar : {conjunto.Id}");
+                this.iDBSet.Add(conjunto);
+            }
+
+        }
+
+
+        public CategoriaPregunta GetCategoria(ConjuntoPreguntas pConjunto)
+        {
+            try
+            {
+                return this.iDBSet.First(c => c.Categoria.Id == pConjunto.Categoria.Id).Categoria;
+            }
+            catch (InvalidOperationException e)
+            {
+                return null;
+            }
+        }
+        public Dificultad GetDificultad(ConjuntoPreguntas pConjunto)
+        {
+            try
+            {
+                return this.iDBSet.First(c => c.Dificultad.Id == pConjunto.Dificultad.Id).Dificultad;
+            }
+            catch (InvalidOperationException e)
+            {
+                return null;
+            }
+        }
+
     }
 }

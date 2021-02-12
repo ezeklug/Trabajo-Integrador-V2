@@ -18,17 +18,16 @@ namespace Trabajo_Integrador.Controladores
         /// </summary>
         /// <param name="pExamen"></param>
         /// <param name="pPregunta"></param>
-        private void AsociarExamenPregunta(Examen pExamen, List<Pregunta> pPreguntas)
+        private static Examen AsociarExamenPregunta(Examen pExamen, IEnumerable<Pregunta> pPreguntas)
         {
-            List<ExamenPreguntaDTO> examenPreguntasDTO = new List<ExamenPreguntaDTO>();
+            pExamen.ExamenPreguntas = new List<ExamenPregunta>();
             foreach (var pregunta in pPreguntas)
             {
-                ExamenPreguntaDTO examenPregunta = new ExamenPreguntaDTO();
+                var examenPregunta = new ExamenPregunta();
                 examenPregunta.PreguntaId = pregunta.Id;
-                examenPreguntasDTO.Add(examenPregunta);
-
+                pExamen.ExamenPreguntas.Add(examenPregunta);
             }
-            pExamen.ExamenPreguntas = examenPreguntasDTO;
+            return pExamen;
         }
 
         /// <summary>
@@ -38,17 +37,17 @@ namespace Trabajo_Integrador.Controladores
         /// <param name="pConjunto"></param>
         /// <param name="pCategoria"></param>
         /// <param name="pDificultad"></param>
-        public Examen InicializarExamen(string pCantidad, string pConjunto, string pCategoria, string pDificultad)
+        public static Examen InicializarExamen(string pCantidad, string pConjunto, string pCategoria, string pDificultad)
         {
             using (var db = new TrabajoDbContext())
             {
                 using (var UoW = new UnitOfWork(db))
                 {
-                    List<Pregunta> preguntas = iControladorPreguntas.GetPreguntasRandom(pCantidad, pConjunto, pCategoria, pDificultad);
+                    var preguntas = ControladorPreguntas.GetPreguntasRandom(pCantidad, pConjunto, pCategoria, pDificultad);
                     Examen examen = new Examen();
-                    this.AsociarExamenPregunta(examen, preguntas);
-                    Pregunta pre = UoW.RepositorioPreguntas.Get(examen.ExamenPreguntas.First().PreguntaId);
-                    examen.TiempoLimite = (float)examen.CantidadPreguntas * pre.Conjunto.TiempoEsperadoRespuesta;
+                    examen = ControladorExamen.AsociarExamenPregunta(examen, preguntas);
+                    var conjunto = UoW.RepositorioConjuntoPregunta.ObtenerConjuntoPorDificultadYCategoria(pConjunto, pDificultad, pCategoria);
+                    examen.TiempoLimite = (float)examen.CantidadPreguntas * conjunto.TiempoEsperadoRespuesta;
 
                     return examen;
                 }
@@ -64,28 +63,28 @@ namespace Trabajo_Integrador.Controladores
         /// <param name="pPregunta"></param>
         /// <param name="pRespuesta"></param>
         /// <returns></returns>
-        public Boolean RespuestaCorrecta(Examen pExamen, Pregunta pPregunta, int idRespuesta)
+        public static Boolean RespuestaCorrecta(Examen pExamen, Pregunta pPregunta, int idRespuesta)
         {
             using (var db = new TrabajoDbContext())
             {
                 using (var UoW = new UnitOfWork(db))
                 {
-                    ExamenPreguntaDTO examenPreguntaDTO = pExamen.ExamenPreguntas.Find(e => e.PreguntaId == pPregunta.Id);
-                    ExamenPregunta examenPregunta = UoW.RepositorioPreguntasExamenes.Get(examenPreguntaDTO.Id);
+                    var examenPregunta = pExamen.ExamenPreguntas.First(e => e.PreguntaId == pPregunta.Id);
+                    examenPregunta = UoW.RepositorioPreguntasExamenes.Get(examenPregunta.Id);
                     examenPregunta.RespuestaElegidaId = idRespuesta;
                     return UoW.RepositorioPreguntas.Get(pPregunta.Id).Respuestas.ToList().Find(r => r.Id == idRespuesta).EsCorrecta;
                 }
             }
         }
 
-        public List<PreguntaDTO> GetPreguntasDeExamen(int examenId)
+        public static IEnumerable<PreguntaDTO> GetPreguntasDeExamen(int examenId)
         {
             List<PreguntaDTO> preguntas = new List<PreguntaDTO>();
             using (var db = new TrabajoDbContext())
             {
                 using (var UoW = new UnitOfWork(db))
                 {
-                    foreach (ExamenPreguntaDTO examenPregunta in UoW.ExamenRepository.Get(examenId).ExamenPreguntas)
+                    foreach (var examenPregunta in UoW.ExamenRepository.Get(examenId).ExamenPreguntas)
                     {
                         Pregunta pregunta = UoW.RepositorioPreguntas.Get(examenPregunta.PreguntaId);
                         PreguntaDTO preguntaDTO = new PreguntaDTO(pregunta);
@@ -99,15 +98,15 @@ namespace Trabajo_Integrador.Controladores
         /// Da fin a un examen y lo guarda en la DB
         /// </summary>
         /// <param name="pExamen"></param>
-        public void FinalizarExamen(ExamenDTO pExamen)
+        public static void FinalizarExamen(ExamenDTO pExamen)
         {
             Examen examen = new Examen(pExamen);
             examen.TiempoUsado = (DateTime.Now - examen.Fecha).TotalSeconds;
-            examen.Puntaje = this.CantidadRespuestasCorrectas(examen) / examen.CantidadPreguntas * this.GetFactorDificultad(examen) * examen.FactorTiempo;
-            this.GuardarExamen(examen);
+            examen.Puntaje = ControladorExamen.CantidadRespuestasCorrectas(examen) / examen.CantidadPreguntas * ControladorExamen.GetFactorDificultad(examen) * examen.FactorTiempo;
+            ControladorExamen.GuardarExamen(examen);
         }
 
-        private double GetFactorDificultad(Examen examen)
+        private static double GetFactorDificultad(Examen examen)
         {
             using (var db = new TrabajoDbContext())
             {
@@ -118,19 +117,19 @@ namespace Trabajo_Integrador.Controladores
             }
         }
 
-        private double CantidadRespuestasCorrectas(Examen examen)
+        private static int CantidadRespuestasCorrectas(Examen examen)
         {
-            double cantidadRespuestasCorrectas = 0;
+            int cantidadRespuestasCorrectas = 0;
             using (var db = new TrabajoDbContext())
             {
                 using (var UoW = new UnitOfWork(db))
                 {
-                    foreach (ExamenPreguntaDTO examenPreguntaDTO in examen.ExamenPreguntas)
+                    foreach (var examenPregunta in examen.ExamenPreguntas)
                     {
                         if (UoW.RepositorioPreguntas
-                            .Get(examenPreguntaDTO.PreguntaId)
-                            .Respuestas.ToList()
-                            .Find(r => r.Id == examenPreguntaDTO.RespuestaElegidaId)
+                            .Get(examenPregunta.PreguntaId)
+                            .Respuestas
+                            .First(r => r.Id == examenPregunta.RespuestaElegidaId)
                             .EsCorrecta)
                         {
                             cantidadRespuestasCorrectas += 1;
@@ -146,51 +145,35 @@ namespace Trabajo_Integrador.Controladores
         /// </summary>
         /// <param name="pUsuario"></param>
         /// <param name="pExamen"></param>
-        public void IniciarExamen(string pNombreUsuario, Examen pExamen)
+        public static Examen IniciarExamen(string pNombreUsuario, Examen pExamen)
         {
-            Usuario usuario;
+            Examen ex = pExamen;
             using (var db = new TrabajoDbContext())
             {
                 using (var UoW = new UnitOfWork(db))
                 {
-
-                    usuario = UoW.RepositorioUsuarios.Get(pNombreUsuario);
+                    Usuario usuario = UoW.RepositorioUsuarios.Get(pNombreUsuario);
+                    pExamen.UsuarioId = usuario.Id;
+                    pExamen.Iniciar();
+                    UoW.ExamenRepository.Add(ex);
                 }
             }
+            return ex;
 
-            pExamen.UsuarioId = usuario.Id;
-            pExamen.Iniciar();
         }
+
+
+
         /// <summary>
         /// Guarda un examen la base de datos
         /// </summary>
         /// <param name="pExamen"></param>
-        public void GuardarExamen(Examen pExamen)
+        public static void GuardarExamen(Examen pExamen)
         {
             using (var db = new TrabajoDbContext())
             {
                 using (var UoW = new UnitOfWork(db))
                 {
-
-                    /*          foreach (ExamenPreguntaDTO ep in pExamen.ExamenPreguntas)
-                              {
-                                  ep.Pregunta = UoW.RepositorioPreguntas.Get(ep.Pregunta.Id);
-                                  ep.RespuestaElegida = UoW.RepositorioRespuesta.Get(ep.RespuestaElegida.Id);
-                              }
-
-
-                              Usuario usr = UoW.RepositorioUsuarios.Get(pExamen.Usuario.Id);
-                              if (usr == null)
-                              {
-                                  UoW.ExamenRepository.Add(pExamen);
-                              }
-                              else
-                              {
-                                  pExamen.Usuario = usr;
-                                  UoW.ExamenRepository.Add(pExamen);
-
-                              }
-                    */
                     UoW.ExamenRepository.Add(pExamen);
                     UoW.Complete();
                 }
