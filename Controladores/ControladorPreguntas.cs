@@ -178,7 +178,7 @@ namespace Trabajo_Integrador.Controladores
         /// Devuelve todas las categorias que tengan mas (o igual) de N preguntas
         /// </summary>
         /// <returns>Lista de categorias</returns>
-        public ICollection<CategoriaPregunta> GetCategoriasConMasDeNPreguntas(int n)
+        public static ICollection<CategoriaPregunta> GetCategoriasConMasDeNPreguntas(String pNombreConjunto, int n)
         {
             try
             {

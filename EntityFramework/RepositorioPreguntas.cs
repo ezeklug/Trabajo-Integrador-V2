@@ -80,12 +80,12 @@ namespace Trabajo_Integrador.EntityFramework
 
 
 
-        public ICollection<CategoriaPregunta> CategoriasConMasDeNPreguntas(int n)
+        public ICollection<CategoriaPregunta> CategoriasConMasDeNPreguntas(String pNombreConjunto, int n)
         {
             var idCategoriaCantidad = new Dictionary<String, int>();
             ICollection<CategoriaPregunta> res = new HashSet<CategoriaPregunta>();
 
-            foreach (var p in this.iDBSet)
+            foreach (var p in this.iDBSet.Where(p => p.Conjunto.Nombre == pNombreConjunto))
             {
                 idCategoriaCantidad[p.Conjunto.Categoria.Id]++;
                 if (idCategoriaCantidad[p.Conjunto.Categoria.Id] >= n)

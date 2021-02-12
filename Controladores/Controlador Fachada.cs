@@ -162,14 +162,14 @@ namespace Trabajo_Integrador.Controladores
         /// </summary>
         /// <param name="n">Cantida de preguntas</param>
         /// <returns>Lista de Categorias</returns>
-        public List<CategoriaPreguntaDTO> GetCategoriaPreguntasConNPreguntas(int n)
+        public static IEnumerable<CategoriaPreguntaDTO> GetCategoriaPreguntasConNPreguntas(String pNombreConjunto, int n)
         {
-            List<CategoriaPreguntaDTO> listaCategoriaDTO = new List<CategoriaPreguntaDTO>();
-            foreach (CategoriaPregunta categoria in controladorPreguntas.GetCategoriasConMasDeNPreguntas(n))
+            var categoriasDTO = new List<CategoriaPreguntaDTO>();
+            foreach (CategoriaPregunta categoria in ControladorPreguntas.GetCategoriasConMasDeNPreguntas(pNombreConjunto, n))
             {
-                listaCategoriaDTO.Add(new CategoriaPreguntaDTO(categoria));
+                categoriasDTO.Add(new CategoriaPreguntaDTO(categoria));
             }
-            return listaCategoriaDTO;
+            return categoriasDTO;
         }
 
 
