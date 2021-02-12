@@ -5,6 +5,7 @@
         //Propiedades
         public string Id { get; set; }
         public string ConjuntoId { get; set; }
+        public string ConjuntoNombre { get; set; }
 
 
 
@@ -18,6 +19,7 @@
         public PreguntaDTO(Pregunta pregunta)
         {
             this.ConjuntoId = pregunta.Conjunto.Id;
+            this.ConjuntoNombre = pregunta.Conjunto.Nombre;
             this.Id = pregunta.Id;
 
         }

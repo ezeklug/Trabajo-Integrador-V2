@@ -39,33 +39,32 @@ namespace Trabajo_Integrador.Controladores
         /// </summary>
         public static int CargarPreguntas(IEnumerable<Pregunta> pPreguntas)
         {
+            /// Este método es horriblemente ineficiente
+            /// Pero fue la unica forma que encontre de hacerlo andar
             int cantidad = 0;
-            try
+            foreach (Pregunta pre in pPreguntas)
             {
                 using (var db = new TrabajoDbContext())
                 {
                     using (var UoW = new UnitOfWork(db))
                     {
 
-                        foreach (Pregunta pre in pPreguntas)
+
+                        // si la pregunta no existe
+                        if (UoW.RepositorioPreguntas.Get(pre.Id) == null)
                         {
-                            // si la pregunta no existe
-                            if (UoW.RepositorioPreguntas.Get(pre.Id) == null)
-                            {
-                                cantidad++;
-                                ConjuntoPreguntas conjunto = UoW.RepositorioConjuntoPregunta.Get(pre.Conjunto.Id);
-                                UoW.RepositorioPreguntas.Add(pre);
-                            }
+                            cantidad++;
+                            ConjuntoPreguntas conjunto = UoW.RepositorioConjuntoPregunta.Get(pre.Conjunto.Id);
+                            pre.Conjunto = conjunto;
+                            UoW.RepositorioPreguntas.Add(pre);
                         }
+
                         UoW.Complete();
                     }
+
                 }
             }
-            catch (Exception ex)
-            {
-                var bitacora = new Bitacora.Bitacora();
-                bitacora.GuardarLog(ex.Message.ToString());
-            }
+
             return cantidad;
         }
 
@@ -291,6 +290,49 @@ namespace Trabajo_Integrador.Controladores
         }
 
 
+        public static void GuardarConjunto(ConjuntoPreguntas pConjunto)
+        {
+            using (var db = new TrabajoDbContext())
+            {
+                using (var UoW = new UnitOfWork(db))
+                {
+                    UoW.RepositorioConjuntoPregunta.Add(pConjunto);
+                }
+            }
+
+        }
+
+        public static void GuardarConjuntos(IEnumerable<ConjuntoPreguntas> pConjuntos)
+        {
+            using (var db = new TrabajoDbContext())
+            {
+                using (var UoW = new UnitOfWork(db))
+                {
+                    foreach (var conjunto in pConjuntos)
+                    {
+                        var cat = UoW.RepositorioConjuntoPregunta.GetCategoria(conjunto);
+                        var dif = UoW.RepositorioConjuntoPregunta.GetDificultad(conjunto);
+                        if (cat != null)
+                        {
+                            conjunto.Categoria = cat;
+                        }
+                        if (dif != null)
+                        {
+                            conjunto.Dificultad = dif;
+                        }
+                        Console.WriteLine($"Va a agregar: {conjunto.Id}");
+                        UoW.RepositorioConjuntoPregunta.Add(conjunto);
+
+                    }
+
+
+                    //UoW.RepositorioConjuntoPregunta.AgregarConjuntos(pConjuntos);
+                    //db.SaveChanges();
+
+                }
+
+            }
+        }
 
 
         /// <summary>
