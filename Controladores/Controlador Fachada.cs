@@ -184,18 +184,18 @@ namespace Trabajo_Integrador.Controladores
             return ControladorAdministrativo.GetNombresConjuntosPreguntas();
         }
         /// <summary>
-        /// Metodo que devuelve todas las dificultades cargadas en base de datos
+        /// Devuelve todas las difulctades de un conjunto
         /// </summary>
         /// <returns></returns>
-        public List<DificultadDTO> GetDificultades()
+        public static IEnumerable<DificultadDTO> GetDificultades(String pNombreConjunto)
         {
-            List<DificultadDTO> listaDificultadDTO = new List<DificultadDTO>();
+            var dificultadesDTO = new List<DificultadDTO>();
 
-            foreach (Dificultad dificultad in controladorAdministrativo.GetDificultades())
+            foreach (Dificultad dificultad in ControladorPreguntas.GetDificultades(pNombreConjunto))
             {
-                listaDificultadDTO.Add(new DificultadDTO(dificultad));
+                dificultadesDTO.Add(new DificultadDTO(dificultad));
             }
-            return listaDificultadDTO;
+            return dificultadesDTO;
         }
         /// <summary>
         /// Metodo que guarda un usuario en la base de datos de usuarios

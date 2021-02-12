@@ -91,16 +91,6 @@ namespace Trabajo_Integrador.Controladores
             return nombres;
         }
         /// <summary>
-        /// Metodo que devuelve todas las dificultades cargadas en base de datos
-        /// </summary>
-        /// <returns></returns>
-        public IEnumerable<Dificultad> GetDificultades()
-        {
-            return iControladorPreguntas.GetDificultades("OpentDb");
-        }
-
-
-        /// <summary>
         /// Metodo que modifica el tiempo esperado por respuesta de un conjunto pasado como parametro.
         /// </summary>
         /// <param name="pConjuntoPreguntas"></param>

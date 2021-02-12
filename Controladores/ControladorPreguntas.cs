@@ -258,7 +258,7 @@ namespace Trabajo_Integrador.Controladores
         /// Metodo que devuelve todas las dificultades cargadas en base de datos de un determinado conjunto
         /// </summary>
         /// <returns></returns>
-        public ICollection<Dificultad> GetDificultades(String pNombreConjunto)
+        public static IEnumerable<Dificultad> GetDificultades(String pNombreConjunto)
         {
             ICollection<Dificultad> dificultades = null;
             try
