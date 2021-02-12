@@ -42,21 +42,6 @@ namespace UnitTests
                 Console.WriteLine(c.Id);
             }
         }
-
-        //[TestMethod]
-        public void TestCategoriaMayorN()
-        {
-            int n = 10;
-            ControladorPreguntas cont = new ControladorPreguntas();
-            ICollection<CategoriaPregunta> categorias = cont.GetCategoriasConMasDeNPreguntas(n);
-            Console.WriteLine("Tamanio: " + categorias.Count);
-            foreach (CategoriaPregunta cat in categorias)
-            {
-                Console.WriteLine(cat.Id);
-            }
-            Console.WriteLine("LLego aca");
-        }
-
         // [TestMethod]
         public void ChechGetLogs()
         {

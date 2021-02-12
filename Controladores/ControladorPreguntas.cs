@@ -186,7 +186,7 @@ namespace Trabajo_Integrador.Controladores
                 {
                     using (var UoW = new UnitOfWork(db))
                     {
-                        return UoW.RepositorioPreguntas.CategoriasConMasDeNPreguntas(n);
+                        return UoW.RepositorioPreguntas.CategoriasConMasDeNPreguntas(pNombreConjunto, n);
                     }
                 }
             }
