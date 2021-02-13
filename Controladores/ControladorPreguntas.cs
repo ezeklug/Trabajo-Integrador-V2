@@ -39,7 +39,7 @@ namespace Trabajo_Integrador.Controladores
         /// </summary>
         public static int CargarPreguntas(IEnumerable<Pregunta> pPreguntas)
         {
-            /// Este método es horriblemente ineficiente
+            /// Este metodo es horriblemente ineficiente
             /// Pero fue la unica forma que encontre de hacerlo andar
             int cantidad = 0;
             foreach (Pregunta pre in pPreguntas)
@@ -48,7 +48,6 @@ namespace Trabajo_Integrador.Controladores
                 {
                     using (var UoW = new UnitOfWork(db))
                     {
-
 
                         // si la pregunta no existe
                         if (UoW.RepositorioPreguntas.Get(pre.Id) == null)
@@ -130,7 +129,7 @@ namespace Trabajo_Integrador.Controladores
         /// <param name="pCategoria"></param>
         /// <param name="pDificultad"></param>
         /// <returns></returns>
-        public List<Pregunta> GetPreguntasRandom(string pCantidad, string pConjunto, string pCategoria, string pDificultad)
+        public static IEnumerable<Pregunta> GetPreguntasRandom(string pCantidad, string pConjunto, string pCategoria, string pDificultad)
         {
             List<Pregunta> preguntas = new List<Pregunta>();
 

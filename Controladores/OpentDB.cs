@@ -34,7 +34,6 @@ namespace Trabajo_Integrador
         {
             {
                 List<Pregunta> preguntas = new List<Pregunta>();
-                ICollection<Respuesta> respuestas = new List<Respuesta>();
 
                 string nombreDificultad = pConjunto.Dificultad.Id;
 
@@ -71,7 +70,7 @@ namespace Trabajo_Integrador
                             string textoPregunta = HttpUtility.HtmlDecode(bResponseItem.question.ToString());
                             string nombreCategoria = bResponseItem.category.ToString();
                             Dificultad dificultad = new Dificultad(HttpUtility.HtmlDecode(bResponseItem.difficulty.ToString()));
-
+                            ICollection<Respuesta> respuestas = new List<Respuesta>();
                             if ((nombreCategoria != pConjunto.Categoria.Id) || (dificultad.Id != pConjunto.Dificultad.Id))
                             {
                                 throw new FormatException(String.Format("Recibio otra cosa de la api {0} = {1}, {2} = {3}",

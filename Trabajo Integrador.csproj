@@ -236,6 +236,10 @@
     <Compile Include="Migrations\202102121343387_ConjuntoPregunta2.designer.cs">
       <DependentUpon>202102121343387_ConjuntoPregunta2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202102122355092_ConjuntoPregunta3.cs" />
+    <Compile Include="Migrations\202102122355092_ConjuntoPregunta3.designer.cs">
+      <DependentUpon>202102122355092_ConjuntoPregunta3.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Controladores\OpentDB.cs" />
     <Compile Include="Dominio\Pregunta.cs" />
@@ -373,6 +377,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202102121343387_ConjuntoPregunta2.resx">
       <DependentUpon>202102121343387_ConjuntoPregunta2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202102122355092_ConjuntoPregunta3.resx">
+      <DependentUpon>202102122355092_ConjuntoPregunta3.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

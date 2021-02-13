@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
-
 namespace Trabajo_Integrador.EntityFramework
 {
     public class RepositorioPreguntas : Repository<Pregunta, TrabajoDbContext>
@@ -50,7 +50,7 @@ namespace Trabajo_Integrador.EntityFramework
             int cantidad = Convert.ToInt32(pCantidad);
             if (preguntas.Count <= cantidad)
             {
-                List<Pregunta> preguntas2 = iDBSet.Include("Conjunto").Include("Dificultad").Include("Respuestas").Where(p => ((p.Conjunto.Categoria.Id == pCategoria) && (p.Conjunto.Nombre == pConjunto))).ToList<Pregunta>();
+                List<Pregunta> preguntas2 = iDBSet.Include("Conjunto").Where(p => ((p.Conjunto.Categoria.Id == pCategoria) && (p.Conjunto.Nombre == pConjunto))).ToList<Pregunta>();
                 foreach (Pregunta preg in preguntas2)
                 {
                     if (!preguntas.Contains(preg) && preguntas.Count < cantidad)
@@ -83,11 +83,20 @@ namespace Trabajo_Integrador.EntityFramework
         public ICollection<CategoriaPregunta> CategoriasConMasDeNPreguntas(String pNombreConjunto, int n)
         {
             var idCategoriaCantidad = new Dictionary<String, int>();
-            ICollection<CategoriaPregunta> res = new HashSet<CategoriaPregunta>();
+            HashSet<CategoriaPregunta> res = new HashSet<CategoriaPregunta>();
 
-            foreach (var p in this.iDBSet.Where(p => p.Conjunto.Nombre == pNombreConjunto))
+            foreach (var p in this.iDBSet.Include(p => p.Conjunto.Categoria).Where(p => p.Conjunto.Nombre == pNombreConjunto))
             {
-                idCategoriaCantidad[p.Conjunto.Categoria.Id]++;
+                if (idCategoriaCantidad.ContainsKey(p.Conjunto.Categoria.Id))
+                {
+                    idCategoriaCantidad[p.Conjunto.Categoria.Id]++;
+                }
+                else
+                {
+                    idCategoriaCantidad.Add(p.Conjunto.Categoria.Id, 1);
+                }
+
+
                 if (idCategoriaCantidad[p.Conjunto.Categoria.Id] >= n)
                 {
                     res.Add(p.Conjunto.Categoria);

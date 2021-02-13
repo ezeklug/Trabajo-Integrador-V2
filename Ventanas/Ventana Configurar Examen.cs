@@ -48,11 +48,11 @@ namespace Trabajo_Integrador.Ventanas
                 foreach (CategoriaPreguntaDTO categ in categorias)
                 {
                     categoria.Items.Add(categ.Id);
-                   
+
                 }
 
             }
-            
+
         }
 
 
@@ -138,8 +138,8 @@ namespace Trabajo_Integrador.Ventanas
 
                     if (result == DialogResult.Yes)
                     {
-                        ExamenDTO nuevoExamen = fachada.InicializarExamen(n, conjuntoSeleccionado, categoriaSeleccionada, dificultadSeleccionada);
-                        fachada.InicarExamen(iNombreUsuario, nuevoExamen);
+                        ExamenDTO nuevoExamen = ControladorFachada.InicializarExamen(n, conjuntoSeleccionado, categoriaSeleccionada, dificultadSeleccionada);
+                        nuevoExamen = ControladorFachada.InicarExamen(iNombreUsuario, nuevoExamen);
 
                         this.Hide();
 
@@ -151,8 +151,8 @@ namespace Trabajo_Integrador.Ventanas
                 }
                 else
                 {
-                    ExamenDTO nuevoExamen = fachada.InicializarExamen(cantidadSeleccionada, conjuntoSeleccionado, categoriaSeleccionada, dificultadSeleccionada);
-                    fachada.InicarExamen(iNombreUsuario, nuevoExamen);
+                    ExamenDTO nuevoExamen = ControladorFachada.InicializarExamen(cantidadSeleccionada, conjuntoSeleccionado, categoriaSeleccionada, dificultadSeleccionada);
+                    nuevoExamen = ControladorFachada.InicarExamen(iNombreUsuario, nuevoExamen);
 
                     this.Hide();
 

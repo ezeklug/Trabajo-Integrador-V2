@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-
+﻿using Trabajo_Integrador.DTO;
 
 namespace Trabajo_Integrador.Dominio
 {
@@ -17,11 +10,19 @@ namespace Trabajo_Integrador.Dominio
     public class ExamenPregunta
     {
         public int Id { get; set; }
-        
-        public string PreguntaId  { get; set; }
-        
+
+        public string PreguntaId { get; set; }
+
         public int RespuestaElegidaId { get; set; }
 
+        public ExamenPregunta(ExamenPreguntaDTO pExamenPreguntaDTO)
+        {
+            this.Id = pExamenPreguntaDTO.Id;
+            this.PreguntaId = pExamenPreguntaDTO.PreguntaId;
+            this.RespuestaElegidaId = pExamenPreguntaDTO.RespuestaElegidaId;
+        }
+
+        public ExamenPregunta() { }
 
     }
 }

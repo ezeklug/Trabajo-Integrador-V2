@@ -10,7 +10,6 @@ namespace Trabajo_Integrador.Ventanas
     public partial class Ventana_Preguntas : Form
     {
         ExamenDTO iExamen;
-        ControladorFachada fachada = new ControladorFachada();
         private int iNumeroPregunta = 0;
 
         public Ventana_Preguntas(ExamenDTO unExamen)
@@ -29,7 +28,6 @@ namespace Trabajo_Integrador.Ventanas
             List<RespuestaDTO> opciones = new List<RespuestaDTO>(); //Almacena las 4 opciones de respuestas
 
             IEnumerable<RespuestaDTO> respuestas = ControladorFachada.RespuestasDePregunta(unaPregunta);
-
             foreach (RespuestaDTO respuesta in respuestas)
             {
                 opciones.Add(respuesta);
@@ -61,7 +59,7 @@ namespace Trabajo_Integrador.Ventanas
 
         public PreguntaDTO obtienePregunta(int numeroPregunta) //Muestra la pregunta iNumeroPregunta en la lista de preguntas del examen 
         {
-            List<PreguntaDTO> listaPreguntas = fachada.GetPreguntasDeExamen(iExamen.Id);
+            var listaPreguntas = ControladorFachada.GetPreguntasDeExamen(iExamen.Id).ToList();
             mostrarPregunta(listaPreguntas[numeroPregunta]);
 
             this.CantidadPreguntas.Text = "Pregunta: " + (numeroPregunta + 1).ToString() + "/" + iExamen.CantidadPreguntas.ToString();
@@ -88,7 +86,7 @@ namespace Trabajo_Integrador.Ventanas
             {
                 this.timer.Enabled = false;
                 this.Hide();
-                fachada.FinalizarExamen(iExamen);
+                ControladorFachada.FinalizarExamen(iExamen);
                 using (Ventana_Examen_Terminado finalizado = new Ventana_Examen_Terminado(iExamen)) //Paso el examen a la proxima ventana 
                     finalizado.ShowDialog();
                 this.Close();
@@ -104,7 +102,7 @@ namespace Trabajo_Integrador.Ventanas
 
                 RadioButton opcion = flowLayoutPanel1.Controls.OfType<RadioButton>().FirstOrDefault(r => r.Checked);
 
-                fachada.RespuestaCorrecta(iExamen, obtienePregunta(iNumeroPregunta), Int32.Parse(opcion.Name));
+                ControladorFachada.RespuestaCorrecta(iExamen, obtienePregunta(iNumeroPregunta), Int32.Parse(opcion.Name));
 
                 LimpiaControles(); // Limpia todos los controles
 
@@ -113,7 +111,7 @@ namespace Trabajo_Integrador.Ventanas
                 if (iNumeroPregunta >= iExamen.CantidadPreguntas)
                 {
                     this.Hide();
-                    fachada.FinalizarExamen(iExamen);
+                    ControladorFachada.FinalizarExamen(iExamen);
                     Ventana_Examen_Terminado finalizado = new Ventana_Examen_Terminado(iExamen);
                     finalizado.ShowDialog();
                     this.Close();

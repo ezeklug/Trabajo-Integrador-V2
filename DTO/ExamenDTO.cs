@@ -1,15 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Trabajo_Integrador.Dominio;
 
 namespace Trabajo_Integrador.DTO
 {
-   public class ExamenDTO
+    public class ExamenDTO
     {
-        public List<ExamenPreguntaDTO> ExamenPreguntas { get; set; }
+        public IEnumerable<ExamenPreguntaDTO> ExamenPreguntas { get; set; }
         public int Id { get; set; }
         public float TiempoLimite { get; set; }
         public double Puntaje { get; set; }
@@ -17,10 +14,10 @@ namespace Trabajo_Integrador.DTO
         public DateTime Fecha { get; set; }
         public string UsuarioId { get; set; }
         public double CantidadPreguntas { get; set; }
-        
+
         public ExamenDTO() { }
-        public ExamenDTO(List<ExamenPreguntaDTO> pExamenPreguntas, int pId, 
-            float pTiempoLimite, double pPuntaje, double pTiempoUsado, 
+        public ExamenDTO(List<ExamenPreguntaDTO> pExamenPreguntas, int pId,
+            float pTiempoLimite, double pPuntaje, double pTiempoUsado,
             DateTime pFecha, string pUsuarioId, double pCantidadPreguntas)
         {
             this.ExamenPreguntas = pExamenPreguntas;
@@ -33,9 +30,20 @@ namespace Trabajo_Integrador.DTO
             this.CantidadPreguntas = pCantidadPreguntas;
         }
 
+        private static IEnumerable<ExamenPreguntaDTO> ExamenPreguntaADto(IEnumerable<ExamenPregunta> pEp)
+        {
+            var epDto = new List<ExamenPreguntaDTO>();
+
+            foreach (var ep in pEp)
+            {
+                epDto.Add(new ExamenPreguntaDTO(ep));
+            }
+            return epDto;
+        }
+
         public ExamenDTO(Examen examen)
         {
-            this.ExamenPreguntas = examen.ExamenPreguntas;
+            this.ExamenPreguntas = ExamenDTO.ExamenPreguntaADto(examen.ExamenPreguntas);
             this.Id = examen.Id;
             this.TiempoLimite = examen.TiempoLimite;
             this.Puntaje = examen.Puntaje;

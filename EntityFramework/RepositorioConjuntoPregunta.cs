@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using Trabajo_Integrador.Dominio;
 
@@ -34,7 +35,8 @@ namespace Trabajo_Integrador.EntityFramework
 
         public ICollection<Dificultad> DificultadesDeUnConjunto(String pNombreConjunto)
         {
-            var conjunto = this.iDBSet.Where(c => c.Nombre == pNombreConjunto);
+
+            var conjunto = this.iDBSet.Include(c => c.Dificultad).Where(c => c.Nombre == pNombreConjunto);
             var dificultades = new HashSet<Dificultad>();
 
             foreach (var c in conjunto)

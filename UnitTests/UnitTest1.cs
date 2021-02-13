@@ -5,11 +5,13 @@ using System.Linq;
 using Trabajo_Integrador;
 using Trabajo_Integrador.Controladores;
 using Trabajo_Integrador.Controladores.Bitacora;
+using Trabajo_Integrador.Dominio;
 
 namespace UnitTests
 {
     public class Tests
     {
+
         public static void CargarTodo()
         {
             var dificultades = new List<Dificultad>();
@@ -59,6 +61,17 @@ namespace UnitTests
         }
 
 
+
+
+        public static void CargarPreguntas()
+        {
+            var cant = ControladorPreguntas.GetPreguntasOnline("10", "OpentDb", "Science: Computers", "hard");
+            Console.WriteLine($"Se cargaron {cant} preguntas");
+        }
+
+
+
+
         //[TestMethod]
 
         public void testEscribirLog()
@@ -68,7 +81,7 @@ namespace UnitTests
             bitacora.GuardarLog(descripcion);
         }
 
-        [Test]
+        //[Test]
         public void testGetPreguntas()
         {
             IEnumerable<Pregunta> preguntas = ControladorPreguntas.ObtenerPreguntasDeInternet("10", "OpentDb", "Science: Computers", "hard");
