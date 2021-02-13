@@ -182,58 +182,22 @@ namespace Trabajo_Integrador.Controladores
         }
 
 
-
         /// <summary>
-        /// Metodo que Agrega un usuario en la BD si este no existe.
+        /// Guarda un usuario en la base de datos
         /// </summary>
+        /// <exception cref="System.Data.Entity.Infrastructure.DbUpdateException">Si usuario ya existe</exception> 
         /// <param name="pUsuario"></param>
-        /// <param name="pContrasenia"></param>
-        public void GuardarUsuario(string pUsuario, string pContrasenia)
+        public static void GuardarUsuario(Usuario pUsuario)
         {
-            Usuario usuario = new Usuario(pUsuario, pContrasenia);
             using (var db = new TrabajoDbContext())
             {
                 using (var UoW = new UnitOfWork(db))
                 {
-                    if (UoW.RepositorioUsuarios.Get(usuario.Id) == null)
-                    {
-                        UoW.RepositorioUsuarios.Add(usuario);
-                    }
+                    UoW.RepositorioUsuarios.Add(pUsuario);
                     UoW.Complete();
                 }
             }
         }
-
-
-        /// <summary>
-        /// Chequea que el usuario y contrasenia de un usuario existan
-        /// </summary>
-        /// <param name="pUsuarioId"></param>
-        /// <param name="pContrasenia"></param>
-        /// <returns></returns>
-        public Boolean UsuarioValido(string pUsuarioId, string pContrasenia)
-        {
-            using (var db = new TrabajoDbContext())
-            {
-                using (var UoW = new UnitOfWork(db))
-                {
-                    Usuario usr = new Usuario(pUsuarioId, pContrasenia);    //Necesario por el hash de contrasenia
-                    Usuario usrDb = UoW.RepositorioUsuarios.Get(pUsuarioId);
-                    if (usrDb != null)
-                    {
-                        if (usrDb.Contrasenia == usr.Contrasenia)
-                        {
-                            return true;
-                        }
-                        else return false;
-                    }
-                    else return false;
-
-
-                }
-            }
-        }
-
 
 
         /// <summary>

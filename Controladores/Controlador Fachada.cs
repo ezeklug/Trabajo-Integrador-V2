@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Trabajo_Integrador.Controladores.Bitacora;
+using Trabajo_Integrador.Controladores.Utils;
 using Trabajo_Integrador.Dominio;
 using Trabajo_Integrador.DTO;
 using Trabajo_Integrador.EntityFramework;
@@ -174,6 +175,12 @@ namespace Trabajo_Integrador.Controladores
         }
 
 
+        public static bool UsuarioEsAdmin(String pUsuario, String pContrasenia)
+        {
+            var usr = Autenticador.ConstruirUsuario(pUsuario, pContrasenia);
+            return Autenticador.UsuarioEsAdmin(usr);
+        }
+
 
 
         /// <summary>
@@ -198,27 +205,31 @@ namespace Trabajo_Integrador.Controladores
             return dificultadesDTO;
         }
         /// <summary>
-        /// Metodo que guarda un usuario en la base de datos de usuarios
+        /// Guarda un nuevo usuario en la base de datos
         /// </summary>
+        /// <exception cref="System.Data.Entity.Infrastructure.DbUpdateException">Si usuario ya existe</exception> 
         /// <param name="usuarioNombre"></param>
         /// <param name="contrasenia"></param>
-        public void GuardarUsuario(string usuarioNombre, string contrasenia)
+        public static void GuardarUsuario(string usuarioNombre, string contrasenia)
         {
-            controladorAdministrativo.GuardarUsuario(usuarioNombre, contrasenia);
+            var usr = Autenticador.ConstruirUsuario(usuarioNombre, contrasenia);
+            ControladorAdministrativo.GuardarUsuario(usr);
+            throw new NotImplementedException("Implementar el control de la excepcion de usuario ya en la bd");
         }
 
 
 
-        /// <summary>
-        /// Chequea si un usuario ya existe en la base de datos
-        /// </summary>
-        /// <param name="pUsuarioId"></param>
-        /// <param name="pContrasenia"></param>
-        /// <returns>Verdadero si usuario y contraseña existen </returns>
-        public Boolean UsuarioValido(string pUsuarioId, string pContrasenia)
+
+        public static bool AutenticarUsuario(String pUsuario, String pContrasenia)
         {
-            return controladorAdministrativo.UsuarioValido(pUsuarioId, pContrasenia);
+            if ((pUsuario == null) || (pContrasenia == null))
+            {
+                return false;
+            }
+            var usr = Autenticador.ConstruirUsuario(pUsuario, pContrasenia);
+            return Autenticador.AutenticarUsuario(usr);
         }
+
 
         /// <summary>
         /// Devuleve true si el nombre de usuario ya existe en BD.

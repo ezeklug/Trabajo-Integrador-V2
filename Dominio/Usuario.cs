@@ -1,10 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Security.Cryptography;
-using Trabajo_Integrador.Utils;
 
 namespace Trabajo_Integrador.Dominio
 {
@@ -19,7 +13,7 @@ namespace Trabajo_Integrador.Dominio
         public string Id { get; set; }
         public string Contrasenia { get; set; }
         public Boolean Administrador { get; set; }
-        
+
         /// <summary>
         /// Constructor
         /// </summary>
@@ -28,8 +22,7 @@ namespace Trabajo_Integrador.Dominio
         public Usuario(string pId, string pContrasenia)
         {
             Id = pId;
-            Contrasenia = PasswordHasher.CreateMD5
-                (pContrasenia);
+            Contrasenia = pContrasenia;
             Administrador = false;
         }
 

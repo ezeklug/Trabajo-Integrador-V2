@@ -7,7 +7,7 @@ namespace Trabajo_Integrador.Ventanas
 {
     public partial class Ventana_Registro : Form
     {
-     
+
         ControladorFachada fachada = new ControladorFachada();
 
         public Ventana_Registro()
@@ -52,7 +52,7 @@ namespace Trabajo_Integrador.Ventanas
                         }
                         else
                         {
-                            fachada.GuardarUsuario(usuarioNombre, nuevaContrasenia.Text.Trim());
+                            ControladorFachada.GuardarUsuario(usuarioNombre, nuevaContrasenia.Text.Trim());
                             MessageBox.Show("Usuario registrado correctamente");
                             this.Hide();
                             Ventana_Inicio vInicio = new Ventana_Inicio();
@@ -68,9 +68,9 @@ namespace Trabajo_Integrador.Ventanas
             {
                 MessageBox.Show("No hay conexion");
             }
-            
 
-            
+
+
 
         }
 
