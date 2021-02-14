@@ -8,19 +8,18 @@ namespace Trabajo_Integrador.Ventanas
 {
     public partial class Ventana_Set_Administrador : Form
     {
-        ControladorFachada fachada = new ControladorFachada();
         public Ventana_Set_Administrador()
         {
             InitializeComponent();
         }
 
-        string nombreUsuario;
+        string iNombreUsuario;
 
 
         private void Volver_Click(object sender, EventArgs e)
         {
             this.Hide();
-            Ventana_Opciones vOpciones = new Ventana_Opciones(nombreUsuario);
+            Ventana_Opciones vOpciones = new Ventana_Opciones(iNombreUsuario);
             vOpciones.ShowDialog();
             this.Close();
         }
@@ -29,11 +28,11 @@ namespace Trabajo_Integrador.Ventanas
 
         private void SetAdministrador_Load(object sender, EventArgs e)
         {
-            var listaUsuarios = ControladorFachada.GetUsuarios();
+            var usuarios = ControladorFachada.GetUsuarios();
 
-            foreach (UsuarioDTO user in listaUsuarios)
+            foreach (UsuarioDTO user in usuarios)
             {
-                if (fachada.EsAdministrador(user.Id))
+                if (ControladorFachada.GetUsuario(user.Id).Administrador)
                 {
                     int index = this.listaCheckedBox.Items.Add(user.Id);
                     listaCheckedBox.Items[index] = user.Id;
@@ -49,22 +48,34 @@ namespace Trabajo_Integrador.Ventanas
 
         private void setAdmin_Click(object sender, EventArgs e)
         {
-            var listaUsuarios = ControladorFachada.GetUsuarios();
-            // Collection usuariosChecked = listaCheckedBox.CheckedItems;
-
-            foreach (UsuarioDTO user in listaUsuarios)
+            var usr = ControladorFachada.GetUsuario(iNombreUsuario);
+            if (usr.Administrador)
             {
-                if (listaCheckedBox.CheckedItems.Contains(user.Id))
-                {
-                    fachada.SetAdministrador(user.Id);
+                var usuarios = ControladorFachada.GetUsuarios();
 
-                }
-                else
+                foreach (UsuarioDTO user in usuarios)
                 {
-                    fachada.SetNoAdministrador(user.Id);
+                    if (listaCheckedBox.CheckedItems.Contains(user.Id))
+                    {
+                        ControladorFachada.SetAdministrador(user.Id);
+
+                    }
+                    else
+                    {
+                        ControladorFachada.SetNoAdministrador(user.Id);
+                    }
                 }
+                MessageBox.Show("El/los usuario/s fueron configurados como administrador con Exito");
+
             }
-            MessageBox.Show("El/los usuario/s fueron configurados como administrador con Exito");
+            else
+            {
+                MessageBox.Show("Ya no eres administrador");
+                this.Hide();
+                var vinicio = new Ventana_Inicio();
+                vinicio.ShowDialog();
+                this.Close();
+            }
         }
     }
 }

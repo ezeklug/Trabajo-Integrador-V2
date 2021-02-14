@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Trabajo_Integrador.Dominio;
-using Trabajo_Integrador.Utils;
 
 namespace Trabajo_Integrador.DTO
 {
@@ -22,8 +17,7 @@ namespace Trabajo_Integrador.DTO
         public UsuarioDTO(string pId, string pContrasenia)
         {
             Id = pId;
-            Contrasenia = PasswordHasher.CreateMD5
-                (pContrasenia);
+            Contrasenia = pContrasenia;
             Administrador = false;
         }
 
@@ -32,7 +26,7 @@ namespace Trabajo_Integrador.DTO
         public UsuarioDTO(Usuario usuario)
         {
             this.Id = usuario.Id;
-            this.Contrasenia = PasswordHasher.CreateMD5(usuario.Contrasenia);
+            this.Contrasenia = usuario.Contrasenia;
             this.Administrador = usuario.Administrador;
         }
     }

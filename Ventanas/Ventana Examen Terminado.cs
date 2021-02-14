@@ -1,15 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using Trabajo_Integrador;
-using Trabajo_Integrador.DTO;
 using Trabajo_Integrador.Controladores;
+using Trabajo_Integrador.DTO;
 
 namespace Trabajo_Integrador.Ventanas
 {
@@ -39,7 +31,7 @@ namespace Trabajo_Integrador.Ventanas
         private void volverInicio_Click_1(object sender, EventArgs e)
         {
             this.Hide();
-            if (fachada.EsAdministrador(iExamen.UsuarioId))
+            if (ControladorFachada.GetUsuario(iExamen.UsuarioId).Administrador)
             {
                 Ventana_Principal_Admi vAdmin = new Ventana_Principal_Admi(iExamen.UsuarioId);
                 vAdmin.ShowDialog();
@@ -62,4 +54,3 @@ namespace Trabajo_Integrador.Ventanas
         }
     }
 }
-

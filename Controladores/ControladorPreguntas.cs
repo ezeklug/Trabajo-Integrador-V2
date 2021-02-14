@@ -203,7 +203,7 @@ namespace Trabajo_Integrador.Controladores
         /// </summary>
         /// <param name="pIdCateoria">El id de la categoria</param>
         /// <returns></returns>
-        public int CantidadDePreguntasParaCategoria(String pIdCategoria)
+        public static int CantidadDePreguntasParaCategoria(String pIdCategoria)
         {
             try
             {
@@ -319,7 +319,6 @@ namespace Trabajo_Integrador.Controladores
                         {
                             conjunto.Dificultad = dif;
                         }
-                        Console.WriteLine($"Va a agregar: {conjunto.Id}");
                         UoW.RepositorioConjuntoPregunta.Add(conjunto);
 
                     }

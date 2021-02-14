@@ -176,6 +176,9 @@
     <Compile Include="Controladores\Bitacora\IBitacora.cs" />
     <Compile Include="Controladores\Controlador Fachada.cs" />
     <Compile Include="Controladores\ControladorAdministrativo.cs" />
+    <Compile Include="Controladores\Excepciones\UsrNoEncontradoException.cs" />
+    <Compile Include="Controladores\Excepciones\UsrYaExisteException.cs" />
+    <Compile Include="Controladores\Utils\Autenticador.cs" />
     <Compile Include="Dominio\CategoriaPregunta.cs" />
     <Compile Include="Dominio\ConjuntoPreguntas.cs" />
     <Compile Include="Controladores\ControladorExamen.cs" />
@@ -243,7 +246,7 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Controladores\OpentDB.cs" />
     <Compile Include="Dominio\Pregunta.cs" />
-    <Compile Include="Utils\PasswordHasher.cs" />
+    <Compile Include="Controladores\Utils\PasswordHasher.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Controladores\ControladorPreguntas.cs" />

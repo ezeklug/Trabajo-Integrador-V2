@@ -75,7 +75,7 @@ namespace Trabajo_Integrador.EntityFramework
 
         public new Pregunta Get(string pId)
         {
-            return this.iDBSet.Include("Conjunto").Include("Respuestas").Where(p => p.Id == pId).FirstOrDefault<Pregunta>();
+            return this.iDBSet.Include("Conjunto").Include(p => p.Conjunto.Dificultad).Include(p => p.Conjunto.Categoria).Include("Respuestas").Where(p => p.Id == pId).FirstOrDefault<Pregunta>();
         }
 
 

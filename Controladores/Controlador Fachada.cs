@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using Trabajo_Integrador.Controladores.Bitacora;
+using Trabajo_Integrador.Controladores.Excepciones;
+using Trabajo_Integrador.Controladores.Utils;
 using Trabajo_Integrador.Dominio;
 using Trabajo_Integrador.DTO;
 using Trabajo_Integrador.EntityFramework;
@@ -87,9 +89,9 @@ namespace Trabajo_Integrador.Controladores
         /// </summary>
         /// <param name="pIdCategoria">Id de la categoria</param>
         /// <returns>Cantidad</returns>
-        public int CantidadDePreguntasParaCategoria(String pIdCategoria)
+        public static int CantidadDePreguntasParaCategoria(String pIdCategoria)
         {
-            return controladorPreguntas.CantidadDePreguntasParaCategoria(pIdCategoria);
+            return ControladorPreguntas.CantidadDePreguntasParaCategoria(pIdCategoria);
         }
 
         /// <summary>
@@ -157,6 +159,17 @@ namespace Trabajo_Integrador.Controladores
         }
 
 
+        /// <summary>
+        /// Obtiene un usuario de la base de datos
+        /// </summary>
+        /// <exception cref="UsrNoEncontradoException"> Si el usuario no existe</exception>
+        /// <param name="pUsuario"></param>
+        /// <returns></returns>
+        public static UsuarioDTO GetUsuario(String pUsuario)
+        {
+            return new UsuarioDTO(Autenticador.GetUsuario(pUsuario));
+        }
+
 
         /// <summary>
         /// Devuelve todas las categorias que tengan mas o igual a N preguntas
@@ -172,8 +185,6 @@ namespace Trabajo_Integrador.Controladores
             }
             return categoriasDTO;
         }
-
-
 
 
         /// <summary>
@@ -198,50 +209,36 @@ namespace Trabajo_Integrador.Controladores
             return dificultadesDTO;
         }
         /// <summary>
-        /// Metodo que guarda un usuario en la base de datos de usuarios
+        /// Guarda un nuevo usuario en la base de datos
         /// </summary>
+        /// <exception cref="UsrYaExisteException">Si usuario ya existe</exception> 
         /// <param name="usuarioNombre"></param>
         /// <param name="contrasenia"></param>
-        public void GuardarUsuario(string usuarioNombre, string contrasenia)
+        public static void GuardarUsuario(string usuarioNombre, string contrasenia)
         {
-            controladorAdministrativo.GuardarUsuario(usuarioNombre, contrasenia);
+            var usr = Autenticador.ConstruirUsuario(usuarioNombre, contrasenia);
+            ControladorAdministrativo.GuardarUsuario(usr);
         }
 
 
 
+
+
         /// <summary>
-        /// Chequea si un usuario ya existe en la base de datos
+        /// Devuelve un UsuarioDTO con los datos actualizados desde la BD
         /// </summary>
-        /// <param name="pUsuarioId"></param>
+        /// <exception cref="UsrNoEncontradoException"> Si el usuario no existe</exception>
+        /// <param name="pUsuario"></param>
         /// <param name="pContrasenia"></param>
-        /// <returns>Verdadero si usuario y contraseña existen </returns>
-        public Boolean UsuarioValido(string pUsuarioId, string pContrasenia)
-        {
-            return controladorAdministrativo.UsuarioValido(pUsuarioId, pContrasenia);
-        }
-
-        /// <summary>
-        /// Devuleve true si el nombre de usuario ya existe en BD.
-        /// </summary>
-        /// <param name="pNombreUsuario"></param>
         /// <returns></returns>
-        public Boolean UsuarioExiste(string pNombreUsuario)
+        public static UsuarioDTO AutenticarUsuario(String pUsuario, String pContrasenia)
         {
-            return controladorAdministrativo.UsuarioExiste(pNombreUsuario);
-
+            var usr = Autenticador.ConstruirUsuario(pUsuario, pContrasenia);
+            return new UsuarioDTO(Autenticador.AutenticarUsuario(usr));
         }
 
 
 
-        /// <summary>
-        /// Chequea si un usuario es administrador
-        /// </summary>
-        /// <param name="nombreUsuario"></param>
-        /// <returns></returns>
-        public Boolean EsAdministrador(string nombreUsuario)
-        {
-            return controladorAdministrativo.EsAdministrador(nombreUsuario);
-        }
 
         public static CategoriaPregunta DTOACategoriaPregunta(CategoriaPreguntaDTO categoriaPreguntaDTO)
         {
@@ -353,9 +350,9 @@ namespace Trabajo_Integrador.Controladores
         /// Setea un usuario como  admin
         /// </summary>
         /// <param name="pUsuario">Id del usuario</param>
-        public void SetAdministrador(string pUsuario)
+        public static void SetAdministrador(string pUsuario)
         {
-            controladorAdministrativo.SetAdministrador(pUsuario);
+            ControladorAdministrativo.SetAdministrador(pUsuario);
         }
 
 
@@ -363,23 +360,23 @@ namespace Trabajo_Integrador.Controladores
         /// Setea un usuario como no admin
         /// </summary>
         /// <param name="pUsuario">Id del usuario</param>
-        public void SetNoAdministrador(string pUsuario)
+        public static void SetNoAdministrador(string pUsuario)
         {
-            controladorAdministrativo.SetNoAdministrador(pUsuario);
+            ControladorAdministrativo.SetNoAdministrador(pUsuario);
         }
 
         /// <summary>
         /// Obtiene todas las preguntas de la base de datos
         /// </summary>
         /// <returns></returns>
-        public List<PreguntaDTO> GetPreguntas()
+        public static IEnumerable<PreguntaDTO> GetPreguntas()
         {
-            List<PreguntaDTO> listaPreguntaDTO = new List<PreguntaDTO>();
-            foreach (Pregunta pregunta in controladorAdministrativo.GetPreguntas())
+            List<PreguntaDTO> preguntasDto = new List<PreguntaDTO>();
+            foreach (Pregunta pregunta in ControladorAdministrativo.GetPreguntas())
             {
-                listaPreguntaDTO.Add(new PreguntaDTO(pregunta));
+                preguntasDto.Add(new PreguntaDTO(pregunta));
             }
-            return listaPreguntaDTO;
+            return preguntasDto;
         }
 
         public List<PreguntaDTO> GetPreguntasRandom(string pCantidad, string pConjunto, string pCategoria, string pDificultad)

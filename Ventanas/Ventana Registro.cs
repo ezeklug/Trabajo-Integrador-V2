@@ -2,12 +2,13 @@
 
 using System.Windows.Forms;
 using Trabajo_Integrador.Controladores;
+using Trabajo_Integrador.Controladores.Excepciones;
 
 namespace Trabajo_Integrador.Ventanas
 {
     public partial class Ventana_Registro : Form
     {
-     
+
         ControladorFachada fachada = new ControladorFachada();
 
         public Ventana_Registro()
@@ -23,55 +24,42 @@ namespace Trabajo_Integrador.Ventanas
             this.Close();
         }
 
+
+
         private void Registrar_Click(object sender, EventArgs e)
         {
-            try
+            string nombreUsuario = nuevoUsuario.Text.Trim();
+            string contrasenia1 = nuevaContrasenia.Text.Trim();
+            string contrasenia2 = nuevaContrasenia2.Text.Trim();
+
+            if (nombreUsuario == string.Empty)
             {
-                string usuarioNombre = nuevoUsuario.Text.Trim();
-                if (usuarioNombre == string.Empty)
+                errorProvider2.SetError(nuevoUsuario, "Debe ingresar un usuario");
+                nuevoUsuario.Focus();
+            }
+            else if ((contrasenia1 == string.Empty) || (contrasenia1 != contrasenia2))
+            {
+                errorProvider1.SetError(nuevaContrasenia, "Las contraseñas ingresadas no coinciden");
+                nuevaContrasenia.Focus();
+            }
+            else
+            {
+                try
                 {
-                    errorProvider2.SetError(nuevoUsuario, "Debe ingresar un usuario");
+                    var usr = ControladorFachada.GetUsuario(nombreUsuario);
+                    errorProvider2.SetError(nuevoUsuario, "Usuario ya existe");
                     nuevoUsuario.Focus();
                 }
-
-                else
+                catch (UsrNoEncontradoException ex)
                 {
-                    if (fachada.UsuarioExiste(usuarioNombre))
-                    {
-                        errorProvider2.SetError(nuevoUsuario, "Usuario ya existe");
-                        nuevoUsuario.Focus();
-
-                    }
-
-                    else
-                    {
-                        if ((nuevaContrasenia.Text.Trim() != null) && (nuevaContrasenia2.Text.Trim() != null) && (nuevaContrasenia.Text.Trim() != nuevaContrasenia2.Text.Trim()))
-                        {
-                            errorProvider1.SetError(nuevaContrasenia, "Las contraseñas ingresadas no coinciden");
-                            nuevaContrasenia.Focus();
-                        }
-                        else
-                        {
-                            fachada.GuardarUsuario(usuarioNombre, nuevaContrasenia.Text.Trim());
-                            MessageBox.Show("Usuario registrado correctamente");
-                            this.Hide();
-                            Ventana_Inicio vInicio = new Ventana_Inicio();
-                            vInicio.ShowDialog();
-                            this.Close();
-
-
-                        }
-                    }
+                    ControladorFachada.GuardarUsuario(nombreUsuario, contrasenia1);
+                    MessageBox.Show("Usuario registrado correctamente");
+                    this.Hide();
+                    Ventana_Inicio vInicio = new Ventana_Inicio();
+                    vInicio.ShowDialog();
+                    this.Close();
                 }
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show("No hay conexion");
-            }
-            
-
-            
-
         }
 
         private void Ventana_Registro_Load(object sender, EventArgs e)
