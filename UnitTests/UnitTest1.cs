@@ -60,6 +60,15 @@ namespace UnitTests
         }
 
 
+        //  [Test]
+        public static void GetPreguntas()
+        {
+            var pregs = ControladorFachada.GetPreguntas();
+            foreach (var p in pregs)
+            {
+                Console.WriteLine(p.Id);
+            }
+        }
 
         //[Test]
         public static void CargarPreguntas()

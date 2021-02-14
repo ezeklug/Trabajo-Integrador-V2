@@ -57,6 +57,18 @@ namespace Trabajo_Integrador.Dominio
         }
 
 
+        private void CalcularPuntaje(int pCantidadRespuestasCorrectas, double pFactorDificultad)
+        {
+            this.Puntaje = pCantidadRespuestasCorrectas / this.CantidadPreguntas * pFactorDificultad * this.FactorTiempo;
+        }
+
+
+        public void Finalizar(int pCantidadRespuestasCorrectas, double pFactorDificultad)
+        {
+            this.TiempoUsado = (DateTime.Now - this.Fecha).TotalSeconds;
+            this.CalcularPuntaje(pCantidadRespuestasCorrectas, pFactorDificultad);
+        }
+
 
 
 
