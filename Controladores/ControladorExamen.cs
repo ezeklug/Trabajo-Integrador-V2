@@ -101,8 +101,7 @@ namespace Trabajo_Integrador.Controladores
         public static void FinalizarExamen(ExamenDTO pExamen)
         {
             Examen examen = new Examen(pExamen);
-            examen.TiempoUsado = (DateTime.Now - examen.Fecha).TotalSeconds;
-            examen.Puntaje = ControladorExamen.CantidadRespuestasCorrectas(examen) / examen.CantidadPreguntas * ControladorExamen.GetFactorDificultad(examen) * examen.FactorTiempo;
+            examen.Finalizar(ControladorExamen.CantidadRespuestasCorrectas(examen), ControladorExamen.GetFactorDificultad(examen));
             ControladorExamen.GuardarExamen(examen);
         }
 
@@ -126,11 +125,12 @@ namespace Trabajo_Integrador.Controladores
                 {
                     foreach (var examenPregunta in examen.ExamenPreguntas)
                     {
-                        if (UoW.RepositorioPreguntas
+                        if ((examenPregunta.RespuestaElegidaId != 0) &&
+                            (UoW.RepositorioPreguntas
                             .Get(examenPregunta.PreguntaId)
                             .Respuestas
                             .First(r => r.Id == examenPregunta.RespuestaElegidaId)
-                            .EsCorrecta)
+                            .EsCorrecta))
                         {
                             cantidadRespuestasCorrectas += 1;
                         }
