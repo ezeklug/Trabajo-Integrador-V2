@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Trabajo_Integrador.Controladores.ObtenerPreguntas;
 using Trabajo_Integrador.Dominio;
 using Trabajo_Integrador.DTO;
 using Trabajo_Integrador.EntityFramework;
@@ -25,7 +26,7 @@ namespace Trabajo_Integrador.Controladores
             switch (nombre)
             {
                 case "OpentDb":
-                    return new OpentDB();
+                    return new ObtenerPreguntasOpentDb();
 
                 default:
                     return new EstrategiaNula();
@@ -79,7 +80,7 @@ namespace Trabajo_Integrador.Controladores
                 }
             }
             IEstrategiaObtenerPreguntas estrategia = ControladorPreguntas.GetEstrategia(pConjunto);
-            var preguntas = estrategia.getPreguntas(int.Parse(pCantidad), conjunto);
+            var preguntas = estrategia.DescargarPreguntas(int.Parse(pCantidad), conjunto);
             return preguntas;
 
         }

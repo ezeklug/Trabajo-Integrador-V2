@@ -126,8 +126,8 @@ namespace UnitTests
         //[TestMethod]
         public void testUrl()
         {
-            OpentDB op = new OpentDB();
-            Console.WriteLine(op.CrearURL("10", "hard", "24"));
+            //OpentDB op = new OpentDB();
+            //Console.WriteLine(op.CrearURL("10", "hard", "24"));
         }
 
     }
