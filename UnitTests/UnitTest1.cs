@@ -57,12 +57,11 @@ namespace UnitTests
                 }
             }
             ControladorPreguntas.GuardarConjuntos(conjuntos);
-
         }
 
 
 
-
+        //[Test]
         public static void CargarPreguntas()
         {
             var cant = ControladorPreguntas.GetPreguntasOnline("10", "OpentDb", "Science: Computers", "hard");

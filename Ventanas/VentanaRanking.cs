@@ -1,14 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using Trabajo_Integrador.DTO;
 using Trabajo_Integrador.Controladores;
+using Trabajo_Integrador.DTO;
 
 namespace Trabajo_Integrador.Ventanas
 {
@@ -32,19 +27,19 @@ namespace Trabajo_Integrador.Ventanas
             dt.Columns.Add("Puntaje", typeof(float));
             dt.Columns.Add("Tiempo", typeof(float));
 
-           foreach (ExamenDTO examen in listaExamenes)
+            foreach (ExamenDTO examen in listaExamenes)
             {
-               dt.Rows.Add(new object[] {  examen.Fecha, examen.Puntaje, examen.TiempoUsado });
+                dt.Rows.Add(new object[] { examen.Fecha, examen.Puntaje, examen.TiempoUsado });
             }
 
             dataGridView1.DataSource = dt;
         }
 
-        
+
 
         private void listo_Click_1(object sender, EventArgs e)
         {
-            if(fachada.EsAdministrador(iNombreUsuario))
+            if (ControladorFachada.GetUsuario(iNombreUsuario).Administrador)
             {
                 this.Hide();
                 Ventana_Principal_Admi vAdmin = new Ventana_Principal_Admi(iNombreUsuario);
@@ -59,7 +54,7 @@ namespace Trabajo_Integrador.Ventanas
                 this.Close();
             }
 
-            
+
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)

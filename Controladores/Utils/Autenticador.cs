@@ -1,4 +1,5 @@
 ﻿using System;
+using Trabajo_Integrador.Controladores.Excepciones;
 using Trabajo_Integrador.Dominio;
 using Trabajo_Integrador.EntityFramework;
 
@@ -17,38 +18,53 @@ namespace Trabajo_Integrador.Controladores.Utils
 
 
         /// <summary>
-        /// Devuelve verdadero si un usuario es valido
+        /// Actualiza y autentica un usuario con los valores de la base de datos
         /// </summary>
         /// <param name="pUsuario"></param>
-        /// <returns></returns>
-        public static bool AutenticarUsuario(Usuario pUsuario)
+        /// <exception cref="UsrNoEncontradoException">pUsuario no esta en la bd</exception>
+        /// <returns>Un usuario de la base de datos</returns>
+        public static Usuario AutenticarUsuario(Usuario pUsuario)
         {
             Usuario usr = null;
             using (var db = new TrabajoDbContext())
             {
                 using (var UoW = new UnitOfWork(db))
                 {
-                    usr = UoW.RepositorioUsuarios.Get(pUsuario.Id);
+                    usr = UoW.RepositorioUsuarios.AutenticarUsuario(pUsuario);
                 }
             }
-            return usr != null;
+            if (usr == null)
+            {
+                throw new UsrNoEncontradoException("Credenciales incorrectas");
+            }
+            return usr;
         }
 
 
 
-
-        public static bool UsuarioEsAdmin(Usuario pUsuario)
+        /// <summary>
+        /// Obtiene un usuario de la bd
+        /// </summary>
+        /// <exception cref="UsrNoEncontradoException"> Si el usuario no existe</exception>
+        /// <param name="pUsuario"></param>
+        /// <returns></returns>
+        public static Usuario GetUsuario(String pUsuario)
         {
-            bool res = false;
+            Usuario usr = null;
             using (var db = new TrabajoDbContext())
             {
                 using (var UoW = new UnitOfWork(db))
                 {
-                    res = UoW.RepositorioUsuarios.Get(pUsuario.Id).Administrador;
+                    usr = UoW.RepositorioUsuarios.Get(pUsuario);
                 }
             }
-            return res;
+            if (usr == null)
+            {
+                throw new UsrNoEncontradoException(String.Format("{0} No registrado", pUsuario));
+            }
+            return usr;
         }
+
 
 
 

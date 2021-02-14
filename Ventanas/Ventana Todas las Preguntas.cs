@@ -10,18 +10,17 @@ namespace Trabajo_Integrador.Ventanas
 {
     public partial class Ventana_Todas_las_Preguntas : Form
     {
-        string iNombre;
-        public Ventana_Todas_las_Preguntas(string pNombre)
+        string iNombreUsuario;
+        public Ventana_Todas_las_Preguntas(string pNombreUsuario)
         {
             InitializeComponent();
-            iNombre = pNombre;
+            iNombreUsuario = pNombreUsuario;
         }
-        ControladorFachada fachada = new ControladorFachada();
 
 
         private void Todas_las_Preguntas_Load(object sender, EventArgs e)
         {
-            List<PreguntaDTO> preguntas = fachada.GetPreguntas();
+            IEnumerable<PreguntaDTO> preguntas = ControladorFachada.GetPreguntas();
             DataTable dt = new DataTable();
             int cont = 0;
 
@@ -31,11 +30,11 @@ namespace Trabajo_Integrador.Ventanas
 
             foreach (PreguntaDTO pregunta in preguntas)
             {
-                IEnumerable<RespuestaDTO> listaRespuestas = ControladorFachada.RespuestasDePregunta(pregunta);
+                IEnumerable<RespuestaDTO> respuestas = ControladorFachada.RespuestasDePregunta(pregunta);
                 var categoriaDePregunta = ControladorPreguntas.CategoriaDePregunta(pregunta);
                 IEnumerable<object> row = new object[] { cont, pregunta.Id, categoriaDePregunta.Id };
                 int i = 1;
-                foreach (RespuestaDTO respuesta in listaRespuestas)
+                foreach (RespuestaDTO respuesta in respuestas)
                 {
                     if (!dt.Columns.Contains($"Respuesta {i}"))
                     {
@@ -57,7 +56,7 @@ namespace Trabajo_Integrador.Ventanas
         private void button1_Click(object sender, EventArgs e)
         {
             this.Hide();
-            Ventana_Opciones vOpciones = new Ventana_Opciones(iNombre);
+            Ventana_Opciones vOpciones = new Ventana_Opciones(iNombreUsuario);
             vOpciones.ShowDialog();
             this.Close();
         }

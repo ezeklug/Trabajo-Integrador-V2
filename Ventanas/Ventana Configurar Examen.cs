@@ -10,7 +10,6 @@ namespace Trabajo_Integrador.Ventanas
     public partial class Ventana_Configurar_Examen : Form
     {
         String iNombreUsuario;
-        ControladorFachada fachada = new ControladorFachada();
 
 
         IEnumerable<CategoriaPreguntaDTO> categorias;
@@ -89,7 +88,7 @@ namespace Trabajo_Integrador.Ventanas
         private void volver_Click(object sender, EventArgs e)
         {
             this.Hide();
-            if (fachada.EsAdministrador(iNombreUsuario))
+            if (ControladorFachada.GetUsuario(iNombreUsuario).Administrador)
             {
                 Ventana_Principal_Admi vAdmin = new Ventana_Principal_Admi(iNombreUsuario);
                 vAdmin.ShowDialog();
@@ -132,7 +131,7 @@ namespace Trabajo_Integrador.Ventanas
 
                 if (!(categorias.Contains(categoriaSeleccionada)) && (categoriaSeleccionada != "0"))
                 {
-                    int n = fachada.CantidadDePreguntasParaCategoria(categoriaSeleccionada);
+                    int n = ControladorFachada.CantidadDePreguntasParaCategoria(categoriaSeleccionada);
                     MessageBoxButtons mensaje = MessageBoxButtons.YesNo;
                     DialogResult result = MessageBox.Show($"Solo hay {n} preguntas de { categoriaSeleccionada}. Quiere hacer el examen aunque no haya la cantidad de preguntas seleccionadas?", "Advertencia", mensaje);
 

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Trabajo_Integrador.Controladores.Bitacora;
+using Trabajo_Integrador.Controladores.Excepciones;
 using Trabajo_Integrador.Dominio;
 using Trabajo_Integrador.EntityFramework;
 
@@ -37,18 +38,18 @@ namespace Trabajo_Integrador.Controladores
         /// Obtiene todas las preguntas de la base de datos
         /// </summary>
         /// <returns></returns>
-        public List<Pregunta> GetPreguntas()
+        public static IEnumerable<Pregunta> GetPreguntas()
         {
-            List<Pregunta> listaPreguntas = new List<Pregunta>();
+            IEnumerable<Pregunta> preguntas;
             using (var db = new TrabajoDbContext())
             {
                 using (var UoW = new UnitOfWork(db))
                 {
-                    listaPreguntas = (List<Pregunta>)UoW.RepositorioPreguntas.GetAll();
+                    preguntas = UoW.RepositorioPreguntas.GetAll();
                 }
             }
 
-            return listaPreguntas;
+            return preguntas;
         }
         public List<Examen> GetExamenes()
         {
@@ -114,7 +115,7 @@ namespace Trabajo_Integrador.Controladores
         /// Metodo que establece como admin a un usuario pasado como parametro
         /// </summary>
         /// <param name="pUsuario"></param>
-        public void SetAdministrador(string pUsuario)
+        public static void SetAdministrador(string pUsuario)
         {
             using (var db = new TrabajoDbContext())
             {
@@ -168,7 +169,7 @@ namespace Trabajo_Integrador.Controladores
         /// Setea un usuario como no administrador
         /// </summary>
         /// <param name="pUsuario">Id del usuario</param>
-        public void SetNoAdministrador(string pUsuario)
+        public static void SetNoAdministrador(string pUsuario)
         {
             using (var db = new TrabajoDbContext())
             {
@@ -185,66 +186,31 @@ namespace Trabajo_Integrador.Controladores
         /// <summary>
         /// Guarda un usuario en la base de datos
         /// </summary>
-        /// <exception cref="System.Data.Entity.Infrastructure.DbUpdateException">Si usuario ya existe</exception> 
+        /// <exception cref="UsrYaExisteException">Si usuario ya existe</exception> 
         /// <param name="pUsuario"></param>
         public static void GuardarUsuario(Usuario pUsuario)
         {
-            using (var db = new TrabajoDbContext())
+            try
             {
-                using (var UoW = new UnitOfWork(db))
+                using (var db = new TrabajoDbContext())
                 {
-                    UoW.RepositorioUsuarios.Add(pUsuario);
-                    UoW.Complete();
-                }
-            }
-        }
-
-
-        /// <summary>
-        /// Chequea si un usuario existe en la base de datos
-        /// </summary>
-        /// <param name="pUsuarioId"></param>
-        /// <returns></returns>
-        public Boolean UsuarioExiste(string pNombreUsuario)
-        {
-            using (var db = new TrabajoDbContext())
-            {
-                using (var UoW = new UnitOfWork(db))
-                {
-                    Usuario usrDb = UoW.RepositorioUsuarios.Get(pNombreUsuario);
-
-                    if (usrDb != null)
+                    using (var UoW = new UnitOfWork(db))
                     {
-                        if (usrDb.Id == pNombreUsuario)
-                        {
-                            return true;
-                        }
-                        else return false;
+                        UoW.RepositorioUsuarios.Add(pUsuario);
+                        UoW.Complete();
                     }
-                    else return false;
                 }
+
             }
-        }
-        /// <summary>
-        /// Devuelve verdadero si un usuario es administrador
-        /// </summary>
-        /// <param name="pNombreUsuario"></param>
-        /// <returns></returns>
-        public Boolean EsAdministrador(string pNombreUsuario)
-        {
-            using (var db = new TrabajoDbContext())
+            catch (System.Data.Entity.Infrastructure.DbUpdateException ex)
             {
-                using (var UoW = new UnitOfWork(db))
-                {
-                    Usuario usrDb = UoW.RepositorioUsuarios.Get(pNombreUsuario);
-                    if (usrDb.Administrador == true)
-                    {
-                        return true;
-                    }
-                    else return false;
-                }
+                throw new UsrYaExisteException(String.Format("{0} Ya existe en la bd", pUsuario));
             }
+
         }
+
+
+
 
     }
 }

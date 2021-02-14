@@ -176,6 +176,8 @@
     <Compile Include="Controladores\Bitacora\IBitacora.cs" />
     <Compile Include="Controladores\Controlador Fachada.cs" />
     <Compile Include="Controladores\ControladorAdministrativo.cs" />
+    <Compile Include="Controladores\Excepciones\UsrNoEncontradoException.cs" />
+    <Compile Include="Controladores\Excepciones\UsrYaExisteException.cs" />
     <Compile Include="Controladores\Utils\Autenticador.cs" />
     <Compile Include="Dominio\CategoriaPregunta.cs" />
     <Compile Include="Dominio\ConjuntoPreguntas.cs" />
