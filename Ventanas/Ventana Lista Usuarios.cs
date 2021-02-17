@@ -8,7 +8,6 @@ namespace Trabajo_Integrador.Ventanas
 {
     public partial class Ventana_Lista_Usuarios : Form
     {
-        ControladorFachada fachada = new ControladorFachada();
 
         string iNombre;
         public Ventana_Lista_Usuarios(string pNombre)

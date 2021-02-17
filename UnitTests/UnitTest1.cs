@@ -70,15 +70,6 @@ namespace UnitTests
             }
         }
 
-        //[Test]
-        public static void CargarPreguntas()
-        {
-            var cant = ControladorPreguntas.GetPreguntasOnline("10", "OpentDb", "Science: Computers", "hard");
-            Console.WriteLine($"Se cargaron {cant} preguntas");
-        }
-
-
-
 
         //[TestMethod]
 
@@ -115,11 +106,78 @@ namespace UnitTests
         // [TestMethod]
         public void ChechGetLogs()
         {
-            ControladorAdministrativo cont = new ControladorAdministrativo();
-            foreach (Log l in cont.getLogs())
+            foreach (Log l in ControladorAdministrativo.getLogs())
             {
                 Console.WriteLine(l.Descripcion);
             }
+        }
+
+        public static void testCategoriaConMasDeN()
+        {
+            string nombreConjunto = "OpentDb";
+            var categorias = ControladorFachada.GetCategoriaPreguntasConNPreguntas(nombreConjunto, 0);
+            foreach (var c in categorias)
+            {
+                Console.WriteLine($"{c.Id}");
+            }
+        }
+
+
+        public static void cargarTodasPreguntas()
+        {
+            var dificultades = new List<Dificultad>();
+
+            dificultades.Add(new Dificultad("easy"));
+            dificultades.Add(new Dificultad("medium"));
+            dificultades.Add(new Dificultad("hard"));
+            List<(String, int, String)> lista = new List<(string, int, string)>()
+            {
+                ("Entertainment: Musicals & Theatres"   ,13,    "Entertainment: Musicals & Theatres"),
+                ("Entertainment: Television"    ,14,    "Entertainment: Television"),
+                ("Entertainment: Video Games"   ,15,    "Entertainment: Video Games"),
+                ("Entertainment: Board Games"   ,16,    "Entertainment: Board Games"),
+                ("Science & Nature" ,17,    "Science & Nature"),
+                ("Science: Computers",  18, "Science: Computers"),
+                ("Science: Mathematics",    19, "Science: Mathematics"),
+                ("Mythology"    ,20,    "Mythology"),
+                ("Sports"   ,21,    "Sports"),
+                ("Geography",   22, "Geography"),
+                ("History"  ,23,    "History"),
+                ("Art"  ,25,    "Art"),
+                ("Celebrities", 26, "Celebrities"),
+                ("Animals"  ,27,    "Animals"),
+                ("Vehicles" ,28,    "Vehicles"),
+                ("Entertainment: Comics"    ,29,    "Entertainment: Comics"),
+                ("Science: Gadgets" ,30,"Science: Gadgets"),
+                ("Entertainment: Japanese Anime & Manga",   31  ,"Entertainment: Japanese Anime & Manga"),
+                ("Entertainment: Cartoon & Animations", 32, "Entertainment: Cartoon & Animations"),
+                ("Politics" ,24,    "Politics"),
+            };
+
+
+            foreach (var value in lista)
+            {
+                foreach (var d in dificultades)
+                {
+                    ConjuntoPreguntas conj = new ConjuntoPreguntas("OpentDb", d, new CategoriaPregunta(value.Item1, value.Item2.ToString()));
+                    conj.TiempoEsperadoRespuesta = 1;
+                    conj.Id = conj.Nombre + "," + conj.Dificultad.Id + "," + conj.Categoria.Id;
+
+                    Console.WriteLine($"Cargando {conj.Categoria.Id} {conj.Dificultad.Id}");
+                    int cargadas = 0;
+                    try
+                    {
+                        cargadas = ControladorFachada.GetPreguntasOnline("10", conj.Nombre, conj.Categoria.Id, conj.Dificultad.Id);
+                    }
+                    catch (System.Data.Entity.Validation.DbEntityValidationException e)
+                    {
+
+                    }
+                    Console.WriteLine($"Se cargaron {cargadas} preguntas");
+                }
+            }
+
+
         }
 
 

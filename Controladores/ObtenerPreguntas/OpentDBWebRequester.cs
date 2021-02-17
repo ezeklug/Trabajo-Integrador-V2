@@ -3,7 +3,7 @@ using System.Net;
 
 namespace Trabajo_Integrador.Controladores.ObtenerPreguntas
 {
-    class OpentDBWebRequester
+    internal class OpentDBWebRequester
     {
         /// <summary>
         /// Crea una peticion a la url

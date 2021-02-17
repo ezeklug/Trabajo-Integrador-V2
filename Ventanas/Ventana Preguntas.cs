@@ -100,9 +100,10 @@ namespace Trabajo_Integrador.Ventanas
             if (flowLayoutPanel1.Controls.OfType<RadioButton>().FirstOrDefault(r => r.Checked) != null)
             {
 
-                RadioButton opcion = flowLayoutPanel1.Controls.OfType<RadioButton>().FirstOrDefault(r => r.Checked);
+                int respuestaId = Int32.Parse(flowLayoutPanel1.Controls.OfType<RadioButton>().FirstOrDefault(r => r.Checked).Name);
 
-                ControladorFachada.RespuestaCorrecta(iExamen, obtienePregunta(iNumeroPregunta), Int32.Parse(opcion.Name));
+                iExamen = ControladorFachada.GuardarRespuesta(iExamen, obtienePregunta(iNumeroPregunta), respuestaId);
+
 
                 LimpiaControles(); // Limpia todos los controles
 

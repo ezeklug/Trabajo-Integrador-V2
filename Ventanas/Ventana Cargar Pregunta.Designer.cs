@@ -157,6 +157,7 @@
             this.conjunto.Name = "conjunto";
             this.conjunto.Size = new System.Drawing.Size(170, 21);
             this.conjunto.TabIndex = 11;
+            this.conjunto.SelectedIndexChanged += new System.EventHandler(this.conjunto_SelectedIndexChanged);
             // 
             // Ventana_Cargar_Pregunta
             // 

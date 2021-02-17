@@ -11,14 +11,9 @@ namespace Trabajo_Integrador.Controladores
     /// <summary>
     /// Clase utilizada por el administrador.
     /// </summary>
-    public class ControladorAdministrativo
+    public static class ControladorAdministrativo
     {
-        ControladorPreguntas iControladorPreguntas = new ControladorPreguntas();
 
-        public void CargarPreguntas(string pCantidad, string pConjunto, string pCategoria, string pDificultad)
-        {
-            ControladorPreguntas.GetPreguntasOnline(pCantidad, pConjunto, pCategoria, pDificultad);
-        }
         public static IEnumerable<Usuario> GetUsuarios()
         {
             List<Usuario> listaUsuarios = new List<Usuario>();
@@ -51,7 +46,9 @@ namespace Trabajo_Integrador.Controladores
 
             return preguntas;
         }
-        public List<Examen> GetExamenes()
+
+
+        public static List<Examen> GetExamenes()
         {
             List<Examen> listaExamenes = new List<Examen>();
             using (var db = new TrabajoDbContext())
@@ -65,6 +62,9 @@ namespace Trabajo_Integrador.Controladores
             return listaExamenes;
 
         }
+
+
+
         /// <summary>
         /// Devuelve todas las categorias cargadas en la base de datos para un conjunto
         /// </summary>
@@ -94,23 +94,22 @@ namespace Trabajo_Integrador.Controladores
         /// <summary>
         /// Metodo que modifica el tiempo esperado por respuesta de un conjunto pasado como parametro.
         /// </summary>
-        /// <param name="pConjuntoPreguntas"></param>
+        /// <param name="pNombreConjunto"></param>
         /// <param name="pTiempo"></param>
-        public void ModificarTiempo(string pConjuntoPreguntas, float pTiempo)
+        public static void ModificarTiempo(string pNombreConjunto, float pTiempo)
         {
             using (var db = new TrabajoDbContext())
             {
                 using (var UoW = new UnitOfWork(db))
                 {
-                    ConjuntoPreguntas conjunto = UoW.RepositorioConjuntoPregunta.Get(pConjuntoPreguntas);
-                    conjunto.TiempoEsperadoRespuesta = pTiempo;
+                    UoW.RepositorioConjuntoPregunta.ModificarTiempoConjunto(pNombreConjunto, pTiempo);
                     UoW.Complete();
                 }
             }
-
-
-
         }
+
+
+
         /// <summary>
         /// Metodo que establece como admin a un usuario pasado como parametro
         /// </summary>
@@ -126,15 +125,17 @@ namespace Trabajo_Integrador.Controladores
                     UoW.Complete();
                 }
             }
-
         }
+
+
+
 
         /// <summary>
         /// Metodo que devuelve una lista de examenes de un usuario ordenados por puntaje
         /// </summary>
         /// <param name="pUsuario"></param>
         /// <returns></returns>
-        public List<Examen> GetRanking(String pUsuario)
+        public static IEnumerable<Examen> GetRanking(String pUsuario)
         {
             List<Examen> listaExamenes = new List<Examen>();
             try
@@ -155,15 +156,19 @@ namespace Trabajo_Integrador.Controladores
             return listaExamenes;
         }
 
+
+
         /// <summary>
         /// Devuelve todos los logs
         /// </summary>
         /// <returns></returns>
-        public ICollection<Log> getLogs()
+        public static IEnumerable<Log> getLogs()
         {
             IBitacora bitacora = new Controladores.Bitacora.Bitacora();
             return bitacora.ObtenerTodos();
         }
+
+
 
         /// <summary>
         /// Setea un usuario como no administrador
@@ -208,9 +213,5 @@ namespace Trabajo_Integrador.Controladores
             }
 
         }
-
-
-
-
     }
 }

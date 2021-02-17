@@ -113,5 +113,15 @@ namespace Trabajo_Integrador.EntityFramework
             }
         }
 
+
+        public void ModificarTiempoConjunto(String pNombreConjunto, float pTiempo)
+        {
+            var conjuntos = this.iDBSet.Where(c => c.Nombre == pNombreConjunto);
+            foreach (var c in conjuntos)
+            {
+                c.TiempoEsperadoRespuesta = pTiempo;
+            }
+        }
+
     }
 }

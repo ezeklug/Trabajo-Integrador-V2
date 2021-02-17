@@ -7,15 +7,9 @@ using Trabajo_Integrador.EntityFramework;
 
 namespace Trabajo_Integrador.Controladores
 {
-    public class ControladorPreguntas
+    public static class ControladorPreguntas
     {
 
-        /// <summary>
-        /// atributos
-        /// </summary>
-        private static ControladorPreguntas cinstancia = null;
-
-        /// <summary>
         /// Obtiene la estrategia a utilizar teniendo como parametro el conjunto de preguntas
         /// Si no encuentra la estrategia devuelve la nula
         /// </summary>
@@ -232,16 +226,16 @@ namespace Trabajo_Integrador.Controladores
         /// Metodo que devuelve todas los conjuntos de preguntas cargados en base de datos
         /// </summary>
         /// <returns></returns>
-        public List<ConjuntoPreguntas> GetAllConjuntoPreguntas()
+        public static IEnumerable<ConjuntoPreguntas> GetAllConjuntoPreguntas()
         {
-            List<ConjuntoPreguntas> listaConjuntos = new List<ConjuntoPreguntas>();
+            IEnumerable<ConjuntoPreguntas> conjuntos = null;
             try
             {
                 using (var db = new TrabajoDbContext())
                 {
                     using (var UoW = new UnitOfWork(db))
                     {
-                        listaConjuntos = (List<ConjuntoPreguntas>)UoW.RepositorioConjuntoPregunta.GetAll();
+                        conjuntos = UoW.RepositorioConjuntoPregunta.GetAll();
                     }
                 }
             }
@@ -250,8 +244,10 @@ namespace Trabajo_Integrador.Controladores
                 var bitacora = new Bitacora.Bitacora();
                 bitacora.GuardarLog("ControladorPreguntas.GetNombresConjuntosPreguntas" + ex.ToString());
             }
-            return listaConjuntos;
+            return conjuntos;
         }
+
+
 
         /// <summary>
         /// Metodo que devuelve todas las dificultades cargadas en base de datos de un determinado conjunto
@@ -278,30 +274,6 @@ namespace Trabajo_Integrador.Controladores
             return dificultades;
         }
 
-        internal ConjuntoPreguntas GetConjuntoPreguntas(string conjuntoId)
-        {
-            using (var db = new TrabajoDbContext())
-            {
-                using (var UoW = new UnitOfWork(db))
-                {
-                    return UoW.RepositorioConjuntoPregunta.Get(conjuntoId);
-                }
-            }
-        }
-
-
-        public static void GuardarConjunto(ConjuntoPreguntas pConjunto)
-        {
-            using (var db = new TrabajoDbContext())
-            {
-                using (var UoW = new UnitOfWork(db))
-                {
-                    UoW.RepositorioConjuntoPregunta.Add(pConjunto);
-                }
-            }
-
-        }
-
         public static void GuardarConjuntos(IEnumerable<ConjuntoPreguntas> pConjuntos)
         {
             using (var db = new TrabajoDbContext())
@@ -323,39 +295,8 @@ namespace Trabajo_Integrador.Controladores
                         UoW.RepositorioConjuntoPregunta.Add(conjunto);
 
                     }
-
-
-                    //UoW.RepositorioConjuntoPregunta.AgregarConjuntos(pConjuntos);
-                    //db.SaveChanges();
-
                 }
-
             }
-        }
-
-
-        /// <summary>
-        /// Implementacion del patron singleton
-        /// </summary>
-        public static ControladorPreguntas Instance
-        {
-            get
-            {
-                if (cinstancia == null)
-                {
-                    cinstancia = new ControladorPreguntas();
-                }
-                return cinstancia;
-            }
-        }
-
-
-
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        public ControladorPreguntas()
-        {
         }
     }
 }
