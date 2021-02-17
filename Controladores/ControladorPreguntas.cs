@@ -26,7 +26,7 @@ namespace Trabajo_Integrador.Controladores
             switch (nombre)
             {
                 case "OpentDb":
-                    return new ObtenerPreguntasOpentDb();
+                    return new OpentDbEstrategiaObtenerPreguntas();
 
                 default:
                     return new EstrategiaNula();

@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Net;
 using Trabajo_Integrador.Dominio;
 
 namespace Trabajo_Integrador.Controladores.ObtenerPreguntas
@@ -12,9 +11,6 @@ namespace Trabajo_Integrador.Controladores.ObtenerPreguntas
         //atributos
         string iConjunto;
 
-        public ICreadorUrl iCreadorUrl { get; set; }
-
-
 
         public EstrategiaObtenerPreguntas(string pNombre)
         {
@@ -26,26 +22,6 @@ namespace Trabajo_Integrador.Controladores.ObtenerPreguntas
             set { this.iConjunto = value; }
         }
 
-        public string GetUrl(int pCantidad, ConjuntoPreguntas pConjunto)
-        {
-            return iCreadorUrl.CrearUrl(pCantidad, pConjunto);
-        }
-
-        public abstract WebResponse PeticionAUrl(string pUrl);
-
-        public abstract IEnumerable<Pregunta> ParseResponse(WebResponse webResponse, ConjuntoPreguntas pConjunto);
-
-        public IEnumerable<Pregunta> DescargarPreguntas(int pCantidad, ConjuntoPreguntas pConjunto)
-        {
-            var url = this.GetUrl(pCantidad, pConjunto);
-            var response = this.PeticionAUrl(url);
-            return this.ParseResponse(response, pConjunto);
-        }
-
-        public EstrategiaObtenerPreguntas(string pConjunto, ICreadorUrl pCreador)
-        {
-            iConjunto = pConjunto;
-            iCreadorUrl = pCreador;
-        }
+        public abstract IEnumerable<Pregunta> DescargarPreguntas(int pCantidad, ConjuntoPreguntas pConjunto);
     }
 }

@@ -12,7 +12,7 @@ namespace Trabajo_Integrador
 
         public static void asd()
         {
-            IEstrategiaObtenerPreguntas es = new ObtenerPreguntasOpentDb();
+            IEstrategiaObtenerPreguntas es = new OpentDbEstrategiaObtenerPreguntas();
             Dificultad d = new Dificultad("easy");
             CategoriaPregunta cat = new CategoriaPregunta("Science: Computers", "18");
             ConjuntoPreguntas conj = new ConjuntoPreguntas("OpentDb", d, cat);

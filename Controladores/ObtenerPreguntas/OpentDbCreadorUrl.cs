@@ -2,7 +2,7 @@
 
 namespace Trabajo_Integrador.Controladores.ObtenerPreguntas
 {
-    internal class CreadorUrlOpentDB : ICreadorUrl
+    internal class OpentDbCreadorUrl 
     {
         public string CrearUrl(int pCantidad, ConjuntoPreguntas pConjunto)
         {

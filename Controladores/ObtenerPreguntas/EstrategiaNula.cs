@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Net;
 using Trabajo_Integrador.Dominio;
 
 namespace Trabajo_Integrador.Controladores.ObtenerPreguntas
@@ -13,16 +12,13 @@ namespace Trabajo_Integrador.Controladores.ObtenerPreguntas
 
         public EstrategiaNula() : base("Null")
         {
+
         }
 
-        public override IEnumerable<Pregunta> ParseResponse(WebResponse webResponse, ConjuntoPreguntas pConjunto)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override WebResponse PeticionAUrl(string pUrl)
+        public override IEnumerable<Pregunta> DescargarPreguntas(int pCantidad, ConjuntoPreguntas pConjunto)
         {
             throw new NotImplementedException();
         }
     }
+
 }

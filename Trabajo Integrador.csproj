@@ -179,9 +179,10 @@
     <Compile Include="Controladores\ControladorAdministrativo.cs" />
     <Compile Include="Controladores\Excepciones\UsrNoEncontradoException.cs" />
     <Compile Include="Controladores\Excepciones\UsrYaExisteException.cs" />
-    <Compile Include="Controladores\ObtenerPreguntas\CreadorUrlOpentDB.cs" />
-    <Compile Include="Controladores\ObtenerPreguntas\ICreadorUrl.cs" />
-    <Compile Include="Controladores\ObtenerPreguntas\ObtenerPreguntasOpentDb.cs" />
+    <Compile Include="Controladores\ObtenerPreguntas\OpentDbCreadorUrl.cs" />
+    <Compile Include="Controladores\ObtenerPreguntas\OpentDbEstrategiaObtenerPreguntas.cs" />
+    <Compile Include="Controladores\ObtenerPreguntas\OpentDbParser.cs" />
+    <Compile Include="Controladores\ObtenerPreguntas\OpentDBWebRequester.cs" />
     <Compile Include="Controladores\Utils\Autenticador.cs" />
     <Compile Include="Dominio\CategoriaPregunta.cs" />
     <Compile Include="Dominio\ConjuntoPreguntas.cs" />
@@ -248,7 +249,6 @@
       <DependentUpon>202102122355092_ConjuntoPregunta3.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Controladores\ObtenerPreguntas\OpentDB.cs" />
     <Compile Include="Dominio\Pregunta.cs" />
     <Compile Include="Controladores\Utils\PasswordHasher.cs" />
     <Compile Include="Program.cs" />

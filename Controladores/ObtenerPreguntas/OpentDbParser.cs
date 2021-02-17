@@ -1,7 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
 using System.Net;
 using System.Text;
@@ -10,9 +9,20 @@ using Trabajo_Integrador.Dominio;
 
 namespace Trabajo_Integrador.Controladores.ObtenerPreguntas
 {
-    class ObtenerPreguntasOpentDb : EstrategiaObtenerPreguntas
+    internal class OpentDbParser
     {
-        public override IEnumerable<Pregunta> ParseResponse(WebResponse webResponse, ConjuntoPreguntas pConjunto)
+        public OpentDbParser()
+        {
+        }
+
+        /// <summary>
+        /// Dada una web response y un conjunto, construye las preguntas
+        /// </summary>
+        /// <exception cref="FormatException">Si webResponse no tiene formato adecuado</exception>
+        /// <param name="webResponse"></param>
+        /// <param name="pConjunto"></param>
+        /// <returns>Preguntas construidas</returns>
+        public IEnumerable<Pregunta> ParseResponse(WebResponse webResponse, ConjuntoPreguntas pConjunto)
         {
             var preguntas = new List<Pregunta>();
 
@@ -75,36 +85,5 @@ namespace Trabajo_Integrador.Controladores.ObtenerPreguntas
         }
 
 
-        /// <summary>
-        /// Crea una peticion a la url
-        /// </summary>
-        /// <exception cref="WebException"></exception>
-        /// <param name="pUrl"></param>
-        /// <returns></returns>
-        public override WebResponse PeticionAUrl(string pUrl)
-        {
-
-            // Establecimiento del protocolo ssl de transporte
-            System.Net.ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
-
-            CultureInfo provider = new CultureInfo("en-us");
-
-            // Se crea el request http
-            HttpWebRequest mRequest = (HttpWebRequest)WebRequest.Create(pUrl);
-            try
-            {
-                WebResponse mResponse = mRequest.GetResponse();
-                return mResponse;
-            }
-            catch (WebException e)
-            {
-                throw;
-            }
-        }
-
-
-
-        public ObtenerPreguntasOpentDb() : base("OpentDb", new CreadorUrlOpentDB())
-        { }
     }
 }
