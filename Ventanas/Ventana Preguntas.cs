@@ -9,25 +9,28 @@ namespace Trabajo_Integrador.Ventanas
 {
     public partial class Ventana_Preguntas : Form
     {
-        ExamenDTO iExamen;
-        private int iNumeroPregunta = 0;
+        private ExamenDTO iExamen;
+        private List<PreguntaDTO> iPreguntas;
+        private int iNumeroPregunta;
+        private int tiempo;
 
-        public Ventana_Preguntas(ExamenDTO unExamen)
+
+        public Ventana_Preguntas(ExamenDTO pExamenDto)
         {
             InitializeComponent();
-            iExamen = unExamen;
-
+            iExamen = pExamenDto;
+            iNumeroPregunta = 0;
+            iPreguntas = ControladorFachada.GetPreguntasDeExamen(iExamen.Id).ToList();
         }
 
-        int tiempo;
 
         public void mostrarPregunta(PreguntaDTO unaPregunta) //Muestra una pregunta con sus opciones
         {
             preg.Text += unaPregunta.Id; //Muestro la Pregunta en el Label
 
+            var respuestas = ControladorFachada.RespuestasDePregunta(iPreguntas[iNumeroPregunta]);
             List<RespuestaDTO> opciones = new List<RespuestaDTO>(); //Almacena las 4 opciones de respuestas
 
-            IEnumerable<RespuestaDTO> respuestas = ControladorFachada.RespuestasDePregunta(unaPregunta);
             foreach (RespuestaDTO respuesta in respuestas)
             {
                 opciones.Add(respuesta);
@@ -50,30 +53,28 @@ namespace Trabajo_Integrador.Ventanas
                 rb.Text = opcion.Texto;
                 rb.Name = opcion.Id.ToString();
                 flowLayoutPanel1.Controls.Add(rb);
-
             }
-
         }
 
 
 
         public PreguntaDTO obtienePregunta(int numeroPregunta) //Muestra la pregunta iNumeroPregunta en la lista de preguntas del examen 
         {
-            var listaPreguntas = ControladorFachada.GetPreguntasDeExamen(iExamen.Id).ToList();
-            mostrarPregunta(listaPreguntas[numeroPregunta]);
-
+            mostrarPregunta(iPreguntas[numeroPregunta]);
             this.CantidadPreguntas.Text = "Pregunta: " + (numeroPregunta + 1).ToString() + "/" + iExamen.CantidadPreguntas.ToString();
-
-            return listaPreguntas[numeroPregunta];
+            return iPreguntas[numeroPregunta];
 
         }
+
+
 
         public void LimpiaControles() //Limpia todos los campos (textBox y checkBox)
         {
             preg.Text = "*";
             flowLayoutPanel1.Controls.Clear();
-
         }
+
+
 
         private void timer_Tick(object sender, EventArgs e) //Tiempo agotado
         {
@@ -86,8 +87,8 @@ namespace Trabajo_Integrador.Ventanas
             {
                 this.timer.Enabled = false;
                 this.Hide();
-                ControladorFachada.FinalizarExamen(iExamen);
-                using (Ventana_Examen_Terminado finalizado = new Ventana_Examen_Terminado(iExamen)) //Paso el examen a la proxima ventana 
+                var examenTerminado = ControladorFachada.FinalizarExamen(iExamen);
+                using (Ventana_Examen_Terminado finalizado = new Ventana_Examen_Terminado(examenTerminado)) //Paso el examen a la proxima ventana 
                     finalizado.ShowDialog();
                 this.Close();
             }
@@ -102,8 +103,7 @@ namespace Trabajo_Integrador.Ventanas
 
                 int respuestaId = Int32.Parse(flowLayoutPanel1.Controls.OfType<RadioButton>().FirstOrDefault(r => r.Checked).Name);
 
-                iExamen = ControladorFachada.GuardarRespuesta(iExamen, obtienePregunta(iNumeroPregunta), respuestaId);
-
+                this.iExamen = ControladorFachada.GuardarRespuesta(iExamen, obtienePregunta(iNumeroPregunta), respuestaId);
 
                 LimpiaControles(); // Limpia todos los controles
 
@@ -112,8 +112,8 @@ namespace Trabajo_Integrador.Ventanas
                 if (iNumeroPregunta >= iExamen.CantidadPreguntas)
                 {
                     this.Hide();
-                    ControladorFachada.FinalizarExamen(iExamen);
-                    Ventana_Examen_Terminado finalizado = new Ventana_Examen_Terminado(iExamen);
+                    var examenTerminado = ControladorFachada.FinalizarExamen(iExamen);
+                    Ventana_Examen_Terminado finalizado = new Ventana_Examen_Terminado(examenTerminado);
                     finalizado.ShowDialog();
                     this.Close();
 

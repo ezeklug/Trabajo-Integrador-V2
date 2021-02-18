@@ -39,7 +39,14 @@ namespace Trabajo_Integrador.Controladores
         }
 
 
-
+        /// <summary>
+        /// Metodo que crea un examen sin asociarlo a un usuario
+        /// </summary>
+        /// <returns></returns>
+        public static ExamenDTO InicializarExamen(int pCantidad, String pConjunto, string pCategoria, string pDificultad)
+        {
+            return (new ExamenDTO(ControladorExamen.InicializarExamen(pCantidad.ToString(), pConjunto, pCategoria, pDificultad)));
+        }
 
         /// <summary>
         /// Da comienzo a un examen. Asocia el examen a un usuario
@@ -80,28 +87,16 @@ namespace Trabajo_Integrador.Controladores
             return ControladorPreguntas.CantidadDePreguntasParaCategoria(pIdCategoria);
         }
 
-        /// <summary>
-        /// Metodo que crea un examen sin asociarlo a un usuario
-        /// </summary>
-        /// <param name="pCantidad">Cantidad de preguntas</param>
-        /// <param name="pConjunto">OpentDb</param>
-        /// <param name="pCategoria">Id Categoria</param>
-        /// <param name="pDificultad">Id Dificultad</param>
-        /// <returns></returns>
-        /// 
-        public static ExamenDTO InicializarExamen(int pCantidad, String pConjunto, string pCategoria, string pDificultad)
-        {
-            return (new ExamenDTO(ControladorExamen.InicializarExamen(pCantidad.ToString(), pConjunto, pCategoria, pDificultad)));
-        }
+
 
 
         /// <summary>
         /// Metodo que finaliza un examen y lo guarda en la base de datos
         /// </summary>
         /// <param name="pExamen"></param>
-        public static void FinalizarExamen(ExamenDTO pExamen)
+        public static ExamenDTO FinalizarExamen(ExamenDTO pExamen)
         {
-            ControladorExamen.FinalizarExamen(pExamen);
+            return new ExamenDTO(ControladorExamen.FinalizarExamen(pExamen));
         }
 
         /// <summary>
@@ -281,7 +276,8 @@ namespace Trabajo_Integrador.Controladores
         public static ExamenDTO GuardarRespuesta(ExamenDTO pExamen, PreguntaDTO pPregunta, int idRespuesta)
         {
             Examen examen = new Examen(pExamen);
-            return new ExamenDTO(ControladorExamen.GuardarRespuesta(examen, ControladorFachada.DTOAPregunta(pPregunta), idRespuesta));
+            var examendto = new ExamenDTO(ControladorExamen.GuardarRespuesta(examen, ControladorFachada.DTOAPregunta(pPregunta), idRespuesta));
+            return examendto;
         }
 
 

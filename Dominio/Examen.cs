@@ -101,6 +101,7 @@ namespace Trabajo_Integrador.Dominio
             this.Puntaje = examenDTO.Puntaje;
             this.TiempoLimite = examenDTO.TiempoLimite;
             this.TiempoUsado = examenDTO.TiempoUsado;
+            this.Fecha = examenDTO.Fecha;
             this.UsuarioId = examenDTO.UsuarioId;
             this.ExamenPreguntas = Examen.DTOaExamenPregunta(examenDTO.ExamenPreguntas);
         }

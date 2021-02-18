@@ -15,21 +15,6 @@ namespace Trabajo_Integrador.DTO
         public string UsuarioId { get; set; }
         public double CantidadPreguntas { get; set; }
 
-        public ExamenDTO() { }
-        public ExamenDTO(List<ExamenPreguntaDTO> pExamenPreguntas, int pId,
-            float pTiempoLimite, double pPuntaje, double pTiempoUsado,
-            DateTime pFecha, string pUsuarioId, double pCantidadPreguntas)
-        {
-            this.ExamenPreguntas = pExamenPreguntas;
-            this.Id = pId;
-            this.TiempoLimite = pTiempoLimite;
-            this.Puntaje = pPuntaje;
-            this.TiempoUsado = pTiempoUsado;
-            this.Fecha = pFecha;
-            this.UsuarioId = pUsuarioId;
-            this.CantidadPreguntas = pCantidadPreguntas;
-        }
-
         private static IEnumerable<ExamenPreguntaDTO> ExamenPreguntaADto(IEnumerable<ExamenPregunta> pEp)
         {
             var epDto = new List<ExamenPreguntaDTO>();
