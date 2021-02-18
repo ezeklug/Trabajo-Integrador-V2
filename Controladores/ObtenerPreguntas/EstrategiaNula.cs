@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Trabajo_Integrador.Dominio;
 
-namespace Trabajo_Integrador
+namespace Trabajo_Integrador.Controladores.ObtenerPreguntas
 {
     /// <summary>
     /// Clase que representa la no implementacion de ninguna estrategia.
@@ -12,11 +12,13 @@ namespace Trabajo_Integrador
 
         public EstrategiaNula() : base("Null")
         {
+
         }
 
-        public override ICollection<Pregunta> getPreguntas(int pCantidad, ConjuntoPreguntas pConjunto)
+        public override IEnumerable<Pregunta> DescargarPreguntas(int pCantidad, ConjuntoPreguntas pConjunto)
         {
             throw new NotImplementedException();
         }
     }
+
 }

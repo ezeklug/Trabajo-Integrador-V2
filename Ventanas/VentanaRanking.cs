@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Windows.Forms;
 using Trabajo_Integrador.Controladores;
@@ -10,7 +9,6 @@ namespace Trabajo_Integrador.Ventanas
     public partial class VentanaRanking : Form
     {
         string iNombreUsuario;
-        ControladorFachada fachada = new ControladorFachada();
 
         public VentanaRanking(string pNombreUsuario)
         {
@@ -20,14 +18,14 @@ namespace Trabajo_Integrador.Ventanas
 
         private void VentanaRanking_Load(object sender, EventArgs e)
         {
-            List<ExamenDTO> listaExamenes = fachada.GetRanking(iNombreUsuario);
+            var examenes = ControladorFachada.GetRanking(iNombreUsuario);
             DataTable dt = new DataTable();
             //dt.Columns.Add("Usuario", typeof(string));
             dt.Columns.Add("Fecha", typeof(DateTime));
             dt.Columns.Add("Puntaje", typeof(float));
             dt.Columns.Add("Tiempo", typeof(float));
 
-            foreach (ExamenDTO examen in listaExamenes)
+            foreach (ExamenDTO examen in examenes)
             {
                 dt.Rows.Add(new object[] { examen.Fecha, examen.Puntaje, examen.TiempoUsado });
             }

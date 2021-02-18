@@ -9,20 +9,15 @@ namespace Trabajo_Integrador.Ventanas
     public partial class Ventana_Modificar_Tiempo : Form
     {
         string iNombre;
+        List<ConjuntoPreguntasDTO> conjuntos;
+
+
         public Ventana_Modificar_Tiempo(string pNombre)
         {
             InitializeComponent();
             iNombre = pNombre;
         }
 
-        List<ConjuntoPreguntasDTO> conjuntos;
-        ControladorFachada fachada = new ControladorFachada();
-
-
-        //private void modificar_Click(object sender, EventArgs e)
-        //{
-
-        //}
 
         private void volver_Click(object sender, EventArgs e)
         {
@@ -60,7 +55,7 @@ namespace Trabajo_Integrador.Ventanas
                 {
                     string i = tiempo.SelectedText.ToString();
                     float tiempoIngresado = float.Parse(tiempo.Text);
-                    fachada.ModificarTiempo(conjuntoSeleccionado, tiempoIngresado);
+                    ControladorFachada.ModificarTiempo(conjuntoSeleccionado, tiempoIngresado);
                     MessageBox.Show("Tiempo modificado con Exito");
                 }
                 else

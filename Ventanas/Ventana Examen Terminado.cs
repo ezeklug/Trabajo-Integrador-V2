@@ -8,7 +8,6 @@ namespace Trabajo_Integrador.Ventanas
     public partial class Ventana_Examen_Terminado : Form
     {
         ExamenDTO iExamen;
-        ControladorFachada fachada = new ControladorFachada();
         public Ventana_Examen_Terminado(ExamenDTO unExamen)
         {
             InitializeComponent();

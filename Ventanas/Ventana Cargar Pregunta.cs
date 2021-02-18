@@ -8,12 +8,10 @@ namespace Trabajo_Integrador.Ventanas
 {
     public partial class Ventana_Cargar_Pregunta : Form
     {
-        ControladorFachada fachada = new ControladorFachada();
         IEnumerable<CategoriaPreguntaDTO> iCategorias;
         IEnumerable<String> iNombreConjuntos;
         IEnumerable<DificultadDTO> dificultades;
         string iNombreUsuario;
-        string categoriaSeleccionada;
 
         public Ventana_Cargar_Pregunta(string pNombreUsuario)
         {
@@ -23,46 +21,7 @@ namespace Trabajo_Integrador.Ventanas
 
         private void Ventana_Cargar_Examen_Load(object sender, EventArgs e)
         {
-            cargarCategoria();
-            cargarConjunto();
-            cargarDificultad();
-        }
-
-
-
-        private void cargarCategoria()
-        {
-            ///
-            ///
-            /// Para cargar las categorias primero se debe seleccionar un conjunto
-            /// Las categorias dependen del conjunto
-            ///
-            ///
-
-            String nombreConjunto = "OpentDB";
-            iCategorias = ControladorFachada.GetCategorias(nombreConjunto);
-
-            List<string> listaCategorias = new List<string>(); ;
-            foreach (CategoriaPreguntaDTO categ in iCategorias)
-            {
-                this.categoria.Items.Add(categ.Id);
-            }
-            
-
-
-        } //Le asigno al combobox categoria la lista categorias
-
-
-        private void cargarDificultad() //Le asigno al combobox dificultad la lista dificultades
-        {
-            String nombreConjunto = "OpentDB";
-            dificultades =  ControladorFachada.GetDificultades(nombreConjunto);
-
-            foreach (DificultadDTO dific in dificultades)
-            {
-                dificultad.Items.Add(dific.Id);
-            }
-
+            this.cargarConjunto();
         }
 
 
@@ -74,7 +33,7 @@ namespace Trabajo_Integrador.Ventanas
             {
                 conjunto.Items.Add(nombre);
             }
-            
+
         }
 
 
@@ -93,7 +52,7 @@ namespace Trabajo_Integrador.Ventanas
 
             if ((categoria.SelectedItem == null) || (dificultad.SelectedItem == null) || (conjunto.SelectedItem == null) || (cantidad.Value == null))
             {
-                MessageBox.Show("Debe completar todos los campos para iniciar el examen");
+                MessageBox.Show("Debe completar todos ");
             }
             else
             {
@@ -108,6 +67,23 @@ namespace Trabajo_Integrador.Ventanas
                 int cargadas = ControladorFachada.GetPreguntasOnline(cantidadSeleccionada, conjuntoSeleccionado, categoriaSeleccionada, dificultadSeleccionada);
 
                 MessageBox.Show($"Se cargaron exitosamente {cargadas} preguntas");
+            }
+        }
+
+        private void conjunto_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string nombreConjuto = this.conjunto.SelectedItem.ToString();
+            var categorias = ControladorFachada.GetCategoriaPreguntasConNPreguntas(nombreConjuto, 0);
+            var dificultades = ControladorFachada.GetDificultades(nombreConjuto);
+
+            foreach (var c in categorias)
+            {
+                categoria.Items.Add(c.Id);
+            }
+
+            foreach (var d in dificultades)
+            {
+                dificultad.Items.Add(d.Id);
             }
         }
     }

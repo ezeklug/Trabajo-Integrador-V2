@@ -9,7 +9,6 @@ namespace Trabajo_Integrador.Ventanas
     public partial class Ventana_Registro : Form
     {
 
-        ControladorFachada fachada = new ControladorFachada();
 
         public Ventana_Registro()
         {

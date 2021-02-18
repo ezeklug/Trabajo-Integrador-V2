@@ -1,14 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using Trabajo_Integrador.Controladores.Bitacora;
 using Trabajo_Integrador.Controladores;
+using Trabajo_Integrador.Controladores.Bitacora;
 
 namespace Trabajo_Integrador.Ventanas
 {
@@ -21,20 +15,20 @@ namespace Trabajo_Integrador.Ventanas
             iNombre = pNombre;
         }
 
-        ControladorFachada fachada = new ControladorFachada();
 
         private void Ventana_Logs_Load(object sender, EventArgs e)
         {
-            ICollection<Log> listaLogs = fachada.getLogs();
+            var logs = ControladorFachada.getLogs();
+
             DataTable dt = new DataTable();
 
             dt.Columns.Add("Id", typeof(int));
             dt.Columns.Add("Fecha", typeof(string));
             dt.Columns.Add("Descripcion", typeof(string));
 
-            foreach (Log log in listaLogs)
+            foreach (Log log in logs)
             {
-              dt.Rows.Add(new object[] { log.Id, log.Fecha, log.Descripcion});
+                dt.Rows.Add(new object[] { log.Id, log.Fecha, log.Descripcion });
             }
             dataGridView1.DataSource = dt;
         }

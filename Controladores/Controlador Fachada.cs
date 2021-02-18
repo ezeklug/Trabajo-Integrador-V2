@@ -9,51 +9,44 @@ using Trabajo_Integrador.EntityFramework;
 
 namespace Trabajo_Integrador.Controladores
 {
-    public class ControladorFachada
+    public static class ControladorFachada
     {
-        ///Atributos
-        ControladorExamen controladorExamen;
-        ControladorAdministrativo controladorAdministrativo;
-        ControladorPreguntas controladorPreguntas;
-
-
-        public ControladorFachada()
-        {
-            controladorAdministrativo = new ControladorAdministrativo();
-            controladorExamen = new ControladorExamen();
-            controladorPreguntas = new ControladorPreguntas();
-        }
-
-
         /// <summary>
         /// Devuevlve el ranking de los examenes de un usuario.
         /// </summary>
         /// <param name="pUsuario">Id del usuario</param>
         /// <returns></returns>
-        public List<ExamenDTO> GetRanking(String pUsuario)
+        public static IEnumerable<ExamenDTO> GetRanking(String pUsuario)
         {
-            List<ExamenDTO> listaExamenes = new List<ExamenDTO>();
-            foreach (Examen examen in controladorAdministrativo.GetRanking(pUsuario))
+            var examenesDTO = new List<ExamenDTO>();
+            foreach (Examen examen in ControladorAdministrativo.GetRanking(pUsuario))
             {
-                listaExamenes.Add(new ExamenDTO(examen));
+                examenesDTO.Add(new ExamenDTO(examen));
             }
 
-            return listaExamenes;
+            return examenesDTO;
         }
 
 
         /// <summary>
         /// Obtiene el tiempo limite que está asociado a un examen
         /// </summary>
-        /// <param name="unExamen"></param>
+        /// <param name="pExamen"></param>
         /// <returns></returns>
-        public float GetTiempoLimite(ExamenDTO unExamen)
+        public static float GetTiempoLimite(ExamenDTO pExamen)
         {
-            return controladorExamen.GetTiempoLimite(unExamen);
+            return ControladorExamen.GetTiempoLimite(pExamen);
         }
 
 
-
+        /// <summary>
+        /// Metodo que crea un examen sin asociarlo a un usuario
+        /// </summary>
+        /// <returns></returns>
+        public static ExamenDTO InicializarExamen(int pCantidad, String pConjunto, string pCategoria, string pDificultad)
+        {
+            return (new ExamenDTO(ControladorExamen.InicializarExamen(pCantidad.ToString(), pConjunto, pCategoria, pDificultad)));
+        }
 
         /// <summary>
         /// Da comienzo a un examen. Asocia el examen a un usuario
@@ -77,9 +70,9 @@ namespace Trabajo_Integrador.Controladores
         /// Devuelve una lista con todos los logs
         /// </summary>
         /// <returns></returns>
-        public List<Log> getLogs()
+        public static IEnumerable<Log> getLogs()
         {
-            return (List<Log>)controladorAdministrativo.getLogs();
+            return ControladorAdministrativo.getLogs();
         }
 
 
@@ -94,28 +87,16 @@ namespace Trabajo_Integrador.Controladores
             return ControladorPreguntas.CantidadDePreguntasParaCategoria(pIdCategoria);
         }
 
-        /// <summary>
-        /// Metodo que crea un examen sin asociarlo a un usuario
-        /// </summary>
-        /// <param name="pCantidad">Cantidad de preguntas</param>
-        /// <param name="pConjunto">OpentDb</param>
-        /// <param name="pCategoria">Id Categoria</param>
-        /// <param name="pDificultad">Id Dificultad</param>
-        /// <returns></returns>
-        /// 
-        public static ExamenDTO InicializarExamen(int pCantidad, String pConjunto, string pCategoria, string pDificultad)
-        {
-            return (new ExamenDTO(ControladorExamen.InicializarExamen(pCantidad.ToString(), pConjunto, pCategoria, pDificultad)));
-        }
+
 
 
         /// <summary>
         /// Metodo que finaliza un examen y lo guarda en la base de datos
         /// </summary>
         /// <param name="pExamen"></param>
-        public static void FinalizarExamen(ExamenDTO pExamen)
+        public static ExamenDTO FinalizarExamen(ExamenDTO pExamen)
         {
-            ControladorExamen.FinalizarExamen(pExamen);
+            return new ExamenDTO(ControladorExamen.FinalizarExamen(pExamen));
         }
 
         /// <summary>
@@ -263,14 +244,9 @@ namespace Trabajo_Integrador.Controladores
             return c;
         }
 
-        public Dificultad DTOADificultad(DificultadDTO dificultadDTO)
-        {
-            return new Dificultad
-            {
-                Id = dificultadDTO.Id,
-                FactorDificultad = dificultadDTO.FactorDificultad
-            };
-        }
+
+
+
         public static Pregunta DTOAPregunta(PreguntaDTO pPreguntaDTO)
         {
             ConjuntoPreguntas conj;
@@ -297,23 +273,14 @@ namespace Trabajo_Integrador.Controladores
         /// <param name="pPregunta"></param>
         /// <param name="pRespuesta"></param>
         /// <returns></returns>
-        public static Boolean RespuestaCorrecta(ExamenDTO pExamen, PreguntaDTO pPregunta, int idRespuesta)
+        public static ExamenDTO GuardarRespuesta(ExamenDTO pExamen, PreguntaDTO pPregunta, int idRespuesta)
         {
             Examen examen = new Examen(pExamen);
-            return ControladorExamen.RespuestaCorrecta(examen, ControladorFachada.DTOAPregunta(pPregunta), idRespuesta);
+            var examendto = new ExamenDTO(ControladorExamen.GuardarRespuesta(examen, ControladorFachada.DTOAPregunta(pPregunta), idRespuesta));
+            return examendto;
         }
 
-        /// <summary>
-        /// Metodo que permite cargar preguntas desde una pagina de preguntas hacia la base de datos.
-        /// </summary>
-        /// <param name="pCantidad"></param>
-        /// <param name="pConjunto"></param>
-        /// <param name="pCategoria"></param>
-        /// <param name="pDificultad"></param>
-        public void CargarPreguntas(string pCantidad, string pConjunto, string pCategoria, string pDificultad)
-        {
-            controladorAdministrativo.CargarPreguntas(pCantidad, pConjunto, pCategoria, pDificultad);
-        }
+
 
 
 
@@ -322,26 +289,25 @@ namespace Trabajo_Integrador.Controladores
         /// Devuelve todos los examenes
         /// </summary>
         /// <returns></returns>
-        public List<ExamenDTO> GetExamenes()
+        public static IEnumerable<ExamenDTO> GetExamenes()
         {
-            List<ExamenDTO> listaExamenDTO = new List<ExamenDTO>();
-            foreach (Examen examen in controladorAdministrativo.GetExamenes())
+            List<ExamenDTO> examenesDTO = new List<ExamenDTO>();
+            foreach (Examen examen in ControladorAdministrativo.GetExamenes())
             {
-                listaExamenDTO.Add(new ExamenDTO(examen));
+                examenesDTO.Add(new ExamenDTO(examen));
             }
-            return listaExamenDTO;
+            return examenesDTO;
         }
 
 
         /// <summary>
         /// Modifica el tiempo de un conjunto de preguntas
         /// </summary>
-        /// <param name="pConjuntoPreguntas">Conjunto a modificar</param>
+        /// <param name="pNombreConjunto">Conjunto a modificar</param>
         /// <param name="pTiempo">Tiempo por pregunta</param>
-        public void ModificarTiempo(string pConjuntoPreguntas, float pTiempo)
+        public static void ModificarTiempo(string pNombreConjunto, float pTiempo)
         {
-            controladorAdministrativo.ModificarTiempo(pConjuntoPreguntas, pTiempo);
-
+            ControladorAdministrativo.ModificarTiempo(pNombreConjunto, pTiempo);
         }
 
 
@@ -379,21 +345,12 @@ namespace Trabajo_Integrador.Controladores
             return preguntasDto;
         }
 
-        public List<PreguntaDTO> GetPreguntasRandom(string pCantidad, string pConjunto, string pCategoria, string pDificultad)
-        {
-            List<PreguntaDTO> listaPreguntasRandomDTO = new List<PreguntaDTO>();
-            foreach (Pregunta pregunta in ControladorPreguntas.GetPreguntasRandom(pCantidad, pConjunto, pCategoria, pDificultad))
-            {
-                listaPreguntasRandomDTO.Add(new PreguntaDTO(pregunta));
-            }
-            return listaPreguntasRandomDTO;
-        }
-
 
         /// <summary>
         /// Carga preguntas desde un servicio  online a la base de datos
         /// Devuelve el numero de preguntas cargadas con exito
         /// </summary>
+        /// <exception cref="System.Data.Entity.Validation.DbEntityValidationException"></exception>
         /// <param name="pCantidad"></param>
         /// <param name="pConjunto"></param>
         /// <param name="pCategoria"></param>

@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Trabajo_Integrador.Controladores.Bitacora
 {
@@ -81,7 +79,7 @@ namespace Trabajo_Integrador.Controladores.Bitacora
         {
             int[] ids = new int[bitacoras.Count];
             int i = 0;
-            foreach(var b in bitacoras)
+            foreach (var b in bitacoras)
             {
                 ids[i] = b.ObtenerSiguienteId();
             }

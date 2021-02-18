@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.IO;
+using System.Linq;
 
 namespace Trabajo_Integrador.Controladores.Bitacora
 {
@@ -36,7 +35,14 @@ namespace Trabajo_Integrador.Controladores.Bitacora
 
         public override int ObtenerSiguienteId()
         {
-            return this.ObtenerTodos().Max(l => l.Id);
+            try
+            {
+                return this.ObtenerTodos().Max(l => l.Id);
+            }
+            catch (FileNotFoundException e)
+            {
+                return 0;
+            }
         }
 
         public override ICollection<Log> ObtenerTodos()

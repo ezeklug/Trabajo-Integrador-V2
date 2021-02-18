@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Trabajo_Integrador.Dominio;
 using Trabajo_Integrador.DTO;
@@ -7,11 +6,9 @@ using Trabajo_Integrador.EntityFramework;
 
 namespace Trabajo_Integrador.Controladores
 {
-    public class ControladorExamen
+    public static class ControladorExamen
     {
 
-        ////Atributos
-        ControladorPreguntas iControladorPreguntas;
 
         /// <summary>
         /// Asocia un examen con la clase de asociacion.
@@ -39,42 +36,43 @@ namespace Trabajo_Integrador.Controladores
         /// <param name="pDificultad"></param>
         public static Examen InicializarExamen(string pCantidad, string pConjunto, string pCategoria, string pDificultad)
         {
+            var preguntas = ControladorPreguntas.GetPreguntasRandom(pCantidad, pConjunto, pCategoria, pDificultad);
+            Examen examen = new Examen();
+            examen = ControladorExamen.AsociarExamenPregunta(examen, preguntas);
             using (var db = new TrabajoDbContext())
             {
                 using (var UoW = new UnitOfWork(db))
                 {
-                    var preguntas = ControladorPreguntas.GetPreguntasRandom(pCantidad, pConjunto, pCategoria, pDificultad);
-                    Examen examen = new Examen();
-                    examen = ControladorExamen.AsociarExamenPregunta(examen, preguntas);
                     var conjunto = UoW.RepositorioConjuntoPregunta.ObtenerConjuntoPorDificultadYCategoria(pConjunto, pDificultad, pCategoria);
                     examen.TiempoLimite = (float)examen.CantidadPreguntas * conjunto.TiempoEsperadoRespuesta;
 
-                    return examen;
                 }
             }
+            return examen;
         }
 
 
         /// <summary>
-        /// Dado un examen, una pregunta y una respuesta, devuelve verdadero si la respuesta es correcta.
+        /// Guarda el resultado de un examen para una pregunta y su respuesta
         /// Almacena el resultado de la respuesta
         /// </summary>
         /// <param name="pExamen"></param>
         /// <param name="pPregunta"></param>
         /// <param name="pRespuesta"></param>
-        /// <returns></returns>
-        public static Boolean RespuestaCorrecta(Examen pExamen, Pregunta pPregunta, int idRespuesta)
+        /// <returns>Examen actualizado</returns>
+        public static Examen GuardarRespuesta(Examen pExamen, Pregunta pPregunta, int idRespuesta)
         {
+            Examen examen;
             using (var db = new TrabajoDbContext())
             {
                 using (var UoW = new UnitOfWork(db))
                 {
-                    var examenPregunta = pExamen.ExamenPreguntas.First(e => e.PreguntaId == pPregunta.Id);
-                    examenPregunta = UoW.RepositorioPreguntasExamenes.Get(examenPregunta.Id);
-                    examenPregunta.RespuestaElegidaId = idRespuesta;
-                    return UoW.RepositorioPreguntas.Get(pPregunta.Id).Respuestas.ToList().Find(r => r.Id == idRespuesta).EsCorrecta;
+                    examen = UoW.ExamenRepository.Get(pExamen.Id);
+                    examen.ExamenPreguntas.First(e => e.PreguntaId == pPregunta.Id).RespuestaElegidaId = idRespuesta;
+                    UoW.Complete();
                 }
             }
+            return examen;
         }
 
         public static IEnumerable<PreguntaDTO> GetPreguntasDeExamen(int examenId)
@@ -98,11 +96,25 @@ namespace Trabajo_Integrador.Controladores
         /// Da fin a un examen y lo guarda en la DB
         /// </summary>
         /// <param name="pExamen"></param>
-        public static void FinalizarExamen(ExamenDTO pExamen)
+        public static Examen FinalizarExamen(ExamenDTO pExamen)
         {
             Examen examen = new Examen(pExamen);
-            examen.Finalizar(ControladorExamen.CantidadRespuestasCorrectas(examen), ControladorExamen.GetFactorDificultad(examen));
-            ControladorExamen.GuardarExamen(examen);
+            int n = ControladorExamen.CantidadRespuestasCorrectas(examen);
+            double factorDificultad = ControladorExamen.GetFactorDificultad(examen);
+            examen.Finalizar(n, factorDificultad);
+
+            using (var db = new TrabajoDbContext())
+            {
+                using (var UoW = new UnitOfWork(db))
+                {
+                    var ex = UoW.ExamenRepository.Get(examen.Id);
+                    ex.Puntaje = examen.Puntaje;
+                    ex.TiempoUsado = examen.TiempoUsado;
+                    UoW.Complete();
+                }
+            }
+            return examen;
+
         }
 
         private static double GetFactorDificultad(Examen examen)
@@ -179,25 +191,19 @@ namespace Trabajo_Integrador.Controladores
                 }
             }
         }
-        /// <summary>
-        /// Metodo que devuelve el tiempo limite de un examen
-        /// </summary>
-        /// <param name="unExamen"></param>
-        /// <returns></returns>
-        public float GetTiempoLimite(ExamenDTO unExamen)
+
+
+
+        public static float GetTiempoLimite(ExamenDTO pExamen)
         {
             using (var db = new TrabajoDbContext())
             {
                 using (var UoW = new UnitOfWork(db))
                 {
-                    Examen ex = UoW.ExamenRepository.Get(unExamen.Id);
+                    Examen ex = UoW.ExamenRepository.Get(pExamen.Id);
                     return ex.TiempoLimite;
                 }
             }
-        }
-        public ControladorExamen()
-        {
-            iControladorPreguntas = new ControladorPreguntas();
         }
     }
 }

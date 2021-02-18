@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.IO;
-using System.Globalization;
 using Trabajo_Integrador.EntityFramework;
 
 namespace Trabajo_Integrador.Controladores.Bitacora
@@ -74,16 +70,24 @@ namespace Trabajo_Integrador.Controladores.Bitacora
 
         public override int ObtenerSiguienteId()
         {
-            int i = 0;
-            using (var db = new TrabajoDbContext())
+            try
             {
-                using (var UoW = new UnitOfWork(db))
+                int i = 0;
+                using (var db = new TrabajoDbContext())
                 {
-                    i = UoW.RepositorioLogs.ObtenerMaxId();
+                    using (var UoW = new UnitOfWork(db))
+                    {
+                        i = UoW.RepositorioLogs.ObtenerMaxId();
+                    }
                 }
-            }
 
-            return i;
+                return i;
+
+            }
+            catch (System.Data.Entity.Core.ProviderIncompatibleException e)
+            {
+                return 0;
+            }
         }
 
         public BitacoraDb()
