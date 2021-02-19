@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 using Trabajo_Integrador.Controladores;
 using Trabajo_Integrador.DTO;
@@ -111,33 +112,26 @@ namespace Trabajo_Integrador.Ventanas
             else
             {
 
-                string categoriaSeleccionada = categoria.SelectedItem.ToString(); //Asigno el valor ingresado a clase Categoria
-                if (categoriaSeleccionada == "Random") categoriaSeleccionada = "0";
+                string categoriaSeleccionada = categoria.SelectedItem.ToString();
+                string dificultadSeleccionada = dificultad.SelectedItem.ToString();
+                string conjuntoSeleccionado = conjunto.SelectedItem.ToString();
+                int cantidadSeleccionada = Convert.ToInt32(cantidadPreguntas.Value);
 
-                string dificultadSeleccionada = dificultad.SelectedItem.ToString(); //Asigno el valor ingresado a clase Dificultad
-                if (dificultadSeleccionada == "Random") dificultadSeleccionada = "0";
+                var categoriaPreguntas = ControladorFachada.GetCategoriaPreguntasConNPreguntas(conjuntoSeleccionado, cantidadSeleccionada);
 
-                string conjuntoSeleccionado = conjunto.SelectedItem.ToString(); //Asigno el valor ingresado a clase Dificultad
 
-                int cantidadSeleccionada = Convert.ToInt32(cantidadPreguntas.Value); //Cantidad de preguntas a responder  
-
-                List<String> categorias = new List<string>();
-                IEnumerable<CategoriaPreguntaDTO> categoriaPreguntas = ControladorFachada.GetCategoriaPreguntasConNPreguntas(conjuntoSeleccionado, cantidadSeleccionada);
-
-                foreach (CategoriaPreguntaDTO cat in categoriaPreguntas)
+                //Si la categoria no tiene mas de N preguntas
+                if (categoriaPreguntas.FirstOrDefault(c => c.Id == categoriaSeleccionada) != null)
                 {
-                    categorias.Add(cat.Id);
-                }
-
-                if (!(categorias.Contains(categoriaSeleccionada)) && (categoriaSeleccionada != "0"))
-                {
-                    int n = ControladorFachada.CantidadDePreguntasParaCategoria(categoriaSeleccionada);
+                    int cantidadDePreguntasParaCategoria = ControladorFachada.CantidadDePreguntasParaCategoria(categoriaSeleccionada);
                     MessageBoxButtons mensaje = MessageBoxButtons.YesNo;
-                    DialogResult result = MessageBox.Show($"Solo hay {n} preguntas de { categoriaSeleccionada}. Quiere hacer el examen aunque no haya la cantidad de preguntas seleccionadas?", "Advertencia", mensaje);
+                    DialogResult result = MessageBox.Show($"Solo hay {cantidadDePreguntasParaCategoria} preguntas de {categoriaSeleccionada}. " +
+                        $"Quiere hacer el examen aunque no haya la cantidad de preguntas seleccionadas?", "Advertencia", mensaje);
+
 
                     if (result == DialogResult.Yes)
                     {
-                        ExamenDTO nuevoExamen = ControladorFachada.InicializarExamen(n, conjuntoSeleccionado, categoriaSeleccionada, dificultadSeleccionada);
+                        ExamenDTO nuevoExamen = ControladorFachada.InicializarExamen(cantidadDePreguntasParaCategoria, conjuntoSeleccionado, categoriaSeleccionada, dificultadSeleccionada);
                         nuevoExamen = ControladorFachada.InicarExamen(iNombreUsuario, nuevoExamen);
 
                         this.Hide();
@@ -147,6 +141,7 @@ namespace Trabajo_Integrador.Ventanas
                         this.Close();
 
                     }
+
                 }
                 else
                 {
@@ -158,12 +153,8 @@ namespace Trabajo_Integrador.Ventanas
                     using (Ventana_Preguntas Vpreguntas = new Ventana_Preguntas(nuevoExamen))
                         Vpreguntas.ShowDialog();
                     this.Close();
-
                 }
-
             }
-
-
         }
 
         private void conjunto_SelectedIndexChanged(object sender, EventArgs e)

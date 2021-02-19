@@ -60,7 +60,7 @@ namespace Trabajo_Integrador.Controladores
             return dto;
         }
 
-        internal static IEnumerable<PreguntaDTO> GetPreguntasDeExamen(int examenId)
+        public static IEnumerable<PreguntaDTO> GetPreguntasDeExamen(int examenId)
         {
             return ControladorExamen.GetPreguntasDeExamen(examenId);
         }

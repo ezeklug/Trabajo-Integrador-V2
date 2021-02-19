@@ -17,6 +17,8 @@ namespace Trabajo_Integrador.EntityFramework
 
         /// <summary>
         /// Devuelve una lista de preguntas de acuerdo a la cantidad, categoria y dificultad.
+        /// Si la cantidad es de preguntas de una categoria y dificultad es menor a la especificada, 
+        /// llena lo restante con preguntas aleatorias
         /// </summary>
         /// <param name="pCantidad"></param>
         /// <param name="pCategoria">Si es "0" no lo tiene en cuenta</param>
