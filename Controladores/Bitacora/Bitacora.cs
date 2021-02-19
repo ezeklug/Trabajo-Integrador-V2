@@ -6,7 +6,7 @@ namespace Trabajo_Integrador.Controladores.Bitacora
 {
 
     /// <summary>
-    /// Guarda logs en cualquier clase que implemente IBitacora
+    /// Guarda logs de cualquier clase que implemente IBitacora
     /// Por default las guarda en un archivo y db
     /// </summary>
     public class Bitacora : IBitacora
@@ -45,27 +45,27 @@ namespace Trabajo_Integrador.Controladores.Bitacora
 
         public ICollection<Log> Obtener(DateTime pDesde, DateTime pHasta)
         {
-            ICollection<Log> logs = null;
-            int i = 0;
-            while (logs == null)
+            List<Log> logs = new List<Log>();
+            foreach (var b in bitacoras)
             {
-                logs = bitacoras[i].Obtener(pDesde, pHasta);
-                i++;
+                logs.AddRange(b.Obtener(pDesde, pHasta));
             }
-
             return logs;
         }
 
+
+        /// <summary>
+        /// Devuelve todos los logs de todas las bitacoras
+        /// Puede contener logs repetidos
+        /// </summary>
+        /// <returns></returns>
         public ICollection<Log> ObtenerTodos()
         {
-            ICollection<Log> logs = null;
-            int i = 0;
-            while (logs == null)
+            var logs = new List<Log>();
+            foreach (var b in bitacoras)
             {
-                logs = bitacoras[i].ObtenerTodos();
-                i++;
+                logs.AddRange(b.ObtenerTodos());
             }
-
             return logs;
         }
 

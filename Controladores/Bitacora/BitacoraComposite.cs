@@ -1,15 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Trabajo_Integrador.Controladores.Bitacora
 {
+
+    /// <summary>
+    /// Implementacion del patron composite.
+    /// Cualquier clase que actue como bitacora debe heredar de esta
+    /// </summary>
     public abstract class BitacoraComposite : IBitacora
     {
 
-        public virtual bool IsComposite() 
+        public virtual bool IsComposite()
         {
             return true;
         }

@@ -8,7 +8,6 @@ namespace Trabajo_Integrador.Controladores.ObtenerPreguntas
     /// </summary>
     public abstract class EstrategiaObtenerPreguntas : IEstrategiaObtenerPreguntas
     {
-        //atributos
         string iConjunto;
 
 
