@@ -8,12 +8,15 @@ namespace Trabajo_Integrador.Ventanas
 {
     public partial class Ventana_Set_Administrador : Form
     {
-        public Ventana_Set_Administrador()
-        {
-            InitializeComponent();
-        }
 
         string iNombreUsuario;
+
+        public Ventana_Set_Administrador(string pNombreUsusario)
+        {
+            InitializeComponent();
+            iNombreUsuario = pNombreUsusario;
+        }
+
 
 
         private void Volver_Click(object sender, EventArgs e)
@@ -49,6 +52,7 @@ namespace Trabajo_Integrador.Ventanas
         private void setAdmin_Click(object sender, EventArgs e)
         {
             var usr = ControladorFachada.GetUsuario(iNombreUsuario);
+            Console.WriteLine(usr.Id);
             if (usr.Administrador)
             {
                 var usuarios = ControladorFachada.GetUsuarios();

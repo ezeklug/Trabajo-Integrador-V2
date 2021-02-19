@@ -35,7 +35,7 @@ namespace Trabajo_Integrador.Ventanas
         private void setAdministrador_Click(object sender, EventArgs e)
         {
             this.Hide();
-            Ventana_Set_Administrador setAdministrador = new Ventana_Set_Administrador();
+            Ventana_Set_Administrador setAdministrador = new Ventana_Set_Administrador(iNombreUsuario);
             setAdministrador.ShowDialog();
             this.Close();
 
