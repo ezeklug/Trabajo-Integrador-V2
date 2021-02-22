@@ -121,26 +121,29 @@ namespace Trabajo_Integrador.Ventanas
 
 
                 //Si la categoria no tiene mas de N preguntas
-                if (categoriaPreguntas.FirstOrDefault(c => c.Id == categoriaSeleccionada) != null)
+                if (categoriaPreguntas.FirstOrDefault(c => c.Id == categoriaSeleccionada) == null)
                 {
                     int cantidadDePreguntasParaCategoria = ControladorFachada.CantidadDePreguntasParaCategoria(categoriaSeleccionada);
-                    MessageBoxButtons mensaje = MessageBoxButtons.YesNo;
-                    DialogResult result = MessageBox.Show($"Solo hay {cantidadDePreguntasParaCategoria} preguntas de {categoriaSeleccionada}. " +
-                        $"Quiere hacer el examen aunque no haya la cantidad de preguntas seleccionadas?", "Advertencia", mensaje);
+                   
+                        MessageBoxButtons mensaje = MessageBoxButtons.YesNo;
+                        DialogResult result = MessageBox.Show($"Solo hay {cantidadDePreguntasParaCategoria} preguntas de {categoriaSeleccionada}. " +
+                            $"Quiere hacer el examen aunque no haya la cantidad de preguntas seleccionadas?", "Advertencia", mensaje);
 
 
-                    if (result == DialogResult.Yes)
-                    {
-                        ExamenDTO nuevoExamen = ControladorFachada.InicializarExamen(cantidadDePreguntasParaCategoria, conjuntoSeleccionado, categoriaSeleccionada, dificultadSeleccionada);
-                        nuevoExamen = ControladorFachada.InicarExamen(iNombreUsuario, nuevoExamen);
+                        if (result == DialogResult.Yes)
+                        {
+                            ExamenDTO nuevoExamen = ControladorFachada.InicializarExamen(cantidadDePreguntasParaCategoria, conjuntoSeleccionado, categoriaSeleccionada, dificultadSeleccionada);
+                            nuevoExamen = ControladorFachada.InicarExamen(iNombreUsuario, nuevoExamen);
 
-                        this.Hide();
+                            this.Hide();
 
-                        using (Ventana_Preguntas Vpreguntas = new Ventana_Preguntas(nuevoExamen))
-                            Vpreguntas.ShowDialog();
-                        this.Close();
+                            using (Ventana_Preguntas Vpreguntas = new Ventana_Preguntas(nuevoExamen))
+                                Vpreguntas.ShowDialog();
+                            this.Close();
 
-                    }
+                        }
+                    
+                   
 
                 }
                 else
