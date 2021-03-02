@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Trabajo_Integrador.Controladores.Bitacora;
 using Trabajo_Integrador.Controladores.Excepciones;
 using Trabajo_Integrador.Controladores.Utils;
@@ -23,9 +22,9 @@ namespace Trabajo_Integrador.Controladores
                 using (var UoW = new UnitOfWork(db))
                 {
                     IEnumerable<Usuario> listaUsuarios = UoW.RepositorioUsuarios.GetAll();
-                    foreach(Usuario usuario in listaUsuarios)
+                    foreach (Usuario usuario in listaUsuarios)
                     {
-                        listaUsuariosDTO.Add(new UsuarioDTO (usuario));
+                        listaUsuariosDTO.Add(new UsuarioDTO(usuario));
                     }
                     return listaUsuariosDTO;
                 }
@@ -42,7 +41,7 @@ namespace Trabajo_Integrador.Controladores
             {
                 using (var UoW = new UnitOfWork(db))
                 {
-                   IEnumerable<Pregunta> preguntas = UoW.RepositorioPreguntas.GetAll();
+                    IEnumerable<Pregunta> preguntas = UoW.RepositorioPreguntas.GetAll();
                     foreach (Pregunta pregunta in preguntas)
                     {
                         preguntasDTO.Add(new PreguntaDTO(pregunta));
@@ -59,7 +58,7 @@ namespace Trabajo_Integrador.Controladores
                 using (var UoW = new UnitOfWork(db))
                 {
                     IEnumerable<Examen> listaExamenes = UoW.ExamenRepository.GetAll();
-                    foreach(Examen examen in listaExamenes)
+                    foreach (Examen examen in listaExamenes)
                     {
                         listaExamenesDTO.Add(new ExamenDTO(examen));
                     }
@@ -130,8 +129,8 @@ namespace Trabajo_Integrador.Controladores
                 {
                     using (var UoW = new UnitOfWork(db))
                     {
-                       IEnumerable<Examen> listaExamenes = UoW.ExamenRepository.GetRankingUser(pUsuario);
-                       foreach(Examen examen in listaExamenes)
+                        IEnumerable<Examen> listaExamenes = UoW.ExamenRepository.GetRankingUser(pUsuario);
+                        foreach (Examen examen in listaExamenes)
                         {
                             listaExamenesDTO.Add(new ExamenDTO(examen));
                         }
@@ -145,6 +144,8 @@ namespace Trabajo_Integrador.Controladores
             }
             return listaExamenesDTO;
         }
+
+
         /// <summary>
         /// Devuelve todos los logs
         /// </summary>
@@ -154,6 +155,9 @@ namespace Trabajo_Integrador.Controladores
             IBitacora bitacora = new Bitacora.Bitacora();
             return bitacora.ObtenerTodos();
         }
+
+
+
         /// <summary>
         /// Setea un usuario como no administrador
         /// </summary>
@@ -196,6 +200,9 @@ namespace Trabajo_Integrador.Controladores
             }
 
         }
+
+
+
         /// <summary>
         /// Obtiene un usuario de la base de datos
         /// </summary>
@@ -206,6 +213,10 @@ namespace Trabajo_Integrador.Controladores
         {
             return new UsuarioDTO(Autenticador.GetUsuario(pUsuario));
         }
+
+
+
+
         /// <summary>
         /// Devuelve un UsuarioDTO con los datos actualizados desde la BD
         /// </summary>

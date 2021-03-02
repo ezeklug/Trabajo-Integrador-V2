@@ -5,6 +5,7 @@ using System.Linq;
 using Trabajo_Integrador;
 using Trabajo_Integrador.Controladores;
 using Trabajo_Integrador.Controladores.Bitacora;
+using Trabajo_Integrador.Controladores.Excepciones;
 using Trabajo_Integrador.Dominio;
 
 namespace UnitTests
@@ -60,7 +61,27 @@ namespace UnitTests
         }
 
 
-        //  [Test]
+
+        [Test]
+        public static void TestGetUsuario()
+        {
+            var usr = ControladorAdministrativo.AutenticarUsuario("leo", "leonardo");
+            Assert.Equals(usr.Id, "leo");
+            try
+            {
+                ControladorAdministrativo.AutenticarUsuario("", "");
+            }
+            catch (UsrNoEncontradoException) { }
+
+            try
+            {
+                ControladorAdministrativo.AutenticarUsuario("asdasd", "lsoebfdia");
+            }
+            catch (UsrNoEncontradoException) { }
+        }
+
+
+        [Test]
         public static void GetPreguntas()
         {
             var pregs = ControladorAdministrativo.GetPreguntas();
