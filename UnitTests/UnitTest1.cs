@@ -1,5 +1,5 @@
-﻿using NUnit.Framework;
-using System;
+﻿using System;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using System.Linq;
 using Trabajo_Integrador;
@@ -8,11 +8,15 @@ using Trabajo_Integrador.Controladores.Bitacora;
 using Trabajo_Integrador.Controladores.Excepciones;
 using Trabajo_Integrador.Dominio;
 
-namespace UnitTests
+namespace UnitTestProject2
 {
-    public class Tests
+    [TestClass]
+    public class UnitTest1
     {
-
+        [TestMethod]
+        public void TestMethod1()
+        {
+        }
         public static void CargarTodo()
         {
             var dificultades = new List<Dificultad>();
@@ -62,7 +66,7 @@ namespace UnitTests
 
 
 
-        [Test]
+        [TestMethod]
         public static void TestGetUsuario()
         {
             var usr = ControladorAdministrativo.AutenticarUsuario("leo", "leonardo");
@@ -81,7 +85,7 @@ namespace UnitTests
         }
 
 
-        [Test]
+        [TestMethod]
         public static void GetPreguntas()
         {
             var pregs = ControladorAdministrativo.GetPreguntas();
@@ -92,7 +96,7 @@ namespace UnitTests
         }
 
 
-        //[TestMethod]
+        //     [TestMethod]
 
         public void testEscribirLog()
         {
@@ -101,7 +105,7 @@ namespace UnitTests
             bitacora.GuardarLog(descripcion);
         }
 
-        //[Test]
+        //     [TestMethod]
         public void testGetPreguntas()
         {
             IEnumerable<Pregunta> preguntas = ControladorPreguntas.ObtenerPreguntasDeInternet("10", "OpentDb", "Science: Computers", "hard");
@@ -109,13 +113,13 @@ namespace UnitTests
             Assert.Equals(10, pre.Count);
         }
 
-        //[Test]
+        //    [TestMethod]
         public void testCargarPreguntas()
         {
             ControladorPreguntas.GetPreguntasOnline("10", "OpentDb", "Science: Computers", "hard");
         }
 
-        //[Test]
+        //     [TestMethod]
         public void testCargarTodasLasCategorias()
         {
             var conj = ControladorPreguntas.GetCategorias("OpentDb");
@@ -124,7 +128,7 @@ namespace UnitTests
                 Console.WriteLine(c.Id);
             }
         }
-        // [TestMethod]
+        //      [TestMethod]
         public void ChechGetLogs()
         {
             foreach (Log l in ControladorAdministrativo.getLogs())
@@ -190,7 +194,7 @@ namespace UnitTests
                     {
                         cargadas = ControladorPreguntas.GetPreguntasOnline("10", conj.Nombre, conj.Categoria.Id, conj.Dificultad.Id);
                     }
-                    catch (System.Data.Entity.Validation.DbEntityValidationException e)
+                    catch (Exception e)
                     {
 
                     }
@@ -202,7 +206,7 @@ namespace UnitTests
         }
 
 
-        //[TestMethod]
+        [TestMethod]
         public void testUrl()
         {
             //OpentDB op = new OpentDB();
