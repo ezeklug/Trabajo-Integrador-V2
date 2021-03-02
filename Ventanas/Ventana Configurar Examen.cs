@@ -132,8 +132,9 @@ namespace Trabajo_Integrador.Ventanas
 
                         if (result == DialogResult.Yes)
                         {
-                            ExamenDTO nuevoExamen = ControladorFachada.InicializarExamen(cantidadDePreguntasParaCategoria, conjuntoSeleccionado, categoriaSeleccionada, dificultadSeleccionada);
-                            nuevoExamen = ControladorFachada.InicarExamen(iNombreUsuario, nuevoExamen);
+                        IEnumerable<Pregunta> preguntas = ControladorPreguntas.GetPreguntasRandom(cantidadSeleccionada.ToString(), conjuntoSeleccionado, categoriaSeleccionada, dificultadSeleccionada);
+                        ExamenDTO nuevoExamen = ControladorExamen.InicializarExamen(cantidadSeleccionada.ToString(), conjuntoSeleccionado, categoriaSeleccionada, dificultadSeleccionada, preguntas);
+                        nuevoExamen = ControladorExamen.IniciarExamen(iNombreUsuario, nuevoExamen);
 
                             this.Hide();
 
@@ -148,8 +149,9 @@ namespace Trabajo_Integrador.Ventanas
                 }
                 else
                 {
-                    ExamenDTO nuevoExamen = ControladorFachada.InicializarExamen(cantidadSeleccionada, conjuntoSeleccionado, categoriaSeleccionada, dificultadSeleccionada);
-                    nuevoExamen = ControladorFachada.InicarExamen(iNombreUsuario, nuevoExamen);
+                    IEnumerable<Pregunta> preguntas = ControladorPreguntas.GetPreguntasRandom(cantidadSeleccionada.ToString(), conjuntoSeleccionado, categoriaSeleccionada, dificultadSeleccionada);
+                    ExamenDTO nuevoExamen = ControladorExamen.InicializarExamen(cantidadSeleccionada.ToString(), conjuntoSeleccionado, categoriaSeleccionada, dificultadSeleccionada, preguntas);
+                    nuevoExamen = ControladorExamen.IniciarExamen(iNombreUsuario, nuevoExamen);
 
                     this.Hide();
 

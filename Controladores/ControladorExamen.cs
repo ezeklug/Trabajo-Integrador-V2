@@ -34,9 +34,8 @@ namespace Trabajo_Integrador.Controladores
         /// <param name="pConjunto"></param>
         /// <param name="pCategoria"></param>
         /// <param name="pDificultad"></param>
-        public static Examen InicializarExamen(string pCantidad, string pConjunto, string pCategoria, string pDificultad)
+        public static ExamenDTO InicializarExamen(string pCantidad, string pConjunto, string pCategoria, string pDificultad, IEnumerable<Pregunta> preguntas)
         {
-            var preguntas = ControladorPreguntas.GetPreguntasRandom(pCantidad, pConjunto, pCategoria, pDificultad);
             Examen examen = new Examen();
             examen = ControladorExamen.AsociarExamenPregunta(examen, preguntas);
             using (var db = new TrabajoDbContext())
@@ -48,7 +47,7 @@ namespace Trabajo_Integrador.Controladores
 
                 }
             }
-            return examen;
+            return (new ExamenDTO(examen));
         }
 
 
@@ -60,7 +59,7 @@ namespace Trabajo_Integrador.Controladores
         /// <param name="pPregunta"></param>
         /// <param name="pRespuesta"></param>
         /// <returns>Examen actualizado</returns>
-        public static Examen GuardarRespuesta(Examen pExamen, Pregunta pPregunta, int idRespuesta)
+        public static ExamenDTO GuardarRespuesta(ExamenDTO pExamen, PreguntaDTO pPregunta, int idRespuesta)
         {
             Examen examen;
             using (var db = new TrabajoDbContext())
@@ -72,7 +71,7 @@ namespace Trabajo_Integrador.Controladores
                     UoW.Complete();
                 }
             }
-            return examen;
+            return new ExamenDTO (examen);
         }
 
         public static IEnumerable<PreguntaDTO> GetPreguntasDeExamen(int examenId)
@@ -96,7 +95,7 @@ namespace Trabajo_Integrador.Controladores
         /// Da fin a un examen y lo guarda en la DB
         /// </summary>
         /// <param name="pExamen"></param>
-        public static Examen FinalizarExamen(ExamenDTO pExamen)
+        public static ExamenDTO FinalizarExamen(ExamenDTO pExamen)
         {
             Examen examen = new Examen(pExamen);
             int n = ControladorExamen.CantidadRespuestasCorrectas(examen);
@@ -113,7 +112,7 @@ namespace Trabajo_Integrador.Controladores
                     UoW.Complete();
                 }
             }
-            return examen;
+            return new ExamenDTO (examen);
 
         }
 
@@ -157,20 +156,20 @@ namespace Trabajo_Integrador.Controladores
         /// </summary>
         /// <param name="pUsuario"></param>
         /// <param name="pExamen"></param>
-        public static Examen IniciarExamen(string pNombreUsuario, Examen pExamen)
+        public static ExamenDTO IniciarExamen(string pNombreUsuario, ExamenDTO pExamen)
         {
-            Examen ex = pExamen;
+            Examen examen = new Examen(pExamen);
             using (var db = new TrabajoDbContext())
             {
                 using (var UoW = new UnitOfWork(db))
                 {
                     Usuario usuario = UoW.RepositorioUsuarios.Get(pNombreUsuario);
-                    pExamen.UsuarioId = usuario.Id;
-                    pExamen.Iniciar();
-                    UoW.ExamenRepository.Add(ex);
+                    examen.UsuarioId = usuario.Id;
+                    examen.Iniciar();
+                    UoW.ExamenRepository.Add(examen);
                 }
             }
-            return ex;
+            return new ExamenDTO(examen);
 
         }
 

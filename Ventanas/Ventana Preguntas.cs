@@ -20,7 +20,7 @@ namespace Trabajo_Integrador.Ventanas
             InitializeComponent();
             iExamen = pExamenDto;
             iNumeroPregunta = 0;
-            iPreguntas = ControladorFachada.GetPreguntasDeExamen(iExamen.Id).ToList();
+            iPreguntas = ControladorExamen.GetPreguntasDeExamen(iExamen.Id).ToList();
         }
 
 
@@ -87,7 +87,8 @@ namespace Trabajo_Integrador.Ventanas
             {
                 this.timer.Enabled = false;
                 this.Hide();
-                var examenTerminado = ControladorFachada.FinalizarExamen(iExamen);
+                var examenTerminado = ControladorExamen.FinalizarExamen(iExamen);
+
                 using (Ventana_Examen_Terminado finalizado = new Ventana_Examen_Terminado(examenTerminado)) //Paso el examen a la proxima ventana 
                     finalizado.ShowDialog();
                 this.Close();
@@ -103,7 +104,7 @@ namespace Trabajo_Integrador.Ventanas
 
                 int respuestaId = Int32.Parse(flowLayoutPanel1.Controls.OfType<RadioButton>().FirstOrDefault(r => r.Checked).Name);
 
-                this.iExamen = ControladorFachada.GuardarRespuesta(iExamen, obtienePregunta(iNumeroPregunta), respuestaId);
+                this.iExamen = ControladorExamen.GuardarRespuesta(iExamen, obtienePregunta(iNumeroPregunta), respuestaId);
 
                 LimpiaControles(); // Limpia todos los controles
 
@@ -112,7 +113,8 @@ namespace Trabajo_Integrador.Ventanas
                 if (iNumeroPregunta >= iExamen.CantidadPreguntas)
                 {
                     this.Hide();
-                    var examenTerminado = ControladorFachada.FinalizarExamen(iExamen);
+                    var examenTerminado = ControladorExamen.FinalizarExamen(iExamen);
+
                     Ventana_Examen_Terminado finalizado = new Ventana_Examen_Terminado(examenTerminado);
                     finalizado.ShowDialog();
                     this.Close();

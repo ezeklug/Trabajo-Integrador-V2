@@ -65,14 +65,14 @@ namespace Trabajo_Integrador.Controladores
 
 
 
-        /// <summary>
-        /// Devuelve todas las categorias cargadas en la base de datos para un conjunto
-        /// </summary>
-        /// <returns></returns>
-        public static IEnumerable<CategoriaPregunta> GetCategorias(String pNombre)
-        {
-            return ControladorPreguntas.GetCategorias(pNombre);
-        }
+        ///// <summary>
+        ///// Devuelve todas las categorias cargadas en la base de datos para un conjunto
+        ///// </summary>
+        ///// <returns></returns>
+        //public static IEnumerable<CategoriaPregunta> GetCategorias(String pNombre)
+        //{
+        //    return ControladorPreguntas.GetCategorias(pNombre);
+        //}
 
         /// <summary>
         /// Devuelve todos los nombres de los conjuntos
@@ -164,7 +164,7 @@ namespace Trabajo_Integrador.Controladores
         /// <returns></returns>
         public static IEnumerable<Log> getLogs()
         {
-            IBitacora bitacora = new Controladores.Bitacora.Bitacora();
+            IBitacora bitacora = new Bitacora.Bitacora();
             return bitacora.ObtenerTodos();
         }
 

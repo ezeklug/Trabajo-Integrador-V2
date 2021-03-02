@@ -27,45 +27,6 @@ namespace Trabajo_Integrador.Controladores
             return examenesDTO;
         }
 
-
-        /// <summary>
-        /// Obtiene el tiempo limite que está asociado a un examen
-        /// </summary>
-        /// <param name="pExamen"></param>
-        /// <returns></returns>
-        public static float GetTiempoLimite(ExamenDTO pExamen)
-        {
-            return ControladorExamen.GetTiempoLimite(pExamen);
-        }
-
-
-        /// <summary>
-        /// Metodo que crea un examen sin asociarlo a un usuario
-        /// </summary>
-        /// <returns></returns>
-        public static ExamenDTO InicializarExamen(int pCantidad, String pConjunto, string pCategoria, string pDificultad)
-        {
-            return (new ExamenDTO(ControladorExamen.InicializarExamen(pCantidad.ToString(), pConjunto, pCategoria, pDificultad)));
-        }
-
-        /// <summary>
-        /// Da comienzo a un examen. Asocia el examen a un usuario
-        /// </summary>
-        /// <param name="pUsuario"></param>
-        /// <param name="pExamen"></param>
-        public static ExamenDTO InicarExamen(String pNombreUsuario, ExamenDTO pExamen)
-        {
-            Examen examen = new Examen(pExamen);
-            ExamenDTO dto = new ExamenDTO(ControladorExamen.IniciarExamen(pNombreUsuario, examen));
-            return dto;
-        }
-
-        public static IEnumerable<PreguntaDTO> GetPreguntasDeExamen(int examenId)
-        {
-            return ControladorExamen.GetPreguntasDeExamen(examenId);
-        }
-
-
         /// <summary>
         /// Devuelve una lista con todos los logs
         /// </summary>
@@ -87,17 +48,6 @@ namespace Trabajo_Integrador.Controladores
             return ControladorPreguntas.CantidadDePreguntasParaCategoria(pIdCategoria);
         }
 
-
-
-
-        /// <summary>
-        /// Metodo que finaliza un examen y lo guarda en la base de datos
-        /// </summary>
-        /// <param name="pExamen"></param>
-        public static ExamenDTO FinalizarExamen(ExamenDTO pExamen)
-        {
-            return new ExamenDTO(ControladorExamen.FinalizarExamen(pExamen));
-        }
 
         /// <summary>
         /// Metodo que devuelve una lista de todos los usuarios
@@ -265,20 +215,6 @@ namespace Trabajo_Integrador.Controladores
             };
         }
 
-        /// <summary>
-        /// Metodo que determina si una respuesta es correcta o no 
-        /// Almacena el resultado de la respuesta
-        /// </summary>
-        /// <param name="pExamen"></param>
-        /// <param name="pPregunta"></param>
-        /// <param name="pRespuesta"></param>
-        /// <returns></returns>
-        public static ExamenDTO GuardarRespuesta(ExamenDTO pExamen, PreguntaDTO pPregunta, int idRespuesta)
-        {
-            Examen examen = new Examen(pExamen);
-            var examendto = new ExamenDTO(ControladorExamen.GuardarRespuesta(examen, ControladorFachada.DTOAPregunta(pPregunta), idRespuesta));
-            return examendto;
-        }
 
 
 
