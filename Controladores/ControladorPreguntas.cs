@@ -93,18 +93,7 @@ namespace Trabajo_Integrador.Controladores
 
 
         }
-        public static CategoriaPreguntaDTO CategoriaDePregunta(PreguntaDTO pPregunta)
-        {
-            CategoriaPregunta c;
-            using (var db = new TrabajoDbContext())
-            {
-                using (var UoW = new UnitOfWork(db))
-                {
-                    c = UoW.RepositorioPreguntas.Get(pPregunta.Id).Conjunto.Categoria;
-                }
-            }
-            return new CategoriaPreguntaDTO(c);
-        }
+
         /// <summary>
         /// Obtiene preguntas random de la base de datos
         /// </summary>
@@ -124,10 +113,6 @@ namespace Trabajo_Integrador.Controladores
                     preguntas = UoW.RepositorioPreguntas.GetRandom(pCantidad, pConjunto, pCategoria, pDificultad);
                 }
             }
-
-
-
-
             return preguntas;
         }
 
@@ -210,30 +195,7 @@ namespace Trabajo_Integrador.Controladores
             }
 
         }
-        /// <summary>
-        /// Metodo que devuelve todas los conjuntos de preguntas cargados en base de datos
-        /// </summary>
-        /// <returns></returns>
-        public static IEnumerable<ConjuntoPreguntas> GetAllConjuntoPreguntas()
-        {
-            IEnumerable<ConjuntoPreguntas> conjuntos = null;
-            try
-            {
-                using (var db = new TrabajoDbContext())
-                {
-                    using (var UoW = new UnitOfWork(db))
-                    {
-                        conjuntos = UoW.RepositorioConjuntoPregunta.GetAll();
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                var bitacora = new Bitacora.Bitacora();
-                bitacora.GuardarLog("ControladorPreguntas.GetNombresConjuntosPreguntas" + ex.ToString());
-            }
-            return conjuntos;
-        }
+
         /// <summary>
         /// Metodo que devuelve todas las dificultades cargadas en base de datos de un determinado conjunto
         /// </summary>
@@ -262,30 +224,6 @@ namespace Trabajo_Integrador.Controladores
             }
             return dificultadesDTO;
 
-        }
-        public static void GuardarConjuntos(IEnumerable<ConjuntoPreguntas> pConjuntos)
-        {
-            using (var db = new TrabajoDbContext())
-            {
-                using (var UoW = new UnitOfWork(db))
-                {
-                    foreach (var conjunto in pConjuntos)
-                    {
-                        var cat = UoW.RepositorioConjuntoPregunta.GetCategoria(conjunto);
-                        var dif = UoW.RepositorioConjuntoPregunta.GetDificultad(conjunto);
-                        if (cat != null)
-                        {
-                            conjunto.Categoria = cat;
-                        }
-                        if (dif != null)
-                        {
-                            conjunto.Dificultad = dif;
-                        }
-                        UoW.RepositorioConjuntoPregunta.Add(conjunto);
-
-                    }
-                }
-            }
         }
         public static IEnumerable<RespuestaDTO> RespuestasDePregunta(PreguntaDTO pPregunta)
         {

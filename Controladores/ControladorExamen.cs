@@ -172,37 +172,5 @@ namespace Trabajo_Integrador.Controladores
             return new ExamenDTO(examen);
 
         }
-
-
-
-        /// <summary>
-        /// Guarda un examen la base de datos
-        /// </summary>
-        /// <param name="pExamen"></param>
-        public static void GuardarExamen(Examen pExamen)
-        {
-            using (var db = new TrabajoDbContext())
-            {
-                using (var UoW = new UnitOfWork(db))
-                {
-                    UoW.ExamenRepository.Add(pExamen);
-                    UoW.Complete();
-                }
-            }
-        }
-
-
-
-        public static float GetTiempoLimite(ExamenDTO pExamen)
-        {
-            using (var db = new TrabajoDbContext())
-            {
-                using (var UoW = new UnitOfWork(db))
-                {
-                    Examen ex = UoW.ExamenRepository.Get(pExamen.Id);
-                    return ex.TiempoLimite;
-                }
-            }
-        }
     }
 }

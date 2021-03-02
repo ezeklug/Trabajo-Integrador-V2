@@ -14,7 +14,6 @@ namespace Trabajo_Integrador.Ventanas
 
 
         IEnumerable<CategoriaPreguntaDTO> categorias;
-        IEnumerable<String> iNombreConjuntos;
         IEnumerable<DificultadDTO> dificultades;
         String conjuntoSeleccionado;
 
