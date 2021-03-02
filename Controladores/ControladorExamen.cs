@@ -27,6 +27,30 @@ namespace Trabajo_Integrador.Controladores
             return pExamen;
         }
 
+
+        /// <summary>
+        /// Obtiene preguntas random de la base de datos
+        /// </summary>
+        /// <param name="pCantidad"></param>
+        /// <param name="pConjunto"></param>
+        /// <param name="pCategoria"></param>
+        /// <param name="pDificultad"></param>
+        /// <returns></returns>
+        private static IEnumerable<Pregunta> GetPreguntasRandom(string pCantidad, string pConjunto, string pCategoria, string pDificultad)
+        {
+            List<Pregunta> preguntas = new List<Pregunta>();
+
+            using (var db = new TrabajoDbContext())
+            {
+                using (var UoW = new UnitOfWork(db))
+                {
+                    preguntas = UoW.RepositorioPreguntas.GetRandom(pCantidad, pConjunto, pCategoria, pDificultad);
+                }
+            }
+            return preguntas;
+        }
+
+
         /// <summary>
         /// Crea un nuevo examen no asociado a un usuario
         /// </summary>
@@ -34,9 +58,10 @@ namespace Trabajo_Integrador.Controladores
         /// <param name="pConjunto"></param>
         /// <param name="pCategoria"></param>
         /// <param name="pDificultad"></param>
-        public static ExamenDTO InicializarExamen(string pCantidad, string pConjunto, string pCategoria, string pDificultad, IEnumerable<Pregunta> preguntas)
+        public static ExamenDTO InicializarExamen(string pCantidad, string pConjunto, string pCategoria, string pDificultad)
         {
             Examen examen = new Examen();
+            var preguntas = ControladorExamen.GetPreguntasRandom(pCantidad, pConjunto, pCategoria, pDificultad);
             examen = ControladorExamen.AsociarExamenPregunta(examen, preguntas);
             using (var db = new TrabajoDbContext())
             {
@@ -44,7 +69,6 @@ namespace Trabajo_Integrador.Controladores
                 {
                     var conjunto = UoW.RepositorioConjuntoPregunta.ObtenerConjuntoPorDificultadYCategoria(pConjunto, pDificultad, pCategoria);
                     examen.TiempoLimite = (float)examen.CantidadPreguntas * conjunto.TiempoEsperadoRespuesta;
-
                 }
             }
             return (new ExamenDTO(examen));
@@ -71,7 +95,7 @@ namespace Trabajo_Integrador.Controladores
                     UoW.Complete();
                 }
             }
-            return new ExamenDTO (examen);
+            return new ExamenDTO(examen);
         }
 
         public static IEnumerable<PreguntaDTO> GetPreguntasDeExamen(int examenId)
@@ -112,7 +136,7 @@ namespace Trabajo_Integrador.Controladores
                     UoW.Complete();
                 }
             }
-            return new ExamenDTO (examen);
+            return new ExamenDTO(examen);
 
         }
 
@@ -151,6 +175,9 @@ namespace Trabajo_Integrador.Controladores
             return cantidadRespuestasCorrectas;
         }
 
+
+
+
         /// <summary>
         /// Da comienzo a un examen
         /// </summary>
@@ -170,7 +197,6 @@ namespace Trabajo_Integrador.Controladores
                 }
             }
             return new ExamenDTO(examen);
-
         }
     }
 }

@@ -123,33 +123,31 @@ namespace Trabajo_Integrador.Ventanas
                 if (categoriaPreguntas.FirstOrDefault(c => c.Id == categoriaSeleccionada) == null)
                 {
                     int cantidadDePreguntasParaCategoria = ControladorPreguntas.CantidadDePreguntasParaCategoria(categoriaSeleccionada);
-                   
-                        MessageBoxButtons mensaje = MessageBoxButtons.YesNo;
-                        DialogResult result = MessageBox.Show($"Solo hay {cantidadDePreguntasParaCategoria} preguntas de {categoriaSeleccionada}. " +
-                            $"Quiere hacer el examen aunque no haya la cantidad de preguntas seleccionadas?", "Advertencia", mensaje);
+
+                    MessageBoxButtons mensaje = MessageBoxButtons.YesNo;
+                    DialogResult result = MessageBox.Show($"Solo hay {cantidadDePreguntasParaCategoria} preguntas de {categoriaSeleccionada}. " +
+                        $"Quiere hacer el examen aunque no haya la cantidad de preguntas seleccionadas?", "Advertencia", mensaje);
 
 
-                        if (result == DialogResult.Yes)
-                        {
-                        IEnumerable<Pregunta> preguntas = ControladorPreguntas.GetPreguntasRandom(cantidadSeleccionada.ToString(), conjuntoSeleccionado, categoriaSeleccionada, dificultadSeleccionada);
-                        ExamenDTO nuevoExamen = ControladorExamen.InicializarExamen(cantidadSeleccionada.ToString(), conjuntoSeleccionado, categoriaSeleccionada, dificultadSeleccionada, preguntas);
+                    if (result == DialogResult.Yes)
+                    {
+                        ExamenDTO nuevoExamen = ControladorExamen.InicializarExamen(cantidadSeleccionada.ToString(), conjuntoSeleccionado, categoriaSeleccionada, dificultadSeleccionada);
                         nuevoExamen = ControladorExamen.IniciarExamen(iNombreUsuario, nuevoExamen);
 
-                            this.Hide();
+                        this.Hide();
 
-                            using (Ventana_Preguntas Vpreguntas = new Ventana_Preguntas(nuevoExamen))
-                                Vpreguntas.ShowDialog();
-                            this.Close();
+                        using (Ventana_Preguntas Vpreguntas = new Ventana_Preguntas(nuevoExamen))
+                            Vpreguntas.ShowDialog();
+                        this.Close();
 
-                        }
-                    
-                   
+                    }
+
+
 
                 }
                 else
                 {
-                    IEnumerable<Pregunta> preguntas = ControladorPreguntas.GetPreguntasRandom(cantidadSeleccionada.ToString(), conjuntoSeleccionado, categoriaSeleccionada, dificultadSeleccionada);
-                    ExamenDTO nuevoExamen = ControladorExamen.InicializarExamen(cantidadSeleccionada.ToString(), conjuntoSeleccionado, categoriaSeleccionada, dificultadSeleccionada, preguntas);
+                    ExamenDTO nuevoExamen = ControladorExamen.InicializarExamen(cantidadSeleccionada.ToString(), conjuntoSeleccionado, categoriaSeleccionada, dificultadSeleccionada);
                     nuevoExamen = ControladorExamen.IniciarExamen(iNombreUsuario, nuevoExamen);
 
                     this.Hide();
