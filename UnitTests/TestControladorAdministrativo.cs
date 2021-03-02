@@ -7,10 +7,11 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace UnitTests
 {
-    class TestControladorAdministrativo
+    [TestClass]
+    public class TestControladorAdministrativo
     {
         [TestMethod]
-        public static void TestGetUsuario()
+        public void TestGetUsuario()
         {
             var usr = ControladorAdministrativo.AutenticarUsuario("leo", "leonardo");
             Assert.Equals(usr.Id, "leo");
@@ -29,30 +30,30 @@ namespace UnitTests
 
 
         [TestMethod]
-        public static void TestGetUsuarios()
+        public void TestGetUsuarios()
         {
             var count = ControladorAdministrativo.GetUsuarios().ToList().Count;
             Assert.IsTrue(count >= 1);
         }
 
 
-   //     [TestMethod]
-        public static void TestGetPreguntas()
+        [TestMethod]
+        public void TestGetPreguntas()
         {
             var count = ControladorAdministrativo.GetPreguntas().ToList().Count;
             Assert.IsTrue(count >= 1);
         }
 
 
-//[TestMethod]
-        public static void TestGetExamenes()
+        [TestMethod]
+        public void TestGetExamenes()
         {
             var count = ControladorAdministrativo.GetExamenes().ToList().Count;
             Assert.IsTrue(count >= 1);
         }
 
-    //    [TestMethod]
-        public static void TestGetNombresConjuntosPreguntas()
+        [TestMethod]
+        public void TestGetNombresConjuntosPreguntas()
         {
             var nombres = ControladorAdministrativo.GetNombresConjuntosPreguntas().ToList();
             // OpentDb es el unico conjunto actualmente en la DB
@@ -60,7 +61,7 @@ namespace UnitTests
         }
 
         [TestMethod]
-        public static void TestSetAdminYGetUsuario()
+        public void TestSetAdminYGetUsuario()
         {
             var id = "leo";
             var pass = "leonardo";
@@ -75,8 +76,8 @@ namespace UnitTests
         }
 
 
-       // [TestMethod]
-        public static void TestGetRanking()
+        [TestMethod]
+        public void TestGetRanking()
         {
             var idUser = "leo";
             var idInexsistente = "UsuarioQueNoExiste";
@@ -89,7 +90,7 @@ namespace UnitTests
 
 
         [TestMethod]
-        public static void TestGuardarUsuario()
+        public void TestGuardarUsuario()
         {
             try { ControladorAdministrativo.GuardarUsuario("leo", "leonardo"); }
             catch (UsrYaExisteException) { }
