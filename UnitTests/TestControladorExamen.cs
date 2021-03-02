@@ -7,10 +7,8 @@ namespace UnitTests
     [TestClass]
     public class TestControladorExamen
     {
-
-
-        //  [TestMethod]
-        /*  public void TestInicializarExamen()
+          [TestMethod]
+          public void TestInicializarExamen()
           {
               try
               {
@@ -23,7 +21,7 @@ namespace UnitTests
               ControladorExamen.InicializarExamen("10", "ConjuntoQueNoExiste", "Science: Computers", "easy");
 
               ControladorExamen.InicializarExamen("10", "OpentDb", "CategoriaQueNoExiste", "easy");
-          }*/
+          }
     }
 }
 
