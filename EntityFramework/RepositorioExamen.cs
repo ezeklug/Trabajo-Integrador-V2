@@ -25,7 +25,7 @@ namespace Trabajo_Integrador.EntityFramework
 
         public IEnumerable<Examen> GetRankingUser(string idUser)
         {
-            return this.iDBSet.Where(u => u.UsuarioId == idUser).OrderBy(ex => ex.Puntaje);
+            return this.iDBSet.Include("ExamenPreguntas").Where(u => u.UsuarioId == idUser).OrderBy(ex => ex.Puntaje);
         }
     }
 }

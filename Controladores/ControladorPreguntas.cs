@@ -240,7 +240,7 @@ namespace Trabajo_Integrador.Controladores
         /// <returns></returns>
         public static IEnumerable<DificultadDTO> GetDificultades(String pNombreConjunto)
         {
-            ICollection<DificultadDTO> dificultadesDTO = null;
+            List<DificultadDTO> dificultadesDTO = new List<DificultadDTO>();
             try
             {
                 using (var db = new TrabajoDbContext())
