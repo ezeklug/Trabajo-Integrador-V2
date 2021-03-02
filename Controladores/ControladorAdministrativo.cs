@@ -130,7 +130,7 @@ namespace Trabajo_Integrador.Controladores
                 {
                     using (var UoW = new UnitOfWork(db))
                     {
-                       IEnumerable<Examen> listaExamenes = UoW.ExamenRepository.GetAll().ToList().FindAll(ex => ex.UsuarioId == pUsuario).OrderBy(ex => ex.Puntaje);
+                       IEnumerable<Examen> listaExamenes = UoW.ExamenRepository.GetRankingUser(pUsuario);
                        foreach(Examen examen in listaExamenes)
                         {
                             listaExamenesDTO.Add(new ExamenDTO(examen));

@@ -35,8 +35,6 @@ namespace Trabajo_Integrador.Controladores
                 dtos[i] = new CategoriaPreguntaDTO(cat);
             }
             return dtos;
-
-
         }
 
 
@@ -50,12 +48,6 @@ namespace Trabajo_Integrador.Controladores
         {
             return new UsuarioDTO(Autenticador.GetUsuario(pUsuario));
         }
-
-
-
-
-
-
         /// <summary>
         /// Devuelve un UsuarioDTO con los datos actualizados desde la BD
         /// </summary>
@@ -67,53 +59,6 @@ namespace Trabajo_Integrador.Controladores
         {
             var usr = Autenticador.ConstruirUsuario(pUsuario, pContrasenia);
             return new UsuarioDTO(Autenticador.AutenticarUsuario(usr));
-        }
-
-
-
-
-        public static CategoriaPregunta DTOACategoriaPregunta(CategoriaPreguntaDTO categoriaPreguntaDTO)
-        {
-            return new CategoriaPregunta
-            {
-                Id = categoriaPreguntaDTO.Id,
-                iCategoria = categoriaPreguntaDTO.iCategoria,
-                ProviderId = categoriaPreguntaDTO.ProviderId,
-            };
-        }
-
-        public static ConjuntoPreguntas DTOAConjunto(ConjuntoPreguntasDTO conjuntoPreguntasDTO)
-        {
-            ConjuntoPreguntas c;
-            using (var db = new TrabajoDbContext())
-            {
-                using (var UoW = new UnitOfWork(db))
-                {
-                    c = UoW.RepositorioConjuntoPregunta.Get(conjuntoPreguntasDTO.Id);
-                }
-            }
-            return c;
-        }
-
-
-
-
-        public static Pregunta DTOAPregunta(PreguntaDTO pPreguntaDTO)
-        {
-            ConjuntoPreguntas conj;
-            using (var db = new TrabajoDbContext())
-            {
-                using (var UoW = new UnitOfWork(db))
-                {
-                    conj = UoW.RepositorioConjuntoPregunta.Get(pPreguntaDTO.ConjuntoId);
-                }
-            }
-
-            return new Pregunta
-            {
-                Id = pPreguntaDTO.Id,
-                Conjunto = conj,
-            };
         }
         public static IEnumerable<RespuestaDTO> RespuestasDePregunta(PreguntaDTO pPregunta)
         {
