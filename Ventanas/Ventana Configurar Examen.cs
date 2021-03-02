@@ -43,7 +43,7 @@ namespace Trabajo_Integrador.Ventanas
             }
             else
             {
-                categorias = ControladorFachada.GetCategoriaPreguntasConNPreguntas(conjuntoSeleccionado, 10);
+                categorias = ControladorPreguntas.GetCategoriasConMasDeNPreguntas(conjuntoSeleccionado, 10);
 
                 foreach (CategoriaPreguntaDTO categ in categorias)
                 {
@@ -65,7 +65,7 @@ namespace Trabajo_Integrador.Ventanas
             }
             else
             {
-                dificultades = ControladorFachada.GetDificultades(conjuntoSeleccionado);
+                dificultades = ControladorPreguntas.GetDificultades(conjuntoSeleccionado);
 
                 foreach (DificultadDTO dific in dificultades)
                 {
@@ -117,13 +117,13 @@ namespace Trabajo_Integrador.Ventanas
                 string conjuntoSeleccionado = conjunto.SelectedItem.ToString();
                 int cantidadSeleccionada = Convert.ToInt32(cantidadPreguntas.Value);
 
-                var categoriaPreguntas = ControladorFachada.GetCategoriaPreguntasConNPreguntas(conjuntoSeleccionado, cantidadSeleccionada);
+                var categoriaPreguntas = ControladorPreguntas.GetCategoriasConMasDeNPreguntas(conjuntoSeleccionado, cantidadSeleccionada);
 
 
                 //Si la categoria no tiene mas de N preguntas
                 if (categoriaPreguntas.FirstOrDefault(c => c.Id == categoriaSeleccionada) == null)
                 {
-                    int cantidadDePreguntasParaCategoria = ControladorFachada.CantidadDePreguntasParaCategoria(categoriaSeleccionada);
+                    int cantidadDePreguntasParaCategoria = ControladorPreguntas.CantidadDePreguntasParaCategoria(categoriaSeleccionada);
                    
                         MessageBoxButtons mensaje = MessageBoxButtons.YesNo;
                         DialogResult result = MessageBox.Show($"Solo hay {cantidadDePreguntasParaCategoria} preguntas de {categoriaSeleccionada}. " +

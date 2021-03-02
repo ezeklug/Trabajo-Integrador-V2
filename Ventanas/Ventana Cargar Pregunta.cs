@@ -64,7 +64,7 @@ namespace Trabajo_Integrador.Ventanas
 
                 string cantidadSeleccionada = cantidad.Value.ToString();
 
-                int cargadas = ControladorFachada.GetPreguntasOnline(cantidadSeleccionada, conjuntoSeleccionado, categoriaSeleccionada, dificultadSeleccionada);
+                int cargadas = ControladorPreguntas.GetPreguntasOnline(cantidadSeleccionada, conjuntoSeleccionado, categoriaSeleccionada, dificultadSeleccionada);
 
                 MessageBox.Show($"Se cargaron exitosamente {cargadas} preguntas");
             }
@@ -73,8 +73,8 @@ namespace Trabajo_Integrador.Ventanas
         private void conjunto_SelectedIndexChanged(object sender, EventArgs e)
         {
             string nombreConjuto = this.conjunto.SelectedItem.ToString();
-            var categorias = ControladorFachada.GetCategoriaPreguntasConNPreguntas(nombreConjuto, 0);
-            var dificultades = ControladorFachada.GetDificultades(nombreConjuto);
+            var categorias = ControladorPreguntas.GetCategoriasConMasDeNPreguntas(nombreConjuto, 0);
+            var dificultades = ControladorPreguntas.GetDificultades(nombreConjuto);
 
             foreach (var c in categorias)
             {

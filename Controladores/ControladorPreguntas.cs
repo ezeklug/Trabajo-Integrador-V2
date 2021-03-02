@@ -9,7 +9,6 @@ namespace Trabajo_Integrador.Controladores
 {
     public static class ControladorPreguntas
     {
-
         /// Obtiene la estrategia a utilizar teniendo como parametro el conjunto de preguntas
         /// Si no encuentra la estrategia devuelve la nula
         /// </summary>
@@ -26,8 +25,6 @@ namespace Trabajo_Integrador.Controladores
                     return new EstrategiaNula();
             }
         }
-
-
         /// <summary>
         /// Dada una lista de preguntas, las inserta en la base de datos
         /// Devuelve la cantidad de preguntas insertada con exito
@@ -61,8 +58,6 @@ namespace Trabajo_Integrador.Controladores
 
             return cantidad;
         }
-
-
         public static IEnumerable<Pregunta> ObtenerPreguntasDeInternet(string pCantidad, string pConjunto, string pCategoria, string pDificultad)
         {
             ConjuntoPreguntas conjunto;
@@ -78,8 +73,6 @@ namespace Trabajo_Integrador.Controladores
             return preguntas;
 
         }
-
-
         /// <summary>
         /// Obtiene las preguntas de internet y se cargan en la base de datos.
         /// Devuelve el numero de preguntas que se cargaron exitosamente
@@ -100,9 +93,6 @@ namespace Trabajo_Integrador.Controladores
 
 
         }
-
-
-
         public static CategoriaPreguntaDTO CategoriaDePregunta(PreguntaDTO pPregunta)
         {
             CategoriaPregunta c;
@@ -115,7 +105,6 @@ namespace Trabajo_Integrador.Controladores
             }
             return new CategoriaPreguntaDTO(c);
         }
-
         /// <summary>
         /// Obtiene preguntas random de la base de datos
         /// </summary>
@@ -171,15 +160,21 @@ namespace Trabajo_Integrador.Controladores
         /// Devuelve todas las categorias que tengan mas (o igual) de N preguntas
         /// </summary>
         /// <returns>Lista de categorias</returns>
-        public static ICollection<CategoriaPregunta> GetCategoriasConMasDeNPreguntas(String pNombreConjunto, int n)
+        public static ICollection<CategoriaPreguntaDTO> GetCategoriasConMasDeNPreguntas(String pNombreConjunto, int n)
         {
+            List<CategoriaPreguntaDTO> categoriasDTO = new List<CategoriaPreguntaDTO>();
             try
             {
                 using (var db = new TrabajoDbContext())
                 {
                     using (var UoW = new UnitOfWork(db))
                     {
-                        return UoW.RepositorioPreguntas.CategoriasConMasDeNPreguntas(pNombreConjunto, n);
+                        ICollection<CategoriaPregunta> categorias = UoW.RepositorioPreguntas.CategoriasConMasDeNPreguntas(pNombreConjunto, n);
+                        foreach(CategoriaPregunta categoria in categorias)
+                        {
+                            categoriasDTO.Add(new CategoriaPreguntaDTO(categoria));
+                        }
+                        return categoriasDTO;
                     }
                 }
             }
@@ -190,9 +185,6 @@ namespace Trabajo_Integrador.Controladores
                 return null;
             }
         }
-
-
-
         /// <summary>
         /// Devuelve la cantidad de preguntas que tiene una categoria
         /// </summary>
@@ -218,10 +210,6 @@ namespace Trabajo_Integrador.Controladores
             }
 
         }
-
-
-
-
         /// <summary>
         /// Metodo que devuelve todas los conjuntos de preguntas cargados en base de datos
         /// </summary>
@@ -246,23 +234,25 @@ namespace Trabajo_Integrador.Controladores
             }
             return conjuntos;
         }
-
-
-
         /// <summary>
         /// Metodo que devuelve todas las dificultades cargadas en base de datos de un determinado conjunto
         /// </summary>
         /// <returns></returns>
-        public static IEnumerable<Dificultad> GetDificultades(String pNombreConjunto)
+        public static IEnumerable<DificultadDTO> GetDificultades(String pNombreConjunto)
         {
-            ICollection<Dificultad> dificultades = null;
+            ICollection<DificultadDTO> dificultadesDTO = null;
             try
             {
                 using (var db = new TrabajoDbContext())
                 {
                     using (var UoW = new UnitOfWork(db))
                     {
-                        dificultades = UoW.RepositorioConjuntoPregunta.DificultadesDeUnConjunto(pNombreConjunto);
+                        ICollection<Dificultad> dificultades = UoW.RepositorioConjuntoPregunta.DificultadesDeUnConjunto(pNombreConjunto);
+                        foreach (Dificultad dificultad in dificultades)
+                        {
+                            dificultadesDTO.Add(new DificultadDTO(dificultad));
+                        }
+                        return dificultadesDTO;
                     }
                 }
             }
@@ -273,7 +263,6 @@ namespace Trabajo_Integrador.Controladores
             }
             return dificultades;
         }
-
         public static void GuardarConjuntos(IEnumerable<ConjuntoPreguntas> pConjuntos)
         {
             using (var db = new TrabajoDbContext())

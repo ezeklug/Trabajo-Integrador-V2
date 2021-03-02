@@ -115,7 +115,7 @@ namespace UnitTests
         public static void testCategoriaConMasDeN()
         {
             string nombreConjunto = "OpentDb";
-            var categorias = ControladorFachada.GetCategoriaPreguntasConNPreguntas(nombreConjunto, 0);
+            var categorias = ControladorPreguntas.GetCategoriasConMasDeNPreguntas(nombreConjunto, 0);
             foreach (var c in categorias)
             {
                 Console.WriteLine($"{c.Id}");
@@ -167,7 +167,7 @@ namespace UnitTests
                     int cargadas = 0;
                     try
                     {
-                        cargadas = ControladorFachada.GetPreguntasOnline("10", conj.Nombre, conj.Categoria.Id, conj.Dificultad.Id);
+                        cargadas = ControladorPreguntas.GetPreguntasOnline("10", conj.Nombre, conj.Categoria.Id, conj.Dificultad.Id);
                     }
                     catch (System.Data.Entity.Validation.DbEntityValidationException e)
                     {

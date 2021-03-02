@@ -35,20 +35,6 @@ namespace Trabajo_Integrador.Controladores
         {
             return ControladorAdministrativo.getLogs();
         }
-
-
-
-        /// <summary>
-        /// Devuelve la cantidad de preguntas que pertecenientes a una categoria
-        /// </summary>
-        /// <param name="pIdCategoria">Id de la categoria</param>
-        /// <returns>Cantidad</returns>
-        public static int CantidadDePreguntasParaCategoria(String pIdCategoria)
-        {
-            return ControladorPreguntas.CantidadDePreguntasParaCategoria(pIdCategoria);
-        }
-
-
         /// <summary>
         /// Metodo que devuelve una lista de todos los usuarios
         /// </summary>
@@ -102,21 +88,6 @@ namespace Trabajo_Integrador.Controladores
         }
 
 
-        /// <summary>
-        /// Devuelve todas las categorias que tengan mas o igual a N preguntas
-        /// </summary>
-        /// <param name="n">Cantida de preguntas</param>
-        /// <returns>Lista de Categorias</returns>
-        public static IEnumerable<CategoriaPreguntaDTO> GetCategoriaPreguntasConNPreguntas(String pNombreConjunto, int n)
-        {
-            var categoriasDTO = new List<CategoriaPreguntaDTO>();
-            foreach (CategoriaPregunta categoria in ControladorPreguntas.GetCategoriasConMasDeNPreguntas(pNombreConjunto, n))
-            {
-                categoriasDTO.Add(new CategoriaPreguntaDTO(categoria));
-            }
-            return categoriasDTO;
-        }
-
 
         /// <summary>
         /// Devuelve los nombres de los conjuntos
@@ -125,19 +96,6 @@ namespace Trabajo_Integrador.Controladores
         public static IEnumerable<String> GetNombreConjuntos()
         {
             return ControladorAdministrativo.GetNombresConjuntosPreguntas();
-        }
-        /// <summary>
-        /// Devuelve todas las difulctades de un conjunto
-        /// </summary>
-        /// <returns></returns>
-        public static IEnumerable<DificultadDTO> GetDificultades(String pNombreConjunto)
-        {
-            var dificultadesDTO = new List<DificultadDTO>();
-            foreach (Dificultad dificultad in ControladorPreguntas.GetDificultades(pNombreConjunto))
-            {
-                dificultadesDTO.Add(new DificultadDTO(dificultad));
-            }
-            return dificultadesDTO;
         }
         /// <summary>
         /// Guarda un nuevo usuario en la base de datos
@@ -279,21 +237,6 @@ namespace Trabajo_Integrador.Controladores
                 preguntasDto.Add(new PreguntaDTO(pregunta));
             }
             return preguntasDto;
-        }
-
-
-        /// <summary>
-        /// Carga preguntas desde un servicio  online a la base de datos
-        /// Devuelve el numero de preguntas cargadas con exito
-        /// </summary>
-        /// <exception cref="System.Data.Entity.Validation.DbEntityValidationException"></exception>
-        /// <param name="pCantidad"></param>
-        /// <param name="pConjunto"></param>
-        /// <param name="pCategoria"></param>
-        /// <param name="pDificultad"></param>
-        public static int GetPreguntasOnline(string pCantidad, string pConjunto, string pCategoria, string pDificultad)
-        {
-            return ControladorPreguntas.GetPreguntasOnline(pCantidad, pConjunto, pCategoria, pDificultad);
         }
 
 
