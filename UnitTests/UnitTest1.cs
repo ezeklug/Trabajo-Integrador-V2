@@ -1,22 +1,17 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using NUnit.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Trabajo_Integrador;
 using Trabajo_Integrador.Controladores;
 using Trabajo_Integrador.Controladores.Bitacora;
-using Trabajo_Integrador.Controladores.Excepciones;
 using Trabajo_Integrador.Dominio;
 
-namespace UnitTestProject2
+namespace UnitTests
 {
-    [TestClass]
-    public class UnitTest1
+    public class Tests
     {
-        [TestMethod]
-        public void TestMethod1()
-        {
-        }
+
         public static void CargarTodo()
         {
             var dificultades = new List<Dificultad>();
@@ -66,26 +61,8 @@ namespace UnitTestProject2
 
 
 
-        [TestMethod]
-        public static void TestGetUsuario()
-        {
-            var usr = ControladorAdministrativo.AutenticarUsuario("leo", "leonardo");
-            Assert.Equals(usr.Id, "leo");
-            try
-            {
-                ControladorAdministrativo.AutenticarUsuario("", "");
-            }
-            catch (UsrNoEncontradoException) { }
 
-            try
-            {
-                ControladorAdministrativo.AutenticarUsuario("asdasd", "lsoebfdia");
-            }
-            catch (UsrNoEncontradoException) { }
-        }
-
-
-        [TestMethod]
+        [Test]
         public static void GetPreguntas()
         {
             var pregs = ControladorAdministrativo.GetPreguntas();
@@ -96,7 +73,7 @@ namespace UnitTestProject2
         }
 
 
-        //     [TestMethod]
+        //[TestMethod]
 
         public void testEscribirLog()
         {
@@ -105,7 +82,7 @@ namespace UnitTestProject2
             bitacora.GuardarLog(descripcion);
         }
 
-        //     [TestMethod]
+        //[Test]
         public void testGetPreguntas()
         {
             IEnumerable<Pregunta> preguntas = ControladorPreguntas.ObtenerPreguntasDeInternet("10", "OpentDb", "Science: Computers", "hard");
@@ -113,13 +90,13 @@ namespace UnitTestProject2
             Assert.Equals(10, pre.Count);
         }
 
-        //    [TestMethod]
+        //[Test]
         public void testCargarPreguntas()
         {
             ControladorPreguntas.GetPreguntasOnline("10", "OpentDb", "Science: Computers", "hard");
         }
 
-        //     [TestMethod]
+        //[Test]
         public void testCargarTodasLasCategorias()
         {
             var conj = ControladorPreguntas.GetCategorias("OpentDb");
@@ -128,7 +105,7 @@ namespace UnitTestProject2
                 Console.WriteLine(c.Id);
             }
         }
-        //      [TestMethod]
+        // [TestMethod]
         public void ChechGetLogs()
         {
             foreach (Log l in ControladorAdministrativo.getLogs())
@@ -194,7 +171,7 @@ namespace UnitTestProject2
                     {
                         cargadas = ControladorPreguntas.GetPreguntasOnline("10", conj.Nombre, conj.Categoria.Id, conj.Dificultad.Id);
                     }
-                    catch (Exception e)
+                    catch (System.Data.Entity.Validation.DbEntityValidationException e)
                     {
 
                     }
@@ -206,7 +183,7 @@ namespace UnitTestProject2
         }
 
 
-        [TestMethod]
+        //[TestMethod]
         public void testUrl()
         {
             //OpentDB op = new OpentDB();
