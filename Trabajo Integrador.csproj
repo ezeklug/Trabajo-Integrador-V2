@@ -175,7 +175,6 @@
     <Compile Include="Controladores\Bitacora\BitacoraComposite.cs" />
     <Compile Include="Controladores\Bitacora\BitacoraFile.cs" />
     <Compile Include="Controladores\Bitacora\IBitacora.cs" />
-    <Compile Include="Controladores\Controlador Fachada.cs" />
     <Compile Include="Controladores\ControladorAdministrativo.cs" />
     <Compile Include="Controladores\Excepciones\UsrNoEncontradoException.cs" />
     <Compile Include="Controladores\Excepciones\UsrYaExisteException.cs" />

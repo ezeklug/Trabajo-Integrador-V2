@@ -30,7 +30,7 @@ namespace Trabajo_Integrador.Ventanas
         private void volverInicio_Click_1(object sender, EventArgs e)
         {
             this.Hide();
-            if (ControladorFachada.GetUsuario(iExamen.UsuarioId).Administrador)
+            if (ControladorAdministrativo.GetUsuario(iExamen.UsuarioId).Administrador)
             {
                 Ventana_Principal_Admi vAdmin = new Ventana_Principal_Admi(iExamen.UsuarioId);
                 vAdmin.ShowDialog();

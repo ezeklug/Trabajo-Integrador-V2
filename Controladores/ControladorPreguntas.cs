@@ -287,5 +287,24 @@ namespace Trabajo_Integrador.Controladores
                 }
             }
         }
+        public static IEnumerable<RespuestaDTO> RespuestasDePregunta(PreguntaDTO pPregunta)
+        {
+            Pregunta pre;
+            using (var db = new TrabajoDbContext())
+            {
+                using (var UoW = new UnitOfWork(db))
+                {
+                    pre = UoW.RepositorioPreguntas.Get(pPregunta.Id);
+                }
+            }
+
+            var respuestas = new List<RespuestaDTO>();
+            foreach (var r in pre.Respuestas)
+            {
+                respuestas.Add(new RespuestaDTO(r));
+            }
+
+            return respuestas;
+        }
     }
 }

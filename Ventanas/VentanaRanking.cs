@@ -37,7 +37,7 @@ namespace Trabajo_Integrador.Ventanas
 
         private void listo_Click_1(object sender, EventArgs e)
         {
-            if (ControladorFachada.GetUsuario(iNombreUsuario).Administrador)
+            if (ControladorAdministrativo.GetUsuario(iNombreUsuario).Administrador)
             {
                 this.Hide();
                 Ventana_Principal_Admi vAdmin = new Ventana_Principal_Admi(iNombreUsuario);

@@ -45,7 +45,7 @@ namespace Trabajo_Integrador.Ventanas
             {
                 try
                 {
-                    var usr = ControladorFachada.GetUsuario(nombreUsuario);
+                    var usr = ControladorAdministrativo.GetUsuario(nombreUsuario);
                     errorProvider2.SetError(nuevoUsuario, "Usuario ya existe");
                     nuevoUsuario.Focus();
                 }

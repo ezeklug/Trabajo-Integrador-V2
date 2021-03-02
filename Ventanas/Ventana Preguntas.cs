@@ -28,7 +28,7 @@ namespace Trabajo_Integrador.Ventanas
         {
             preg.Text += unaPregunta.Id; //Muestro la Pregunta en el Label
 
-            var respuestas = ControladorFachada.RespuestasDePregunta(iPreguntas[iNumeroPregunta]);
+            var respuestas = ControladorPreguntas.RespuestasDePregunta(iPreguntas[iNumeroPregunta]);
             List<RespuestaDTO> opciones = new List<RespuestaDTO>(); //Almacena las 4 opciones de respuestas
 
             foreach (RespuestaDTO respuesta in respuestas)

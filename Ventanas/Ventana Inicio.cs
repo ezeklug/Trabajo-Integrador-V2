@@ -27,7 +27,7 @@ namespace Trabajo_Integrador.Ventanas
                 {
                     try
                     {
-                        var usr = ControladorFachada.AutenticarUsuario(usuario.Text, contrasenia.Text.Trim());
+                        var usr = ControladorAdministrativo.AutenticarUsuario(usuario.Text, contrasenia.Text.Trim());
 
                         this.Hide();
                         if (usr.Administrador)

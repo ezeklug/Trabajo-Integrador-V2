@@ -196,5 +196,27 @@ namespace Trabajo_Integrador.Controladores
             }
 
         }
+        /// <summary>
+        /// Obtiene un usuario de la base de datos
+        /// </summary>
+        /// <exception cref="UsrNoEncontradoException"> Si el usuario no existe</exception>
+        /// <param name="pUsuario"></param>
+        /// <returns></returns>
+        public static UsuarioDTO GetUsuario(String pUsuario)
+        {
+            return new UsuarioDTO(Autenticador.GetUsuario(pUsuario));
+        }
+        /// <summary>
+        /// Devuelve un UsuarioDTO con los datos actualizados desde la BD
+        /// </summary>
+        /// <exception cref="UsrNoEncontradoException"> Si el usuario no existe</exception>
+        /// <param name="pUsuario"></param>
+        /// <param name="pContrasenia"></param>
+        /// <returns></returns>
+        public static UsuarioDTO AutenticarUsuario(String pUsuario, String pContrasenia)
+        {
+            var usr = Autenticador.ConstruirUsuario(pUsuario, pContrasenia);
+            return new UsuarioDTO(Autenticador.AutenticarUsuario(usr));
+        }
     }
 }

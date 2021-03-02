@@ -89,7 +89,7 @@ namespace Trabajo_Integrador.Ventanas
         private void volver_Click(object sender, EventArgs e)
         {
             this.Hide();
-            if (ControladorFachada.GetUsuario(iNombreUsuario).Administrador)
+            if (ControladorAdministrativo.GetUsuario(iNombreUsuario).Administrador)
             {
                 Ventana_Principal_Admi vAdmin = new Ventana_Principal_Admi(iNombreUsuario);
                 vAdmin.ShowDialog();

@@ -35,7 +35,7 @@ namespace Trabajo_Integrador.Ventanas
         private void Opciones_Click(object sender, EventArgs e)
         {
             this.Hide();
-            var usr = ControladorFachada.GetUsuario(iUsuario);
+            var usr = ControladorAdministrativo.GetUsuario(iUsuario);
             if (usr.Administrador)
             {
                 Ventana_Opciones vopciones = new Ventana_Opciones(iUsuario);

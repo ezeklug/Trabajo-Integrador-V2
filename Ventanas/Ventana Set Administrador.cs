@@ -35,7 +35,7 @@ namespace Trabajo_Integrador.Ventanas
 
             foreach (UsuarioDTO user in usuarios)
             {
-                if (ControladorFachada.GetUsuario(user.Id).Administrador)
+                if (ControladorAdministrativo.GetUsuario(user.Id).Administrador)
                 {
                     int index = this.listaCheckedBox.Items.Add(user.Id);
                     listaCheckedBox.Items[index] = user.Id;
@@ -51,7 +51,7 @@ namespace Trabajo_Integrador.Ventanas
 
         private void setAdmin_Click(object sender, EventArgs e)
         {
-            var usr = ControladorFachada.GetUsuario(iNombreUsuario);
+            var usr = ControladorAdministrativo.GetUsuario(iNombreUsuario);
             Console.WriteLine(usr.Id);
             if (usr.Administrador)
             {

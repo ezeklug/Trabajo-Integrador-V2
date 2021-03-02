@@ -30,7 +30,7 @@ namespace Trabajo_Integrador.Ventanas
 
             foreach (PreguntaDTO pregunta in preguntas)
             {
-                IEnumerable<RespuestaDTO> respuestas = ControladorFachada.RespuestasDePregunta(pregunta);
+                IEnumerable<RespuestaDTO> respuestas = ControladorPreguntas.RespuestasDePregunta(pregunta);
                 var categoriaDePregunta = ControladorPreguntas.CategoriaDePregunta(pregunta);
                 IEnumerable<object> row = new object[] { cont, pregunta.Id, categoriaDePregunta.Id };
                 int i = 1;
