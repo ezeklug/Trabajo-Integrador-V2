@@ -94,27 +94,7 @@ namespace Trabajo_Integrador.Controladores
 
         }
 
-        /// <summary>
-        /// Obtiene preguntas random de la base de datos
-        /// </summary>
-        /// <param name="pCantidad"></param>
-        /// <param name="pConjunto"></param>
-        /// <param name="pCategoria"></param>
-        /// <param name="pDificultad"></param>
-        /// <returns></returns>
-        public static IEnumerable<Pregunta> GetPreguntasRandom(string pCantidad, string pConjunto, string pCategoria, string pDificultad)
-        {
-            List<Pregunta> preguntas = new List<Pregunta>();
 
-            using (var db = new TrabajoDbContext())
-            {
-                using (var UoW = new UnitOfWork(db))
-                {
-                    preguntas = UoW.RepositorioPreguntas.GetRandom(pCantidad, pConjunto, pCategoria, pDificultad);
-                }
-            }
-            return preguntas;
-        }
 
         /// <summary>
         /// Metodo que devuelve todas las categorias cargadas en base de datos
@@ -155,7 +135,7 @@ namespace Trabajo_Integrador.Controladores
                     using (var UoW = new UnitOfWork(db))
                     {
                         ICollection<CategoriaPregunta> categorias = UoW.RepositorioPreguntas.CategoriasConMasDeNPreguntas(pNombreConjunto, n);
-                        foreach(CategoriaPregunta categoria in categorias)
+                        foreach (CategoriaPregunta categoria in categorias)
                         {
                             categoriasDTO.Add(new CategoriaPreguntaDTO(categoria));
                         }
