@@ -77,7 +77,7 @@ namespace Trabajo_Integrador.Ventanas
 
         private void cargarConjuntos()   //Le asigno al combobox conjunto el array conjunto
         {
-            var nombreConjuntos = ControladorFachada.GetNombreConjuntos();
+            var nombreConjuntos = ControladorAdministrativo.GetNombresConjuntosPreguntas();
             foreach (var nombre in nombreConjuntos)
             {
                 conjunto.Items.Add(nombre);

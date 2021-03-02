@@ -11,43 +11,7 @@ namespace Trabajo_Integrador.Controladores
 {
     public static class ControladorFachada
     {
-        /// <summary>
-        /// Devuevlve el ranking de los examenes de un usuario.
-        /// </summary>
-        /// <param name="pUsuario">Id del usuario</param>
-        /// <returns></returns>
-        public static IEnumerable<ExamenDTO> GetRanking(String pUsuario)
-        {
-            var examenesDTO = new List<ExamenDTO>();
-            foreach (Examen examen in ControladorAdministrativo.GetRanking(pUsuario))
-            {
-                examenesDTO.Add(new ExamenDTO(examen));
-            }
 
-            return examenesDTO;
-        }
-
-        /// <summary>
-        /// Devuelve una lista con todos los logs
-        /// </summary>
-        /// <returns></returns>
-        public static IEnumerable<Log> getLogs()
-        {
-            return ControladorAdministrativo.getLogs();
-        }
-        /// <summary>
-        /// Metodo que devuelve una lista de todos los usuarios
-        /// </summary>
-        /// <returns></returns>
-        public static IEnumerable<UsuarioDTO> GetUsuarios()
-        {
-            var usuarios = new List<UsuarioDTO>();
-            foreach (Usuario usuario in ControladorAdministrativo.GetUsuarios())
-            {
-                usuarios.Add(new UsuarioDTO(usuario));
-            }
-            return usuarios;
-        }
 
         /// <summary>
         /// Devuelve todas las DTOcategorias relacionadas a un conjunto
@@ -87,27 +51,6 @@ namespace Trabajo_Integrador.Controladores
             return new UsuarioDTO(Autenticador.GetUsuario(pUsuario));
         }
 
-
-
-        /// <summary>
-        /// Devuelve los nombres de los conjuntos
-        /// </summary>
-        /// <returns></returns>
-        public static IEnumerable<String> GetNombreConjuntos()
-        {
-            return ControladorAdministrativo.GetNombresConjuntosPreguntas();
-        }
-        /// <summary>
-        /// Guarda un nuevo usuario en la base de datos
-        /// </summary>
-        /// <exception cref="UsrYaExisteException">Si usuario ya existe</exception> 
-        /// <param name="usuarioNombre"></param>
-        /// <param name="contrasenia"></param>
-        public static void GuardarUsuario(string usuarioNombre, string contrasenia)
-        {
-            var usr = Autenticador.ConstruirUsuario(usuarioNombre, contrasenia);
-            ControladorAdministrativo.GuardarUsuario(usr);
-        }
 
 
 
@@ -172,74 +115,6 @@ namespace Trabajo_Integrador.Controladores
                 Conjunto = conj,
             };
         }
-
-
-
-
-
-
-
-        /// <summary>
-        /// Devuelve todos los examenes
-        /// </summary>
-        /// <returns></returns>
-        public static IEnumerable<ExamenDTO> GetExamenes()
-        {
-            List<ExamenDTO> examenesDTO = new List<ExamenDTO>();
-            foreach (Examen examen in ControladorAdministrativo.GetExamenes())
-            {
-                examenesDTO.Add(new ExamenDTO(examen));
-            }
-            return examenesDTO;
-        }
-
-
-        /// <summary>
-        /// Modifica el tiempo de un conjunto de preguntas
-        /// </summary>
-        /// <param name="pNombreConjunto">Conjunto a modificar</param>
-        /// <param name="pTiempo">Tiempo por pregunta</param>
-        public static void ModificarTiempo(string pNombreConjunto, float pTiempo)
-        {
-            ControladorAdministrativo.ModificarTiempo(pNombreConjunto, pTiempo);
-        }
-
-
-
-        /// <summary>
-        /// Setea un usuario como  admin
-        /// </summary>
-        /// <param name="pUsuario">Id del usuario</param>
-        public static void SetAdministrador(string pUsuario)
-        {
-            ControladorAdministrativo.SetAdministrador(pUsuario);
-        }
-
-
-        /// <summary>
-        /// Setea un usuario como no admin
-        /// </summary>
-        /// <param name="pUsuario">Id del usuario</param>
-        public static void SetNoAdministrador(string pUsuario)
-        {
-            ControladorAdministrativo.SetNoAdministrador(pUsuario);
-        }
-
-        /// <summary>
-        /// Obtiene todas las preguntas de la base de datos
-        /// </summary>
-        /// <returns></returns>
-        public static IEnumerable<PreguntaDTO> GetPreguntas()
-        {
-            List<PreguntaDTO> preguntasDto = new List<PreguntaDTO>();
-            foreach (Pregunta pregunta in ControladorAdministrativo.GetPreguntas())
-            {
-                preguntasDto.Add(new PreguntaDTO(pregunta));
-            }
-            return preguntasDto;
-        }
-
-
         public static IEnumerable<RespuestaDTO> RespuestasDePregunta(PreguntaDTO pPregunta)
         {
             Pregunta pre;

@@ -34,7 +34,7 @@ namespace Trabajo_Integrador.Ventanas
 
         private void CargarConjunto()
         {
-            var nombresConjuntos = ControladorFachada.GetNombreConjuntos();
+            var nombresConjuntos = ControladorAdministrativo.GetNombresConjuntosPreguntas();
             foreach (var nombre in nombresConjuntos)
             {
                 ListaConjuntos.Items.Add(nombre);
@@ -55,7 +55,7 @@ namespace Trabajo_Integrador.Ventanas
                 {
                     string i = tiempo.SelectedText.ToString();
                     float tiempoIngresado = float.Parse(tiempo.Text);
-                    ControladorFachada.ModificarTiempo(conjuntoSeleccionado, tiempoIngresado);
+                    ControladorAdministrativo.ModificarTiempo(conjuntoSeleccionado, tiempoIngresado);
                     MessageBox.Show("Tiempo modificado con Exito");
                 }
                 else

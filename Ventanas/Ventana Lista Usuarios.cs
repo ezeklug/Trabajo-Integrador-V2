@@ -28,7 +28,7 @@ namespace Trabajo_Integrador.Ventanas
 
         private void Ventana_Lista_Usuarios_Load(object sender, EventArgs e)
         {
-            var listaUsuarios = ControladorFachada.GetUsuarios();
+            var listaUsuarios = ControladorAdministrativo.GetUsuarios();
             DataTable dt = new DataTable();
 
             dt.Columns.Add("Nombre", typeof(string));

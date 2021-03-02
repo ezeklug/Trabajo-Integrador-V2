@@ -18,7 +18,7 @@ namespace Trabajo_Integrador.Ventanas
 
         private void VentanaRanking_Load(object sender, EventArgs e)
         {
-            var examenes = ControladorFachada.GetRanking(iNombreUsuario);
+            var examenes = ControladorAdministrativo.GetRanking(iNombreUsuario);
             DataTable dt = new DataTable();
             //dt.Columns.Add("Usuario", typeof(string));
             dt.Columns.Add("Fecha", typeof(DateTime));

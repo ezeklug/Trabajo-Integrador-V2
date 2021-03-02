@@ -18,7 +18,7 @@ namespace Trabajo_Integrador.Ventanas
 
         private void Ventana_Logs_Load(object sender, EventArgs e)
         {
-            var logs = ControladorFachada.getLogs();
+            var logs = ControladorAdministrativo.getLogs();
 
             DataTable dt = new DataTable();
 

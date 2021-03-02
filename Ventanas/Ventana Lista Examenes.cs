@@ -29,7 +29,7 @@ namespace Trabajo_Integrador.Ventanas
 
         private void Ventana_Lista_Examenes_Load(object sender, EventArgs e)
         {
-            var examenes = ControladorFachada.GetExamenes();
+            var examenes = ControladorAdministrativo.GetExamenes();
             DataTable dt = new DataTable();
             dt.Columns.Add("Usuario", typeof(string));
             dt.Columns.Add("Fecha", typeof(DateTime));

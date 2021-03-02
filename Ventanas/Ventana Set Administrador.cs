@@ -31,7 +31,7 @@ namespace Trabajo_Integrador.Ventanas
 
         private void SetAdministrador_Load(object sender, EventArgs e)
         {
-            var usuarios = ControladorFachada.GetUsuarios();
+            var usuarios = ControladorAdministrativo.GetUsuarios();
 
             foreach (UsuarioDTO user in usuarios)
             {
@@ -55,18 +55,18 @@ namespace Trabajo_Integrador.Ventanas
             Console.WriteLine(usr.Id);
             if (usr.Administrador)
             {
-                var usuarios = ControladorFachada.GetUsuarios();
+                var usuarios = ControladorAdministrativo.GetUsuarios();
 
                 foreach (UsuarioDTO user in usuarios)
                 {
                     if (listaCheckedBox.CheckedItems.Contains(user.Id))
                     {
-                        ControladorFachada.SetAdministrador(user.Id);
+                        ControladorAdministrativo.SetAdministrador(user.Id);
 
                     }
                     else
                     {
-                        ControladorFachada.SetNoAdministrador(user.Id);
+                        ControladorAdministrativo.SetNoAdministrador(user.Id);
                     }
                 }
                 MessageBox.Show("El/los usuario/s fueron configurados como administrador con Exito");

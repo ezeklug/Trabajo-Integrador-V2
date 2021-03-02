@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using Trabajo_Integrador.Controladores.Bitacora;
 using Trabajo_Integrador.Controladores.Excepciones;
+using Trabajo_Integrador.Controladores.Utils;
 using Trabajo_Integrador.Dominio;
+using Trabajo_Integrador.DTO;
 using Trabajo_Integrador.EntityFramework;
 
 namespace Trabajo_Integrador.Controladores
@@ -13,67 +15,58 @@ namespace Trabajo_Integrador.Controladores
     /// </summary>
     public static class ControladorAdministrativo
     {
-
-        public static IEnumerable<Usuario> GetUsuarios()
+        public static IEnumerable<UsuarioDTO> GetUsuarios()
         {
-            List<Usuario> listaUsuarios = new List<Usuario>();
+            List<UsuarioDTO> listaUsuariosDTO = new List<UsuarioDTO>();
             using (var db = new TrabajoDbContext())
             {
                 using (var UoW = new UnitOfWork(db))
                 {
-                    listaUsuarios = UoW.RepositorioUsuarios.GetAll().ToList();
+                    IEnumerable<Usuario> listaUsuarios = UoW.RepositorioUsuarios.GetAll();
+                    foreach(Usuario usuario in listaUsuarios)
+                    {
+                        listaUsuariosDTO.Add(new UsuarioDTO (usuario));
+                    }
+                    return listaUsuariosDTO;
                 }
             }
-
-            return listaUsuarios;
         }
-
-
         /// <summary>
         /// Obtiene todas las preguntas de la base de datos
         /// </summary>
         /// <returns></returns>
-        public static IEnumerable<Pregunta> GetPreguntas()
+        public static IEnumerable<PreguntaDTO> GetPreguntas()
         {
-            IEnumerable<Pregunta> preguntas;
+            List<PreguntaDTO> preguntasDTO = new List<PreguntaDTO>();
             using (var db = new TrabajoDbContext())
             {
                 using (var UoW = new UnitOfWork(db))
                 {
-                    preguntas = UoW.RepositorioPreguntas.GetAll();
+                   IEnumerable<Pregunta> preguntas = UoW.RepositorioPreguntas.GetAll();
+                    foreach (Pregunta pregunta in preguntas)
+                    {
+                        preguntasDTO.Add(new PreguntaDTO(pregunta));
+                    }
+                    return preguntasDTO;
                 }
             }
-
-            return preguntas;
         }
-
-
-        public static List<Examen> GetExamenes()
+        public static List<ExamenDTO> GetExamenes()
         {
-            List<Examen> listaExamenes = new List<Examen>();
+            List<ExamenDTO> listaExamenesDTO = new List<ExamenDTO>();
             using (var db = new TrabajoDbContext())
             {
                 using (var UoW = new UnitOfWork(db))
                 {
-                    listaExamenes = (List<Examen>)UoW.ExamenRepository.GetAll();
+                    IEnumerable<Examen> listaExamenes = UoW.ExamenRepository.GetAll();
+                    foreach(Examen examen in listaExamenes)
+                    {
+                        listaExamenesDTO.Add(new ExamenDTO(examen));
+                    }
+                    return listaExamenesDTO;
                 }
             }
-
-            return listaExamenes;
-
         }
-
-
-
-        ///// <summary>
-        ///// Devuelve todas las categorias cargadas en la base de datos para un conjunto
-        ///// </summary>
-        ///// <returns></returns>
-        //public static IEnumerable<CategoriaPregunta> GetCategorias(String pNombre)
-        //{
-        //    return ControladorPreguntas.GetCategorias(pNombre);
-        //}
-
         /// <summary>
         /// Devuelve todos los nombres de los conjuntos
         /// </summary>
@@ -107,9 +100,6 @@ namespace Trabajo_Integrador.Controladores
                 }
             }
         }
-
-
-
         /// <summary>
         /// Metodo que establece como admin a un usuario pasado como parametro
         /// </summary>
@@ -126,25 +116,25 @@ namespace Trabajo_Integrador.Controladores
                 }
             }
         }
-
-
-
-
         /// <summary>
         /// Metodo que devuelve una lista de examenes de un usuario ordenados por puntaje
         /// </summary>
         /// <param name="pUsuario"></param>
         /// <returns></returns>
-        public static IEnumerable<Examen> GetRanking(String pUsuario)
+        public static IEnumerable<ExamenDTO> GetRanking(String pUsuario)
         {
-            List<Examen> listaExamenes = new List<Examen>();
+            List<ExamenDTO> listaExamenesDTO = new List<ExamenDTO>();
             try
             {
                 using (var db = new TrabajoDbContext())
                 {
                     using (var UoW = new UnitOfWork(db))
                     {
-                        listaExamenes = (List<Examen>)UoW.ExamenRepository.GetAll().ToList().FindAll(ex => ex.UsuarioId == pUsuario).OrderBy(ex => ex.Puntaje).ToList<Examen>();
+                       IEnumerable<Examen> listaExamenes = UoW.ExamenRepository.GetAll().ToList().FindAll(ex => ex.UsuarioId == pUsuario).OrderBy(ex => ex.Puntaje);
+                       foreach(Examen examen in listaExamenes)
+                        {
+                            listaExamenesDTO.Add(new ExamenDTO(examen));
+                        }
                     }
                 }
             }
@@ -153,11 +143,8 @@ namespace Trabajo_Integrador.Controladores
                 var bitacora = new Bitacora.Bitacora();
                 bitacora.GuardarLog("ControladorAdministrativo.GetRanking" + ex.Message);
             }
-            return listaExamenes;
+            return listaExamenesDTO;
         }
-
-
-
         /// <summary>
         /// Devuelve todos los logs
         /// </summary>
@@ -167,9 +154,6 @@ namespace Trabajo_Integrador.Controladores
             IBitacora bitacora = new Bitacora.Bitacora();
             return bitacora.ObtenerTodos();
         }
-
-
-
         /// <summary>
         /// Setea un usuario como no administrador
         /// </summary>
@@ -186,22 +170,21 @@ namespace Trabajo_Integrador.Controladores
                 }
             }
         }
-
-
         /// <summary>
         /// Guarda un usuario en la base de datos
         /// </summary>
         /// <exception cref="UsrYaExisteException">Si usuario ya existe</exception> 
         /// <param name="pUsuario"></param>
-        public static void GuardarUsuario(Usuario pUsuario)
+        public static void GuardarUsuario(string usuarioNombre, string contrasenia)
         {
+            var usr = Autenticador.ConstruirUsuario(usuarioNombre, contrasenia);
             try
             {
                 using (var db = new TrabajoDbContext())
                 {
                     using (var UoW = new UnitOfWork(db))
                     {
-                        UoW.RepositorioUsuarios.Add(pUsuario);
+                        UoW.RepositorioUsuarios.Add(usr);
                         UoW.Complete();
                     }
                 }
@@ -209,7 +192,7 @@ namespace Trabajo_Integrador.Controladores
             }
             catch (System.Data.Entity.Infrastructure.DbUpdateException ex)
             {
-                throw new UsrYaExisteException(String.Format("{0} Ya existe en la bd", pUsuario));
+                throw new UsrYaExisteException(String.Format("{0} Ya existe en la bd", usr));
             }
 
         }

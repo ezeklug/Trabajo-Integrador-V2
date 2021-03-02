@@ -20,7 +20,7 @@ namespace Trabajo_Integrador.Ventanas
 
         private void Todas_las_Preguntas_Load(object sender, EventArgs e)
         {
-            IEnumerable<PreguntaDTO> preguntas = ControladorFachada.GetPreguntas();
+            IEnumerable<PreguntaDTO> preguntas = ControladorAdministrativo.GetPreguntas();
             DataTable dt = new DataTable();
             int cont = 0;
 

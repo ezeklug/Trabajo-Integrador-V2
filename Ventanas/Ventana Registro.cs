@@ -51,7 +51,7 @@ namespace Trabajo_Integrador.Ventanas
                 }
                 catch (UsrNoEncontradoException ex)
                 {
-                    ControladorFachada.GuardarUsuario(nombreUsuario, contrasenia1);
+                    ControladorAdministrativo.GuardarUsuario(nombreUsuario, contrasenia1);
                     MessageBox.Show("Usuario registrado correctamente");
                     this.Hide();
                     Ventana_Inicio vInicio = new Ventana_Inicio();

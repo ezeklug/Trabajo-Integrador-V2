@@ -252,7 +252,6 @@ namespace Trabajo_Integrador.Controladores
                         {
                             dificultadesDTO.Add(new DificultadDTO(dificultad));
                         }
-                        return dificultadesDTO;
                     }
                 }
             }
@@ -261,7 +260,8 @@ namespace Trabajo_Integrador.Controladores
                 var bitacora = new Bitacora.Bitacora();
                 bitacora.GuardarLog("ControladorPreguntas.GetDificultades" + ex.ToString());
             }
-            return dificultades;
+            return dificultadesDTO;
+
         }
         public static void GuardarConjuntos(IEnumerable<ConjuntoPreguntas> pConjuntos)
         {
