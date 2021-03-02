@@ -1,17 +1,17 @@
-﻿using NUnit.Framework;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using Trabajo_Integrador;
 using Trabajo_Integrador.Controladores;
 using Trabajo_Integrador.Controladores.Bitacora;
 using Trabajo_Integrador.Dominio;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace UnitTests
 {
+    [TestClass]
     public class Tests
     {
-
         public static void CargarTodo()
         {
             var dificultades = new List<Dificultad>();
@@ -56,13 +56,13 @@ namespace UnitTests
                     conjuntos.Add(conj);
                 }
             }
-            ControladorPreguntas.GuardarConjuntos(conjuntos);
+          //  ControladorPreguntas.GuardarConjuntos(conjuntos);
         }
 
 
 
 
-        [Test]
+        [TestMethod]
         public static void GetPreguntas()
         {
             var pregs = ControladorAdministrativo.GetPreguntas();
@@ -82,7 +82,7 @@ namespace UnitTests
             bitacora.GuardarLog(descripcion);
         }
 
-        //[Test]
+        //[TestMethod]
         public void testGetPreguntas()
         {
             IEnumerable<Pregunta> preguntas = ControladorPreguntas.ObtenerPreguntasDeInternet("10", "OpentDb", "Science: Computers", "hard");
@@ -90,13 +90,13 @@ namespace UnitTests
             Assert.Equals(10, pre.Count);
         }
 
-        //[Test]
+        //[TestMethod]
         public void testCargarPreguntas()
         {
             ControladorPreguntas.GetPreguntasOnline("10", "OpentDb", "Science: Computers", "hard");
         }
 
-        //[Test]
+        //[TestMethod]
         public void testCargarTodasLasCategorias()
         {
             var conj = ControladorPreguntas.GetCategorias("OpentDb");
