@@ -22,35 +22,20 @@ namespace Trabajo_Integrador.Ventanas
         {
             IEnumerable<PreguntaDTO> preguntas = ControladorAdministrativo.GetPreguntas();
             DataTable dt = new DataTable();
-            int cont = 0;
+            int cont = 1;
 
             dt.Columns.Add("Nº", typeof(int));
             dt.Columns.Add("Pregunta", typeof(string));
-            dt.Columns.Add("Categoria", typeof(string));
 
             foreach (PreguntaDTO pregunta in preguntas)
             {
-                IEnumerable<RespuestaDTO> respuestas = ControladorPreguntas.RespuestasDePregunta(pregunta);
-                var categoriaDePregunta = ControladorPreguntas.CategoriaDePregunta(pregunta);
-                IEnumerable<object> row = new object[] { cont, pregunta.Id, categoriaDePregunta.Id };
-                int i = 1;
-                foreach (RespuestaDTO respuesta in respuestas)
-                {
-                    if (!dt.Columns.Contains($"Respuesta {i}"))
-                    {
-                        dt.Columns.Add($"Respuesta {i}", typeof(string));
-
-                    }
-                    row = row.Append(respuesta.Texto);
-                    i++;
-
-
-                }
+                IEnumerable<object> row = new object[] { cont, pregunta.Id };
                 cont++;
                 dt.Rows.Add(row.ToArray<object>());
             }
             dataGridView1.DataSource = dt;
-
+            dataGridView1.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            dataGridView1.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
         }
 
         private void button1_Click(object sender, EventArgs e)
