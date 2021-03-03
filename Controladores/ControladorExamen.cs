@@ -1,8 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using Trabajo_Integrador.Controladores.Excepciones;
 using Trabajo_Integrador.Dominio;
 using Trabajo_Integrador.DTO;
 using Trabajo_Integrador.EntityFramework;
+
 
 namespace Trabajo_Integrador.Controladores
 {
@@ -54,12 +57,23 @@ namespace Trabajo_Integrador.Controladores
         /// <summary>
         /// Crea un nuevo examen no asociado a un usuario
         /// </summary>
+        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="ArgumentException"> Cuando no existe un conjunto para la categoria y dificultad</exception>
         /// <param name="pCantidad"></param>
         /// <param name="pConjunto"></param>
         /// <param name="pCategoria"></param>
         /// <param name="pDificultad"></param>
         public static ExamenDTO InicializarExamen(string pCantidad, string pConjunto, string pCategoria, string pDificultad)
         {
+            if (string.IsNullOrEmpty(pCantidad) ||
+                string.IsNullOrEmpty(pConjunto) ||
+                string.IsNullOrEmpty(pCategoria) ||
+                string.IsNullOrEmpty(pDificultad))
+            {
+                throw new ArgumentNullException();
+            }
+
+
             Examen examen = new Examen();
             var preguntas = ControladorExamen.GetPreguntasRandom(pCantidad, pConjunto, pCategoria, pDificultad);
             examen = ControladorExamen.AsociarExamenPregunta(examen, preguntas);
@@ -68,6 +82,10 @@ namespace Trabajo_Integrador.Controladores
                 using (var UoW = new UnitOfWork(db))
                 {
                     var conjunto = UoW.RepositorioConjuntoPregunta.ObtenerConjuntoPorDificultadYCategoria(pConjunto, pDificultad, pCategoria);
+                    if (conjunto == null)
+                    {
+                        throw new ArgumentException(String.Format("No existe {0} para {1} y {2}", pConjunto, pCategoria, pDificultad));
+                    }
                     examen.TiempoLimite = (float)examen.CantidadPreguntas * conjunto.TiempoEsperadoRespuesta;
                 }
             }
@@ -79,6 +97,7 @@ namespace Trabajo_Integrador.Controladores
         /// Guarda el resultado de un examen para una pregunta y su respuesta
         /// Almacena el resultado de la respuesta
         /// </summary>
+        /// <exception cref="ArgumentException"></exception>
         /// <param name="pExamen"></param>
         /// <param name="pPregunta"></param>
         /// <param name="pRespuesta"></param>
@@ -91,6 +110,11 @@ namespace Trabajo_Integrador.Controladores
                 using (var UoW = new UnitOfWork(db))
                 {
                     examen = UoW.ExamenRepository.Get(pExamen.Id);
+                    var respuesta = UoW.RepositorioPreguntas.Get(pPregunta.Id).Respuestas.Where(r => r.Id == idRespuesta);
+                    if (!respuesta.Any())
+                    {
+                        throw new ArgumentException(String.Format("Respuesta {0} no existe", idRespuesta));
+                    }
                     examen.ExamenPreguntas.First(e => e.PreguntaId == pPregunta.Id).RespuestaElegidaId = idRespuesta;
                     UoW.Complete();
                 }
@@ -179,10 +203,11 @@ namespace Trabajo_Integrador.Controladores
 
 
         /// <summary>
-        /// Da comienzo a un examen
+        /// Asocia un usuario a un examen y llama a examen.iniciar()
         /// </summary>
         /// <param name="pUsuario"></param>
         /// <param name="pExamen"></param>
+        /// <returns>Examen con datos actualiados</returns>
         public static ExamenDTO IniciarExamen(string pNombreUsuario, ExamenDTO pExamen)
         {
             Examen examen = new Examen(pExamen);
@@ -191,6 +216,10 @@ namespace Trabajo_Integrador.Controladores
                 using (var UoW = new UnitOfWork(db))
                 {
                     Usuario usuario = UoW.RepositorioUsuarios.Get(pNombreUsuario);
+                    if (usuario == null)
+                    {
+                        throw new UsrNoEncontradoException("Usuario no existe");
+                    }
                     examen.UsuarioId = usuario.Id;
                     examen.Iniciar();
                     UoW.ExamenRepository.Add(examen);

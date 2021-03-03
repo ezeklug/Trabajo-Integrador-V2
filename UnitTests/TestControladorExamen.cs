@@ -1,6 +1,9 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Linq;
 using Trabajo_Integrador.Controladores;
+using Trabajo_Integrador.Controladores.Excepciones;
+using Trabajo_Integrador.DTO;
 
 namespace UnitTests
 {
@@ -10,29 +13,40 @@ namespace UnitTests
         [TestMethod]
         public void TestInicializarExamen()
         {
-            try
-            {
-                ControladorExamen.InicializarExamen("", "", "", "");
-            }
-            catch (ArgumentNullException) { }
+            var examenDto = ControladorExamen.InicializarExamen("10", "OpentDb", "Science: Computers", "easy");
+            Assert.IsTrue(examenDto.ExamenPreguntas.ToList().Count == 10);
 
-            ControladorExamen.InicializarExamen("10", "OpentDb", "Science: Computers", "easy");
-
-            ControladorExamen.InicializarExamen("10", "ConjuntoQueNoExiste", "Science: Computers", "easy");
-
-            ControladorExamen.InicializarExamen("10", "OpentDb", "CategoriaQueNoExiste", "easy");
+            Assert.ThrowsException<ArgumentNullException>(() => ControladorExamen.InicializarExamen("", "", "", ""));
+            Assert.ThrowsException<ArgumentException>(() => ControladorExamen.InicializarExamen("10", "ConjuntoQueNoExiste", "Science: Computers", "easy"));
+            Assert.ThrowsException<ArgumentException>(() => ControladorExamen.InicializarExamen("10", "OpentDb", "CategoriaQueNoExiste", "easy"));
         }
 
         [TestMethod]
-        public void TestIniciarExamen()
+        public void TestFuncionalidadExamen()
         {
             var examen = ControladorExamen.InicializarExamen("10", "OpentDb", "Science: Computers", "easy");
-            var examenDto = ControladorExamen.IniciarExamen("leo", examen);
+            Assert.ThrowsException<UsrNoEncontradoException>(() => ControladorExamen.IniciarExamen("usuarioQueNoExiste", examen));
+            examen = ControladorExamen.IniciarExamen("leo", examen);
 
-            ///TODO: testear que pasa si el nombre de usuario no existe
-            ///que pasa si se hacen dos llamadas consecutivas a iniciarExamen
-            ///
+            TestGuardarPreguntas(examen);
+        }
 
+
+        public void TestGuardarPreguntas(ExamenDTO pExamen)
+        {
+            var preguntas = ControladorExamen.GetPreguntasDeExamen(pExamen.Id);
+
+            Assert.ThrowsException<ArgumentException>(() => ControladorExamen.GuardarRespuesta(pExamen, preguntas.First(), 0));
+
+            foreach (var p in preguntas)
+            {
+                ControladorExamen.GuardarRespuesta(pExamen, p, p.Respuestas.First().Id);
+            }
+            ControladorExamen.FinalizarExamen(pExamen);
+
+            /// Chequea que el examen se haya guardado correctamente el DB
+            var examenGuardadoDTO = ControladorAdministrativo.GetExamenes().First(e => e.Id == pExamen.Id);
+            Assert.IsTrue(examenGuardadoDTO.ExamenPreguntas.Where(ep => ep.RespuestaElegidaId == 1).ToList().Count == preguntas.Count());
         }
 
 

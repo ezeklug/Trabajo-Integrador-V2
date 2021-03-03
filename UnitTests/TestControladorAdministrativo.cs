@@ -1,7 +1,7 @@
-﻿using System.Linq;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Linq;
 using Trabajo_Integrador.Controladores;
 using Trabajo_Integrador.Controladores.Excepciones;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 
 
@@ -14,16 +14,18 @@ namespace UnitTests
         public void TestGetUsuario()
         {
             var usr = ControladorAdministrativo.AutenticarUsuario("leo", "leonardo");
-            Assert.Equals(usr.Id, "leo");
+            Assert.AreEqual(usr.Id, "leo");
             try
             {
                 ControladorAdministrativo.AutenticarUsuario("", "");
+                Assert.Fail();
             }
             catch (UsrNoEncontradoException) { }
 
             try
             {
                 ControladorAdministrativo.AutenticarUsuario("asdasd", "lsoebfdia");
+                Assert.Fail();
             }
             catch (UsrNoEncontradoException) { }
         }
@@ -68,11 +70,11 @@ namespace UnitTests
 
             ControladorAdministrativo.SetAdministrador(id);
             var usr = ControladorAdministrativo.AutenticarUsuario(id, pass);
-            Assert.Equals(usr.Administrador, true);
+            Assert.AreEqual(usr.Administrador, true);
 
             ControladorAdministrativo.SetNoAdministrador(id);
             usr = ControladorAdministrativo.AutenticarUsuario(id, pass);
-            Assert.Equals(usr.Administrador, false);
+            Assert.AreEqual(usr.Administrador, false);
         }
 
 
@@ -92,7 +94,11 @@ namespace UnitTests
         [TestMethod]
         public void TestGuardarUsuario()
         {
-            try { ControladorAdministrativo.GuardarUsuario("leo", "leonardo"); }
+            try
+            {
+                ControladorAdministrativo.GuardarUsuario("leo", "leonardo");
+                Assert.Fail();
+            }
             catch (UsrYaExisteException) { }
         }
 
