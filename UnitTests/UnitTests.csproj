@@ -240,6 +240,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="TestBitacoraFile.cs" />
     <Compile Include="TestControladorAdministrativo.cs" />
     <Compile Include="TestControladorExamen.cs" />
     <Compile Include="TestControladorPreguntas.cs" />
