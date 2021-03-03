@@ -243,6 +243,7 @@
     <Compile Include="TestControladorAdministrativo.cs" />
     <Compile Include="TestControladorExamen.cs" />
     <Compile Include="TestControladorPreguntas.cs" />
+    <Compile Include="TestObtenerPreguntas.cs" />
     <Compile Include="UnitTest1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

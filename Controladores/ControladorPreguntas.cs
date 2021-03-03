@@ -134,7 +134,7 @@ namespace Trabajo_Integrador.Controladores
                 {
                     using (var UoW = new UnitOfWork(db))
                     {
-                        ICollection<CategoriaPregunta> categorias = UoW.RepositorioPreguntas.CategoriasConMasDeNPreguntas(pNombreConjunto, n);
+                        var categorias = UoW.RepositorioPreguntas.CategoriasConMasDeNPreguntas(pNombreConjunto, n);
                         foreach (CategoriaPregunta categoria in categorias)
                         {
                             categoriasDTO.Add(new CategoriaPreguntaDTO(categoria));

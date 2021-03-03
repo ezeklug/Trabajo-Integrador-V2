@@ -1,5 +1,5 @@
 ﻿using Trabajo_Integrador.DTO;
-namespace Trabajo_Integrador
+namespace Trabajo_Integrador.Dominio
 {
     /// <summary>
     /// Clase que indica la categoria de un conjunto

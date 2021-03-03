@@ -5,7 +5,7 @@ using Trabajo_Integrador.Dominio;
 
 namespace Trabajo_Integrador.Controladores.ObtenerPreguntas
 {
-    class OpentDbEstrategiaObtenerPreguntas : EstrategiaObtenerPreguntas
+    public class OpentDbEstrategiaObtenerPreguntas : EstrategiaObtenerPreguntas
     {
         ///Clase compuesta por 
 
@@ -18,11 +18,24 @@ namespace Trabajo_Integrador.Controladores.ObtenerPreguntas
         /// </summary>
         /// <exception cref="WebException"></exception>
         /// <exception cref="FormatException"></exception>
+        /// <exception cref="ArgumentNullException"></exception>
         /// <param name="pCantidad"></param>
         /// <param name="pConjunto"></param>
         /// <returns></returns>
         public override IEnumerable<Pregunta> DescargarPreguntas(int pCantidad, ConjuntoPreguntas pConjunto)
         {
+            if ((pConjunto == null) ||
+                (pConjunto.Categoria == null) ||
+                (pConjunto.Dificultad == null) ||
+                String.IsNullOrEmpty(pConjunto.Nombre))
+            {
+                throw new ArgumentNullException();
+            }
+
+            if (pCantidad == 0)
+            {
+                return new List<Pregunta>();
+            }
             var url = iUrlCreador.CrearUrl(pCantidad, pConjunto);
             var response = iWebRequester.PeticionAUrl(url);
             return iParser.ParseResponse(response, pConjunto);

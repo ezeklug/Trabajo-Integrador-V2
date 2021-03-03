@@ -24,6 +24,12 @@ namespace Trabajo_Integrador.Controladores.ObtenerPreguntas
         /// <returns>Preguntas construidas</returns>
         public IEnumerable<Pregunta> ParseResponse(WebResponse webResponse, ConjuntoPreguntas pConjunto)
         {
+
+            if (((HttpWebResponse)webResponse).StatusCode != HttpStatusCode.OK)
+            {
+                throw new ArgumentException(String.Format("Error en webResponse. Status code es: {0}", ((HttpWebResponse)webResponse).StatusCode));
+            }
+
             var preguntas = new List<Pregunta>();
 
 

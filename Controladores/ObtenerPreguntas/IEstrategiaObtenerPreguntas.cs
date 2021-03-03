@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Trabajo_Integrador.Dominio;
 
-namespace Trabajo_Integrador
+namespace Trabajo_Integrador.Controladores.ObtenerPreguntas
 {
     /// <summary>
     /// Interface que especifica los metodos para poder obtener preguntas 

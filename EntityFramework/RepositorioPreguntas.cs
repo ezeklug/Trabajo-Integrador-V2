@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using Trabajo_Integrador.Dominio;
 namespace Trabajo_Integrador.EntityFramework
 {
     public class RepositorioPreguntas : Repository<Pregunta, TrabajoDbContext>

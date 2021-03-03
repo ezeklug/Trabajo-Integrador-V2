@@ -1,4 +1,5 @@
-﻿namespace Trabajo_Integrador.DTO
+﻿using Trabajo_Integrador.Dominio;
+namespace Trabajo_Integrador.DTO
 {
     public class CategoriaPreguntaDTO
     {
