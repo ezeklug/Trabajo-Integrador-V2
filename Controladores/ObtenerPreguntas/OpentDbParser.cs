@@ -18,18 +18,12 @@ namespace Trabajo_Integrador.Controladores.ObtenerPreguntas
         /// <summary>
         /// Dada una web response y un conjunto, construye las preguntas
         /// </summary>
-        /// <exception cref="FormatException">Si webResponse no tiene formato adecuado</exception>
+        /// <exception cref="JsonReaderException">Si webResponse no tiene formato adecuado</exception>
         /// <param name="webResponse"></param>
         /// <param name="pConjunto"></param>
         /// <returns>Preguntas construidas</returns>
         public IEnumerable<Pregunta> ParseResponse(WebResponse webResponse, ConjuntoPreguntas pConjunto)
         {
-
-            if (((HttpWebResponse)webResponse).StatusCode != HttpStatusCode.OK)
-            {
-                throw new ArgumentException(String.Format("Error en webResponse. Status code es: {0}", ((HttpWebResponse)webResponse).StatusCode));
-            }
-
             var preguntas = new List<Pregunta>();
 
 

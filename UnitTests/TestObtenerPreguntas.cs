@@ -1,6 +1,8 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Newtonsoft.Json;
 using System;
 using System.Linq;
+using System.Net;
 using Trabajo_Integrador.Controladores;
 using Trabajo_Integrador.Controladores.ObtenerPreguntas;
 using Trabajo_Integrador.Dominio;
@@ -47,6 +49,16 @@ namespace UnitTests
 
             estrategiaNula = ControladorPreguntas.GetEstrategia("");
             Assert.IsInstanceOfType(estrategiaNula, typeof(EstrategiaNula));
+        }
+
+
+        [TestMethod]
+        public void TestOpentDbParser()
+        {
+            // El "camino feliz" es testeado en TestObtenerPreguntasOpentDb
+            var parser = new OpentDbParser();
+            var httpRequestBueno = (WebRequest.CreateHttp("http://google.com")).GetResponse();
+            Assert.ThrowsException<JsonReaderException>(() => parser.ParseResponse(httpRequestBueno, new ConjuntoPreguntas()));
         }
 
 
