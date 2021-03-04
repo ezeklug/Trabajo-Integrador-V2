@@ -58,8 +58,15 @@ namespace Trabajo_Integrador.Controladores
 
             return cantidad;
         }
+
+
+
         public static IEnumerable<Pregunta> ObtenerPreguntasDeInternet(string pCantidad, string pConjunto, string pCategoria, string pDificultad)
         {
+            if (pCantidad == "0")
+            {
+                return new List<Pregunta>();
+            }
             ConjuntoPreguntas conjunto;
             using (var db = new TrabajoDbContext())
             {
@@ -71,8 +78,9 @@ namespace Trabajo_Integrador.Controladores
             IEstrategiaObtenerPreguntas estrategia = ControladorPreguntas.GetEstrategia(pConjunto);
             var preguntas = estrategia.DescargarPreguntas(int.Parse(pCantidad), conjunto);
             return preguntas;
-
         }
+
+
         /// <summary>
         /// Obtiene las preguntas de internet y se cargan en la base de datos.
         /// Devuelve el numero de preguntas que se cargaron exitosamente
@@ -89,9 +97,6 @@ namespace Trabajo_Integrador.Controladores
 
             cargadas = ControladorPreguntas.CargarPreguntas(preguntas);
             return cargadas;
-
-
-
         }
 
 
@@ -203,8 +208,9 @@ namespace Trabajo_Integrador.Controladores
                 bitacora.GuardarLog("ControladorPreguntas.GetDificultades" + ex.ToString());
             }
             return dificultadesDTO;
-
         }
+
+
         public static IEnumerable<RespuestaDTO> RespuestasDePregunta(PreguntaDTO pPregunta)
         {
             Pregunta pre;

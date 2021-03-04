@@ -18,7 +18,7 @@ namespace UnitTests
         }
 
         [TestMethod]
-        public void TestCargarPreguntasDeInternet()
+        public void TestObtenerPreguntasDeInternet()
         {
             string cantidad = "20";
             string conjunto = "OpentDb";
@@ -42,6 +42,8 @@ namespace UnitTests
                 Assert.IsTrue(ControladorPreguntas.CantidadDePreguntasParaCategoria(categoria.Id) >= cantidadDePreguntas);
             }
         }
+
+
 
 
     }

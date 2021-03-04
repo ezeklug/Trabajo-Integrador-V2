@@ -81,10 +81,10 @@ namespace Trabajo_Integrador.Controladores.Bitacora
                     }
                 }
 
-                return i;
+                return i + 1;
 
             }
-            catch (System.Data.Entity.Core.ProviderIncompatibleException e)
+            catch (System.Data.Entity.Core.ProviderIncompatibleException)
             {
                 return 0;
             }

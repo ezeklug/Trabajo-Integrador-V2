@@ -83,7 +83,7 @@ namespace Trabajo_Integrador.Controladores.Bitacora
             {
                 ids[i] = b.ObtenerSiguienteId();
             }
-            return ids.Max() + 1;
+            return ids.Max();
         }
 
         public Bitacora()
