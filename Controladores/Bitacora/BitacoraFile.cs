@@ -33,11 +33,16 @@ namespace Trabajo_Integrador.Controladores.Bitacora
             return this.ObtenerTodos().Where(l => (l.Fecha <= pHasta) && (pDesde < l.Fecha)).ToArray();
         }
 
+
+        /// <summary>
+        /// Devuelve el siguiente id a utilizar 
+        /// </summary>
+        /// <returns></returns>
         public override int ObtenerSiguienteId()
         {
             try
             {
-                return this.ObtenerTodos().Max(l => l.Id);
+                return this.ObtenerTodos().Max(l => l.Id) + 1;
             }
             catch (FileNotFoundException e)
             {
@@ -45,25 +50,43 @@ namespace Trabajo_Integrador.Controladores.Bitacora
             }
         }
 
+
+        /// <summary>
+        /// Obtiene todos los logs
+        /// </summary>
+        /// <returns>Devuelve los logs o null</returns>
         public override ICollection<Log> ObtenerTodos()
         {
 
             // Primera implementacion
             // Se podría hacer mas eficiente utilizando un buffer y leyendo de a poco
             List<Log> logs = new List<Log>();
+            String f;
 
-            var f = File.ReadAllText(nombreDefault);
+            try
+            {
+                f = File.ReadAllText(nombreDefault);
+            }
+            catch (FileNotFoundException)
+            {
+                return new List<Log>();
+            }
+
+
             var lines = f.Split('\n');
             foreach (var l in lines)
             {
                 // Se podria hacer mas eficiente evitando tanto alloc dentro del for
                 Log log = new Log();
                 var campos = l.Split(',');
-                log.Id = int.Parse(campos[0]);
-                log.Fecha = DateTime.Parse(campos[1]);
-                log.Descripcion = campos[2];
+                if (campos.First() != "")
+                {
+                    log.Id = int.Parse(campos[0]);
+                    log.Fecha = DateTime.Parse(campos[1]);
+                    log.Descripcion = campos[2];
 
-                logs.Add(log);
+                    logs.Add(log);
+                }
             }
 
             return logs;

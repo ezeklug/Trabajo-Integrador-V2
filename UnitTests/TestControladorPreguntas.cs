@@ -1,7 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Linq;
-using Trabajo_Integrador;
 using Trabajo_Integrador.Controladores;
 
 namespace UnitTests
@@ -18,60 +17,31 @@ namespace UnitTests
             Assert.IsNotNull(ControladorPreguntas.GetEstrategia(nombre).ToString());
         }
 
-       [TestMethod]
+        [TestMethod]
         public void TestCargarPreguntasDeInternet()
         {
-            string pCantidad = "20";
-            string pConjunto = "OpentDb";
-            string pCategoria = "Sports";
-            string pDificultad = "easy";
+            string cantidad = "20";
+            string conjunto = "OpentDb";
+            string categoria = "Sports";
+            string dificultad = "easy";
 
-            var count = ControladorPreguntas.ObtenerPreguntasDeInternet(pCantidad,pConjunto,pCategoria,pDificultad).ToList().Count;
-            Console.WriteLine(count);
-            Assert.IsTrue(count >= 1);
-
-
-        }
-
-        [TestMethod]
-        public void TestGetCategorias()
-        {
-            string nombreConjunto = "OpentDb";
-            int count = ControladorPreguntas.GetCategorias(nombreConjunto).ToList().Count;
-            Console.WriteLine(count);
+            var count = ControladorPreguntas.ObtenerPreguntasDeInternet(cantidad, conjunto, categoria, dificultad).ToList().Count;
+            // Se chequea que tenga mas de una pregunta ya que la API puede devolver menos preguntas
             Assert.IsTrue(count >= 1);
         }
 
         [TestMethod]
         public void TestGetCategoriasConMasDeNPreguntas()
         {
-            String pNombreConjunto= "OpentDb";
-            int n = 35;
-            int count = ControladorPreguntas.GetCategoriasConMasDeNPreguntas(pNombreConjunto, n).ToList().Count;
-            Console.WriteLine(count);
-            Assert.IsTrue(count >= 1);
+            String nombreConjunto = "OpentDb";
+            int cantidadDePreguntas = 35;
+            var categorias = ControladorPreguntas.GetCategoriasConMasDeNPreguntas(nombreConjunto, cantidadDePreguntas);
 
+            foreach (var categoria in categorias)
+            {
+                Assert.IsTrue(ControladorPreguntas.CantidadDePreguntasParaCategoria(categoria.Id) >= cantidadDePreguntas);
+            }
         }
-
-        [TestMethod]
-        public void TestCantidadDePreguntasParaCategoria()
-        {
-            String pIdCategoria = "History";
-            int count = ControladorPreguntas.CantidadDePreguntasParaCategoria(pIdCategoria);
-            Assert.IsNotNull(count);
-            Console.WriteLine(count);
-        }
-
-        [TestMethod]
-        public void GetDificultades()
-        {
-            string nombreConjunto = "OpentDb";
-            int count = ControladorPreguntas.GetDificultades(nombreConjunto).ToList().Count;
-            Console.WriteLine(count);
-            Assert.IsTrue(count == 3);
-        }
-
-
 
 
     }
