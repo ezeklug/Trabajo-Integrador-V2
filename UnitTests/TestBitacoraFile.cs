@@ -12,14 +12,14 @@ namespace UnitTests
         /// solo testeamos este metodo y GuardarLog
 
         [TestMethod]
-        public void TestObtenerTodos()
+        public void TestObtenerTodos_DevuelveTodosLosLogs()
         {
             var bitacora = new BitacoraFile();
             Assert.IsNotNull(bitacora.ObtenerTodos());
         }
 
         [TestMethod]
-        public void TestGuardarLog()
+        public void TestGuardarLog_LogValido_GuardaUnLog()
         {
             var bitacora = new BitacoraFile();
             var siguienteId = bitacora.ObtenerSiguienteId();
