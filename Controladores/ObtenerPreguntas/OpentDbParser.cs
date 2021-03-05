@@ -9,7 +9,7 @@ using Trabajo_Integrador.Dominio;
 
 namespace Trabajo_Integrador.Controladores.ObtenerPreguntas
 {
-    internal class OpentDbParser
+    public class OpentDbParser
     {
         public OpentDbParser()
         {

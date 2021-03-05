@@ -9,7 +9,7 @@ namespace Trabajo_Integrador.Controladores.Bitacora
     /// <summary>
     /// Almacena logs en un archivo de texto
     /// </summary>
-    class BitacoraFile : BitacoraComposite
+    public class BitacoraFile : BitacoraComposite
     {
         private const string nombreDefault = "examenvirtual.log";
 
