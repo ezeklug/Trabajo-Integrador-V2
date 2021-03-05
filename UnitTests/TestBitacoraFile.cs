@@ -7,10 +7,6 @@ namespace UnitTests
     [TestClass]
     public class TestBitacoraFile
     {
-
-        /// Como todos los metodos de bitacora file estan basados en ObtenerTodos() y la libreria Linq
-        /// solo testeamos este metodo y GuardarLog
-
         [TestMethod]
         public void TestObtenerTodos_DevuelveTodosLosLogs()
         {
@@ -24,9 +20,7 @@ namespace UnitTests
             var bitacora = new BitacoraFile();
             var siguienteId = bitacora.ObtenerSiguienteId();
             var log = new Log(siguienteId, DateTime.Now, String.Format("Un error de prueba con id {0}", siguienteId));
-
             bitacora.GuardarLog(log);
-
             Assert.AreEqual(siguienteId + 1, bitacora.ObtenerSiguienteId());
         }
     }

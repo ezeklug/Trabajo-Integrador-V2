@@ -3,8 +3,6 @@ using System.Linq;
 using Trabajo_Integrador.Controladores;
 using Trabajo_Integrador.Controladores.Excepciones;
 
-
-
 namespace UnitTests
 {
     [TestClass]
@@ -46,14 +44,12 @@ namespace UnitTests
             Assert.IsTrue(count >= 1);
         }
 
-
         [TestMethod]
         public void GetPreguntas_DevuelveListaDePreguntas()
         {
             var count = ControladorAdministrativo.GetPreguntas().ToList().Count;
             Assert.IsTrue(count >= 1);
         }
-
 
         [TestMethod]
         public void GetExamenes_DevuelveListaDeExamenes()
@@ -92,7 +88,6 @@ namespace UnitTests
             Assert.AreEqual(usr.Administrador, false);
         }
 
-
         [TestMethod]
         public void GetRanking_UsuarioValido_DevuelveListaDeExamenesOrdenadasPorPuntaje()
         {
@@ -101,7 +96,6 @@ namespace UnitTests
             Assert.IsTrue(count >= 1);
         }
 
-
         [TestMethod]
         public void GetRanking_UsuarioNoValido_DevuelveListaVacia()
         {
@@ -109,7 +103,6 @@ namespace UnitTests
             var count = ControladorAdministrativo.GetRanking(idInexsistente).ToList().Count;
             Assert.AreEqual(count, 0);
         }
-
 
         [TestMethod]
         public void GuardarUsuario_UsuarioExistente_DevuelveExcepcion()

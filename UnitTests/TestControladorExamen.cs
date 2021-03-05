@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Trabajo_Integrador.Controladores;
 using Trabajo_Integrador.Controladores.Excepciones;
-using Trabajo_Integrador.DTO;
 
 namespace UnitTests
 {
@@ -55,6 +54,7 @@ namespace UnitTests
         public void GuardarRespuestaFinalizarExamen_ExamenValidoPreguntaValidaRespuestaValida_DevuelveExamen()
         {
             var examen = ControladorExamen.InicializarExamen("10", "OpentDb", "Science: Computers", "easy");
+            examen = ControladorExamen.IniciarExamen("leo", examen);
             var preguntas = ControladorExamen.GetPreguntasDeExamen(examen.Id);
             var idRespuestasElegidas = new List<int>();
             foreach (var p in preguntas)
@@ -76,9 +76,9 @@ namespace UnitTests
         public void GuardarRespuesta_ExamenValidoPreguntaValidaRespuestaInvalida_DevuelveArgumentException()
         {
             var examen = ControladorExamen.InicializarExamen("10", "OpentDb", "Science: Computers", "easy");
+            examen = ControladorExamen.IniciarExamen("leo", examen);
             var preguntas = ControladorExamen.GetPreguntasDeExamen(examen.Id);
             var idRespuestasElegidas = new List<int>();
-
             Assert.ThrowsException<ArgumentException>(() => ControladorExamen.GuardarRespuesta(examen, preguntas.First(), 0));
         }
     }
