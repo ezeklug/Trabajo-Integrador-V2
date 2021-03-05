@@ -18,23 +18,16 @@ namespace UnitTests
         [TestMethod]
         public void AutenticarUsuario_UsuarioVacio_DevuelveExcepcion()
         {
-            try
-            {
-                ControladorAdministrativo.AutenticarUsuario("", "");
-                Assert.Fail();
-            }
-            catch (UsrNoEncontradoException) { }
+            Assert.ThrowsException<UsrNoEncontradoException>(() =>
+                ControladorAdministrativo.AutenticarUsuario("", ""));
         }
 
         [TestMethod]
         public void AutenticarUsuario_UsuarioInexistente_DevuelveExcepcion()
         {
-            try
-            {
-                ControladorAdministrativo.AutenticarUsuario("usuarioInexistente", "contraseñaInexistente");
-                Assert.Fail();
-            }
-            catch (UsrNoEncontradoException) { }
+
+            Assert.ThrowsException<UsrNoEncontradoException>(() =>
+                ControladorAdministrativo.AutenticarUsuario("UsuarioInexistente", "ContraseniaInexistente"));
         }
 
         [TestMethod]
@@ -78,6 +71,16 @@ namespace UnitTests
         }
 
         [TestMethod]
+        public void SetAdministrador_UsuarioNoValido_DevuelveExcepcion()
+        {
+            var id = "UsuarioQueNoexiste";
+
+            Assert.ThrowsException<UsrNoEncontradoException>(() =>
+                ControladorAdministrativo.SetAdministrador(id));
+        }
+
+
+        [TestMethod]
         public void SetNoAdministrador_UsuarioValido()
         {
             var id = "admin";
@@ -86,6 +89,17 @@ namespace UnitTests
             ControladorAdministrativo.SetNoAdministrador(id);
             var usr = ControladorAdministrativo.AutenticarUsuario(id, pass);
             Assert.AreEqual(usr.Administrador, false);
+        }
+
+
+
+        [TestMethod]
+        public void SetNoAdministrador_UsuarioNoValido_DevuelveExcepcion()
+        {
+            var id = "UsuarioQueNoExiste";
+
+            Assert.ThrowsException<UsrNoEncontradoException>(() =>
+                ControladorAdministrativo.SetNoAdministrador(id));
         }
 
         [TestMethod]
@@ -107,12 +121,8 @@ namespace UnitTests
         [TestMethod]
         public void GuardarUsuario_UsuarioExistente_DevuelveExcepcion()
         {
-            try
-            {
-                ControladorAdministrativo.GuardarUsuario("leo", "leonardo");
-                Assert.Fail();
-            }
-            catch (UsrYaExisteException) { }
+            Assert.ThrowsException<UsrYaExisteException>(() =>
+                ControladorAdministrativo.GuardarUsuario("leo", "leonardo"));
         }
     }
 }

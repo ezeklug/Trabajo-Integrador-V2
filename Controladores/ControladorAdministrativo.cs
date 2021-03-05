@@ -99,9 +99,12 @@ namespace Trabajo_Integrador.Controladores
                 }
             }
         }
+
+
         /// <summary>
         /// Metodo que establece como admin a un usuario pasado como parametro
         /// </summary>
+        /// <exception cref="UsrNoEncontradoException"></exception>
         /// <param name="pUsuario"></param>
         public static void SetAdministrador(string pUsuario)
         {
@@ -110,6 +113,10 @@ namespace Trabajo_Integrador.Controladores
                 using (var UoW = new UnitOfWork(db))
                 {
                     Usuario dBUsuario = UoW.RepositorioUsuarios.Get(pUsuario);
+                    if (dBUsuario == null)
+                    {
+                        throw new UsrNoEncontradoException(string.Format("{0} no existe ", pUsuario));
+                    }
                     dBUsuario.Administrador = true;
                     UoW.Complete();
                 }
@@ -161,6 +168,7 @@ namespace Trabajo_Integrador.Controladores
         /// <summary>
         /// Setea un usuario como no administrador
         /// </summary>
+        /// <exception cref="UsrNoEncontradoException"></exception>
         /// <param name="pUsuario">Id del usuario</param>
         public static void SetNoAdministrador(string pUsuario)
         {
@@ -169,6 +177,10 @@ namespace Trabajo_Integrador.Controladores
                 using (var UoW = new UnitOfWork(db))
                 {
                     Usuario dBUsuario = UoW.RepositorioUsuarios.Get(pUsuario);
+                    if (dBUsuario == null)
+                    {
+                        throw new UsrNoEncontradoException(string.Format("{0} no encontrado", pUsuario));
+                    }
                     dBUsuario.Administrador = false;
                     UoW.Complete();
                 }

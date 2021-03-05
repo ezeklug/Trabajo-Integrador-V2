@@ -25,12 +25,22 @@ namespace Trabajo_Integrador.Controladores.Bitacora
 
         public override Log Obtener(int pId)
         {
-            return this.ObtenerTodos().FirstOrDefault(l => l.Id == pId);
+            var logs = this.ObtenerTodos();
+            if (logs.Any())
+            {
+                return logs.FirstOrDefault(l => l.Id == pId);
+            }
+            return null;
         }
 
         public override ICollection<Log> Obtener(DateTime pDesde, DateTime pHasta)
         {
-            return this.ObtenerTodos().Where(l => (l.Fecha <= pHasta) && (pDesde < l.Fecha)).ToArray();
+            var logs = this.ObtenerTodos();
+            if (logs.Any())
+            {
+                return logs.Where(l => (l.Fecha <= pHasta) && (pDesde < l.Fecha)).ToArray();
+            }
+            return new List<Log>();
         }
 
 
@@ -40,21 +50,19 @@ namespace Trabajo_Integrador.Controladores.Bitacora
         /// <returns></returns>
         public override int ObtenerSiguienteId()
         {
-            try
-            {
-                return this.ObtenerTodos().Max(l => l.Id) + 1;
-            }
-            catch (FileNotFoundException e)
-            {
-                return 0;
-            }
-        }
 
+            var logs = this.ObtenerTodos();
+            if (logs.Any())
+            {
+                return logs.Max(l => l.Id) + 1;
+            }
+            return 1;
+        }
 
         /// <summary>
         /// Obtiene todos los logs
         /// </summary>
-        /// <returns>Devuelve los logs o null</returns>
+        /// <returns>Devuelve los logs o Icollection vacio</returns>
         public override ICollection<Log> ObtenerTodos()
         {
 
