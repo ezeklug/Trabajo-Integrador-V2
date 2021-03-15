@@ -18,16 +18,16 @@ namespace UnitTests
 
             var dificultad = new Dificultad("easy");
             var categoria = new CategoriaPregunta("Science: Computers", "18");
-            var conjuntoExistente = new ConjuntoPreguntas("OpentDb", dificultad, categoria);
-            conjuntoExistente.Categoria = null;
+            var conjuntoConPropiedadNull = new ConjuntoPreguntas("OpentDb", dificultad, categoria);
+            conjuntoConPropiedadNull.Categoria = null;
 
-            Assert.ThrowsException<ArgumentNullException>(() => opentdb.DescargarPreguntas(0, conjuntoExistente));
-            Assert.ThrowsException<ArgumentNullException>(() => opentdb.DescargarPreguntas(100, conjuntoExistente));
-            conjuntoExistente.Categoria = categoria;
-            conjuntoExistente.Dificultad = null;
+            Assert.ThrowsException<ArgumentNullException>(() => opentdb.DescargarPreguntas(0, conjuntoConPropiedadNull));
+            Assert.ThrowsException<ArgumentNullException>(() => opentdb.DescargarPreguntas(100, conjuntoConPropiedadNull));
+            conjuntoConPropiedadNull.Categoria = categoria;
+            conjuntoConPropiedadNull.Dificultad = null;
 
-            Assert.ThrowsException<ArgumentNullException>(() => opentdb.DescargarPreguntas(0, conjuntoExistente));
-            Assert.ThrowsException<ArgumentNullException>(() => opentdb.DescargarPreguntas(100, conjuntoExistente));
+            Assert.ThrowsException<ArgumentNullException>(() => opentdb.DescargarPreguntas(0, conjuntoConPropiedadNull));
+            Assert.ThrowsException<ArgumentNullException>(() => opentdb.DescargarPreguntas(100, conjuntoConPropiedadNull));
         }
 
         [TestMethod]
@@ -36,10 +36,10 @@ namespace UnitTests
             var opentdb = new OpentDbEstrategiaObtenerPreguntas();
             var dificultad = new Dificultad("easy");
             var categoria = new CategoriaPregunta("Science: Computers", "18");
-            var conjuntoExistente = new ConjuntoPreguntas("OpentDb", dificultad, categoria);
+            var conjunto = new ConjuntoPreguntas("OpentDb", dificultad, categoria);
 
 
-            var res = opentdb.DescargarPreguntas(0, conjuntoExistente);
+            var res = opentdb.DescargarPreguntas(0, conjunto);
             Assert.IsFalse(res.Any());
         }
 
@@ -48,10 +48,10 @@ namespace UnitTests
         {
             var dificultad = new Dificultad("easy");
             var categoria = new CategoriaPregunta("Science: Computers", "18");
-            var conjuntoExistente = new ConjuntoPreguntas("OpentDb", dificultad, categoria);
+            var conjunto = new ConjuntoPreguntas("OpentDb", dificultad, categoria);
 
             var opentdb = new OpentDbEstrategiaObtenerPreguntas();
-            var res = opentdb.DescargarPreguntas(10, conjuntoExistente);
+            var res = opentdb.DescargarPreguntas(10, conjunto);
 
             Assert.IsTrue(res.Any());
 
