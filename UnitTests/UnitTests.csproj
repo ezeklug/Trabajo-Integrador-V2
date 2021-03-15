@@ -246,6 +246,7 @@
     <Compile Include="TestControladorPreguntas.cs" />
     <Compile Include="TestObtenerPreguntas.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestOpentDbEstrategiaObtenerPreguntas.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
