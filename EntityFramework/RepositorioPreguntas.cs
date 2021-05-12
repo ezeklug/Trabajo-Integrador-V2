@@ -28,6 +28,7 @@ namespace Trabajo_Integrador.EntityFramework
         public List<Pregunta> GetRandom(string pCantidad, string pConjunto, string pCategoria, string pDificultad)
         {
             List<Pregunta> preguntas;
+            Random rnd = new Random();
             if ((pCategoria != "0") && (pDificultad == "0"))
             {
                 preguntas = iDBSet.Include("Conjunto").Where(p => ((p.Conjunto.Categoria.Id == pCategoria) && (p.Conjunto.Nombre == pConjunto))).ToList<Pregunta>();
@@ -51,6 +52,7 @@ namespace Trabajo_Integrador.EntityFramework
                 }
             }
             int cantidad = Convert.ToInt32(pCantidad);
+
             if (preguntas.Count <= cantidad)
             {
                 List<Pregunta> preguntas2 = iDBSet.Include("Conjunto").Where(p => ((p.Conjunto.Categoria.Id == pCategoria) && (p.Conjunto.Nombre == pConjunto))).ToList<Pregunta>();
@@ -61,15 +63,16 @@ namespace Trabajo_Integrador.EntityFramework
                         preguntas.Add(preg);
                     }
                 }
-                return preguntas;
             }
-            else
-            {
-                return preguntas.OrderBy(x => Guid.NewGuid()).Take(cantidad).ToList<Pregunta>();
+            var preguntasRandom = new List<Pregunta>();
+
+            while(preguntas.Count() > 0 && preguntasRandom.Count() < cantidad ) { 
+                var pos = rnd.Next(0, preguntas.Count() - 1 );
+                preguntasRandom.Add(preguntas[pos]);
+                preguntas.RemoveAt(pos);
             }
 
-
-
+            return preguntasRandom.OrderBy(x => Guid.NewGuid()).Take(cantidad).ToList<Pregunta>(); 
         }
         public override IEnumerable<Pregunta> GetAll()
         {

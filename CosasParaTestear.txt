@@ -1,6 +1,0 @@
-﻿
-
-- Cargar pregutnas desde opentDB. Modifique algunas cosas por lo que se debería probar que ande bien
-
--Testear que pasa si se agrega una pregunta donde el conjunto asociado no tenga una dificultad o una categoria cargada en la
-base de datos

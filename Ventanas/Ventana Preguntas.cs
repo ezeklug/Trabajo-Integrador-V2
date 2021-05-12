@@ -14,6 +14,8 @@ namespace Trabajo_Integrador.Ventanas
         private int iNumeroPregunta;
         private int tiempo;
 
+        private ExamenDTO examenTerminado = null;
+
 
         public Ventana_Preguntas(ExamenDTO pExamenDto)
         {
@@ -83,17 +85,17 @@ namespace Trabajo_Integrador.Ventanas
                 tiempo--;
                 this.time.Text = "Tiempo Restante: " + tiempo.ToString();
             }
-            else
+            else if(examenTerminado == null)
             {
                 this.timer.Enabled = false;
                 this.Hide();
-                var examenTerminado = ControladorExamen.FinalizarExamen(iExamen);
+
+                examenTerminado = ControladorExamen.FinalizarExamen(iExamen);
 
                 using (Ventana_Examen_Terminado finalizado = new Ventana_Examen_Terminado(examenTerminado)) //Paso el examen a la proxima ventana 
                     finalizado.ShowDialog();
                 this.Close();
             }
-
         }
 
 
@@ -113,7 +115,8 @@ namespace Trabajo_Integrador.Ventanas
                 if (iNumeroPregunta >= iExamen.CantidadPreguntas)
                 {
                     this.Hide();
-                    var examenTerminado = ControladorExamen.FinalizarExamen(iExamen);
+
+                    examenTerminado = ControladorExamen.FinalizarExamen(iExamen);
 
                     Ventana_Examen_Terminado finalizado = new Ventana_Examen_Terminado(examenTerminado);
                     finalizado.ShowDialog();
@@ -130,7 +133,6 @@ namespace Trabajo_Integrador.Ventanas
             {
                 MessageBox.Show("Debe seleccionar una resupuesta");
             }
-
         }
 
         private void VPreguntas_Load(object sender, EventArgs e)
