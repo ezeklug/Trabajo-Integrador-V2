@@ -18,7 +18,14 @@ namespace Trabajo_Integrador.EntityFramework
 
         public int ObtenerMaxId()
         {
-            return this.iDBSet.Max(l => l.Id);
+            try
+            {
+                return this.iDBSet.Max(l => l.Id);
+            }
+            catch(Exception)
+            {
+                return 0;
+            }
         }
     }
 }

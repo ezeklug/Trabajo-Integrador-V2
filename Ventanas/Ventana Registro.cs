@@ -2,6 +2,7 @@
 
 using System.Windows.Forms;
 using Trabajo_Integrador.Controladores;
+using Trabajo_Integrador.Controladores.Bitacora;
 using Trabajo_Integrador.Controladores.Excepciones;
 
 namespace Trabajo_Integrador.Ventanas
@@ -47,6 +48,8 @@ namespace Trabajo_Integrador.Ventanas
                 {
                     var usr = ControladorAdministrativo.GetUsuario(nombreUsuario);
                     errorProvider2.SetError(nuevoUsuario, "Usuario ya existe");
+                    var bitacora = new Bitacora();
+                    bitacora.GuardarLog("RegistrarUsuario ya existe" );
                     nuevoUsuario.Focus();
                 }
                 catch (UsrNoEncontradoException ex)
